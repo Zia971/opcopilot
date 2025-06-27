@@ -256,125 +256,137 @@ def create_timeline_horizontal(operation_data, phases_data):
         date_min = min(dates_debut)
         date_max = max(dates_fin)
         
-        # BARRE HORIZONTALE PRINCIPALE
-        fig.add_trace(go.Scatter(
-            x=[date_min, date_max],
-            y=[0, 0],
-            mode='lines',
-            line=dict(
-                width=12,
-                color='rgba(0, 102, 204, 0.6)'
-            ),
-            name='Timeline Principale',
-            showlegend=False,
-            hoverinfo='skip'
-        ))
+        # BARRE HORIZONTALE AVEC DÉGRADÉ - Style modèle exact
+        # Création de segments colorés pour simuler le dégradé
+        if len(phases_valides) > 1:
+            # Couleurs du dégradé (jaune → orange → rouge → violet → bleu)
+            couleurs_degrade = [
+                "#FFD54F",  # Jaune
+                "#FF9800",  # Orange  
+                "#F44336",  # Rouge
+                "#E91E63",  # Rose/Violet
+                "#673AB7",  # Violet
+                "#2E7D32"   # Bleu-vert foncé
+            ]
+            
+            # Segments de la barre avec dégradé
+            for i in range(len(phases_valides)):
+                debut = dates_debut[i]
+                if i < len(phases_valides) - 1:
+                    fin = dates_debut[i + 1]
+                else:
+                    fin = date_max
+                
+                # Couleur du segment
+                couleur_segment = couleurs_degrade[i % len(couleurs_degrade)]
+                
+                # Segment de barre coloré
+                fig.add_trace(go.Scatter(
+                    x=[debut, fin],
+                    y=[0, 0],
+                    mode='lines',
+                    line=dict(width=20, color=couleur_segment),
+                    showlegend=False,
+                    hoverinfo='skip'
+                ))
+                
+                # Triangle/flèche sur la barre (style modèle)
+                milieu_segment = debut + (fin - debut) / 2
+                y_triangle = 0.15 if i % 2 == 0 else -0.15
+                fig.add_trace(go.Scatter(
+                    x=[milieu_segment],
+                    y=[y_triangle],
+                    mode='markers',
+                    marker=dict(
+                        size=15,
+                        color=couleur_segment,
+                        symbol='triangle-up' if i % 2 == 0 else 'triangle-down'
+                    ),
+                    showlegend=False,
+                    hoverinfo='skip'
+                ))
         
-        # JALONS ET TEXTES pour chaque phase valide
+        # CERCLES ET TEXTES - Style modèle exact avec alternance vraie
         for i, phase in enumerate(phases_valides):
             try:
                 debut = dates_debut[i]
-                fin = dates_fin[i] 
                 statut = phase.get('statut', 'NON_DEMARREE')
                 nom_phase = phase.get('nom', f'Phase {i+1}')
-                responsable = phase.get('responsable', 'Non assigné')
                 
-                # Couleurs sécurisées
-                couleurs_infographiques = {
-                    "VALIDEE": "#4CAF50",
-                    "EN_COURS": "#2196F3", 
-                    "EN_ATTENTE": "#FF9800",
-                    "RETARD": "#F44336",
-                    "CRITIQUE": "#E91E63",
-                    "NON_DEMARREE": "#9E9E9E",
-                    "VALIDATION_REQUISE": "#FF5722"
-                }
-                couleur = couleurs_infographiques.get(statut, "#0066cc")
+                # Couleur assortie au dégradé
+                couleurs_cercles = [
+                    "#FFD54F", "#FF9800", "#F44336", 
+                    "#E91E63", "#673AB7", "#2E7D32"
+                ]
+                couleur = couleurs_cercles[i % len(couleurs_cercles)]
                 
-                # JALON PRINCIPAL
+                # Position alternée (VRAIE alternance haut/bas)
+                est_en_haut = i % 2 == 0
+                y_cercle = 0.8 if est_en_haut else -0.8
+                y_ligne_debut = 0.15 if est_en_haut else -0.15
+                
+                # LIGNE VERTICALE DE CONNEXION (style modèle)
+                fig.add_trace(go.Scatter(
+                    x=[debut, debut],
+                    y=[y_ligne_debut, y_cercle - (0.25 if est_en_haut else -0.25)],
+                    mode='lines',
+                    line=dict(width=3, color=couleur),
+                    showlegend=False,
+                    hoverinfo='skip'
+                ))
+                
+                # CERCLE PRINCIPAL avec année/numéro (style modèle)
                 fig.add_trace(go.Scatter(
                     x=[debut],
-                    y=[0],
+                    y=[y_cercle],
                     mode='markers+text',
                     marker=dict(
-                        size=35,
+                        size=50,  # Très gros comme modèle
                         color=couleur,
                         symbol='circle',
                         line=dict(width=4, color='white')
                     ),
-                    text=[str(i+1)],
-                    textfont=dict(size=14, color='white', family='Arial Black'),
+                    text=[str(2023 + i)],  # Années comme modèle
+                    textfont=dict(size=18, color='white', family='Arial Black'),
                     textposition='middle center',
-                    name=f"Phase {i+1}",
                     showlegend=False,
-                    hovertemplate=(
-                        f"<b>Phase {i+1}</b><br>" +
-                        f"{nom_phase}<br>" +
-                        f"Début: {debut.strftime('%d/%m/%Y')}<br>" +
-                        f"Statut: {statut}<br>" +
-                        f"Responsable: {responsable}<extra></extra>"
-                    )
+                    hovertemplate=f"<b>Phase {i+1}</b><br>{nom_phase}<extra></extra>"
                 ))
                 
-                # LIGNE CONNECTRICE
-                y_text = 0.8 if i % 2 == 0 else -0.8
-                fig.add_trace(go.Scatter(
-                    x=[debut, debut],
-                    y=[0.2, y_text - 0.1],
-                    mode='lines',
-                    line=dict(width=2, color=couleur, dash='dot'),
-                    showlegend=False,
-                    hoverinfo='skip'
-                ))
+                # TITRE ET DESCRIPTION (style modèle)
+                nom_court = nom_phase[:20] + '...' if len(nom_phase) > 20 else nom_phase
                 
-                # TEXTE DESCRIPTIF
-                nom_court = nom_phase[:25] + '...' if len(nom_phase) > 25 else nom_phase
+                # Titre principal
+                y_titre = y_cercle + (0.4 if est_en_haut else -0.4)
                 fig.add_trace(go.Scatter(
                     x=[debut],
-                    y=[y_text],
+                    y=[y_titre],
                     mode='text',
-                    text=[f"<b>{nom_court}</b><br><span style='color:{couleur}'>{statut}</span>"],
-                    textfont=dict(size=12, color='#333333', family='Arial'),
+                    text=[f"<b>PHASE {i+1:02d}</b>"],
+                    textfont=dict(size=14, color='#333333', family='Arial Black'),
                     textposition='middle center',
                     showlegend=False,
                     hoverinfo='skip'
                 ))
                 
-                # JALON FIN (si phase longue)
-                if (fin - debut).days > 7:
-                    fig.add_trace(go.Scatter(
-                        x=[fin],
-                        y=[0],
-                        mode='markers',
-                        marker=dict(
-                            size=25,
-                            color=couleur,
-                            symbol='square' if phase.get('est_critique', False) else 'circle',
-                            line=dict(width=3, color='white')
-                        ),
-                        showlegend=False,
-                        hovertemplate=f"<b>Fin Phase {i+1}</b><br>Date: {fin.strftime('%d/%m/%Y')}<extra></extra>"
-                    ))
-                
-                # INDICATEUR FREIN
-                if statut in ['RETARD', 'CRITIQUE']:
-                    fig.add_trace(go.Scatter(
-                        x=[debut],
-                        y=[0.4],
-                        mode='markers+text',
-                        marker=dict(size=20, color='red', symbol='diamond'),
-                        text=['⚠️'],
-                        textfont=dict(size=16),
-                        textposition='middle center',
-                        showlegend=False,
-                        hovertemplate="<b>ATTENTION</b><br>Frein détecté<extra></extra>"
-                    ))
+                # Description (style Lorem ipsum du modèle)
+                y_desc = y_cercle + (0.6 if est_en_haut else -0.6)
+                fig.add_trace(go.Scatter(
+                    x=[debut],
+                    y=[y_desc],
+                    mode='text',
+                    text=[f"{nom_court}<br><span style='color:#999999;font-size:10px'>Statut: {statut}</span>"],
+                    textfont=dict(size=11, color='#666666', family='Arial'),
+                    textposition='middle center',
+                    showlegend=False,
+                    hoverinfo='skip'
+                ))
                     
             except Exception as e:
-                st.warning(f"⚠️ Erreur jalon phase {i+1}: {str(e)}")
+                st.warning(f"⚠️ Erreur phase {i+1}: {str(e)}")
                 continue
         
-        # LAYOUT SÉCURISÉ avec propriétés Plotly VALIDES
+        # LAYOUT STYLE MODÈLE EXACT
         operation_nom = operation_data.get('nom', 'Opération') if isinstance(operation_data, dict) else 'Opération'
         
         fig.update_layout(
@@ -382,34 +394,33 @@ def create_timeline_horizontal(operation_data, phases_data):
                 'text': f"🗓️ Timeline Interactive - {operation_nom}",
                 'x': 0.5,
                 'xanchor': 'center',
-                'font': {'size': 22, 'color': '#0066cc', 'family': 'Arial Black'}
+                'font': {'size': 22, 'color': '#333333', 'family': 'Arial Black'}
             },
-            plot_bgcolor='rgba(248, 249, 250, 0.8)',
-            paper_bgcolor='white',
+            # Fond gris clair comme modèle
+            plot_bgcolor='rgba(240, 240, 240, 0.3)',
+            paper_bgcolor='#f5f5f5',
+            
             xaxis=dict(
                 title=dict(
                     text="📅 Chronologie du Projet",
                     font=dict(size=14, color='#333333', family='Arial Bold')
                 ),
                 type='date',
-                showgrid=True,
-                gridcolor='rgba(0, 0, 0, 0.1)',
-                gridwidth=1,
+                showgrid=False,  # Pas de grille comme modèle
                 tickformat='%b %Y',
                 tickfont=dict(size=12, color='#333333', family='Arial'),
-                showline=True,
-                linecolor='#333333',
-                linewidth=2
+                showline=False,  # Pas de ligne d'axe comme modèle
+                zeroline=False
             ),
             yaxis=dict(
-                range=[-1.5, 1.5],
+                range=[-1.8, 1.8],  # Range élargie pour vraie alternance
                 showgrid=False,
                 showticklabels=False,
                 zeroline=False,
                 showline=False
             ),
-            height=500,
-            margin=dict(l=80, r=80, t=100, b=80),
+            height=600,  # Plus haut pour accommoder l'alternance
+            margin=dict(l=50, r=50, t=100, b=50),
             hovermode='closest',
             dragmode='pan',
             font=dict(size=12, color='#333333', family='Arial'),
