@@ -256,9 +256,11 @@ def create_timeline_horizontal(operation_data, phases_data):
         date_min = min(dates_debut)
         date_max = max(dates_fin)
         
-        # BARRE HORIZONTALE AVEC DÉGRADÉ - Style modèle exact
-        # Création de segments colorés pour simuler le dégradé
+        # BARRE HORIZONTALE AVEC ESPACEMENT ÉGAL - Timeline chronologique
         if len(phases_valides) > 1:
+            # Positions équidistantes (chronologie simple, pas durées)
+            x_positions = list(range(len(phases_valides)))
+            
             # Couleurs du dégradé (jaune → orange → rouge → violet → bleu)
             couleurs_degrade = [
                 "#FFD54F",  # Jaune
@@ -269,13 +271,10 @@ def create_timeline_horizontal(operation_data, phases_data):
                 "#2E7D32"   # Bleu-vert foncé
             ]
             
-            # Segments de la barre avec dégradé
-            for i in range(len(phases_valides)):
-                debut = dates_debut[i]
-                if i < len(phases_valides) - 1:
-                    fin = dates_debut[i + 1]
-                else:
-                    fin = date_max
+            # Segments de la barre avec espacement égal
+            for i in range(len(phases_valides) - 1):
+                debut = x_positions[i]
+                fin = x_positions[i + 1]
                 
                 # Couleur du segment
                 couleur_segment = couleurs_degrade[i % len(couleurs_degrade)]
@@ -306,10 +305,11 @@ def create_timeline_horizontal(operation_data, phases_data):
                     hoverinfo='skip'
                 ))
         
-        # CERCLES AVEC DATES INTÉGRÉES - Style auto-suffisant
+        # CERCLES AVEC DATES MM/YY - Espacement chronologique égal
         for i, phase in enumerate(phases_valides):
             try:
-                debut = dates_debut[i]
+                debut_date = dates_debut[i]  # Date réelle pour format MM/YY
+                x_pos = i  # Position équidistante (chronologique)
                 statut = phase.get('statut', 'NON_DEMARREE')
                 nom_phase = phase.get('nom', f'Phase {i+1}')
                 
@@ -320,14 +320,14 @@ def create_timeline_horizontal(operation_data, phases_data):
                 ]
                 couleur = couleurs_cercles[i % len(couleurs_cercles)]
                 
-                # Position alternée (VRAIE alternance haut/bas)
+                # Position alternée (PRÉSERVER espacement qui fonctionne)
                 est_en_haut = i % 2 == 0
                 y_cercle = 0.8 if est_en_haut else -0.8
                 y_ligne_debut = 0.15 if est_en_haut else -0.15
                 
-                # LIGNE VERTICALE DE CONNEXION (style modèle)
+                # LIGNE VERTICALE DE CONNEXION (PRÉSERVÉE)
                 fig.add_trace(go.Scatter(
-                    x=[debut, debut],
+                    x=[x_pos, x_pos],
                     y=[y_ligne_debut, y_cercle - (0.25 if est_en_haut else -0.25)],
                     mode='lines',
                     line=dict(width=3, color=couleur),
@@ -336,15 +336,15 @@ def create_timeline_horizontal(operation_data, phases_data):
                 ))
                 
                 # FORMAT DATE MM/YY pour cercle
-                date_formatted = debut.strftime('%m/%y')  # Format 07/25, 01/26, etc.
+                date_formatted = debut_date.strftime('%m/%y')  # Format 07/25, 01/26, etc.
                 
-                # CERCLE PRINCIPAL avec DATE INTÉGRÉE (auto-suffisant)
+                # CERCLE PRINCIPAL avec DATE INTÉGRÉE
                 fig.add_trace(go.Scatter(
-                    x=[debut],
+                    x=[x_pos],
                     y=[y_cercle],
                     mode='markers+text',
                     marker=dict(
-                        size=80,  # Plus gros pour date complète
+                        size=80,  # Gros pour date complète
                         color=couleur,
                         symbol='circle',
                         line=dict(width=5, color='white')
@@ -353,16 +353,17 @@ def create_timeline_horizontal(operation_data, phases_data):
                     textfont=dict(size=16, color='white', family='Arial Bold'),
                     textposition='middle center',
                     showlegend=False,
-                    hovertemplate=f"<b>Phase {i+1}</b><br>{nom_phase}<br>Date: {debut.strftime('%d/%m/%Y')}<extra></extra>"
+                    hovertemplate=f"<b>Phase {i+1}</b><br>{nom_phase}<br>Date: {debut_date.strftime('%d/%m/%Y')}<extra></extra>"
                 ))
                 
-                # TITRE ET DESCRIPTION (style modèle)
-                nom_court = nom_phase[:25] + '...' if len(nom_phase) > 25 else nom_phase
+                # TITRE ET DESCRIPTION (ESPACEMENT PRÉSERVÉ)
+                # Afficher nom complet (non tronqué)
+                nom_complet = nom_phase  # Texte complet
                 
-                # Titre principal
+                # Titre principal (position préservée)
                 y_titre = y_cercle + (0.4 if est_en_haut else -0.4)
                 fig.add_trace(go.Scatter(
-                    x=[debut],
+                    x=[x_pos],
                     y=[y_titre],
                     mode='text',
                     text=[f"<b>PHASE {i+1:02d}</b>"],
@@ -372,13 +373,13 @@ def create_timeline_horizontal(operation_data, phases_data):
                     hoverinfo='skip'
                 ))
                 
-                # Description (style Lorem ipsum du modèle)
+                # Description complète (espacement préservé, texte complet)
                 y_desc = y_cercle + (0.6 if est_en_haut else -0.6)
                 fig.add_trace(go.Scatter(
-                    x=[debut],
+                    x=[x_pos],
                     y=[y_desc],
                     mode='text',
-                    text=[f"{nom_court}<br><span style='color:#999999;font-size:10px'>Statut: {statut}</span>"],
+                    text=[f"{nom_complet}<br><span style='color:#999999;font-size:10px'>Statut: {statut}</span>"],
                     textfont=dict(size=12, color='#666666', family='Arial'),
                     textposition='middle center',
                     showlegend=False,
@@ -389,7 +390,7 @@ def create_timeline_horizontal(operation_data, phases_data):
                 st.warning(f"⚠️ Erreur phase {i+1}: {str(e)}")
                 continue
         
-        # LAYOUT TIMELINE AUTO-SUFFISANTE (sans axes)
+        # LAYOUT TIMELINE CHRONOLOGIQUE (espacement égal, pas durées)
         operation_nom = operation_data.get('nom', 'Opération') if isinstance(operation_data, dict) else 'Opération'
         
         fig.update_layout(
@@ -403,24 +404,25 @@ def create_timeline_horizontal(operation_data, phases_data):
             plot_bgcolor='rgba(240, 240, 240, 0.3)',
             paper_bgcolor='#f5f5f5',
             
-            # SUPPRESSION COMPLÈTE AXE X (auto-suffisant)
+            # SUPPRESSION COMPLÈTE AXE X (chronologie dans cercles)
             xaxis=dict(
+                range=[-0.5, len(phases_valides) - 0.5],  # Range pour espacement égal
                 visible=False,        # Complètement invisible
                 showticklabels=False,
                 showgrid=False,
                 zeroline=False,
                 showline=False
             ),
-            # SUPPRESSION COMPLÈTE AXE Y
+            # AXE Y masqué mais fonctionnel pour alternance
             yaxis=dict(
-                range=[-1.8, 1.8],    # Range élargie pour vraie alternance
-                visible=False,        # Complètement invisible
+                range=[-1.8, 1.8],    # Range préservée pour alternance
+                visible=False,        # Invisible
                 showgrid=False,
                 showticklabels=False,
                 zeroline=False,
                 showline=False
             ),
-            height=600,  # Plus haut pour accommoder l'alternance
+            height=600,  # Hauteur préservée
             margin=dict(l=50, r=50, t=100, b=50),
             hovermode='closest',
             dragmode='pan',
