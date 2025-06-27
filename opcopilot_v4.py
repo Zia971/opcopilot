@@ -146,210 +146,296 @@ def get_couleur_statut(statut):
 
 def create_timeline_horizontal(operation_data, phases_data):
     """
-    Timeline Plotly style INFOGRAPHIQUE MODERNE
-    Reproduit le style roadmap professionnel avec :
-    - Barre horizontale épaisse continue
-    - Jalons colorés ronds sur la barre  
-    - Textes connectés et lisibles
-    - Style infographique comme PowerPoint/Canva
+    Timeline Plotly style INFOGRAPHIQUE MODERNE avec gestion d'erreur robuste
+    Reproduit le style roadmap professionnel avec validation complète des données
     """
     
-    if not phases_data:
-        st.warning("Aucune phase définie pour cette opération")
-        return None, {}
+    def create_empty_timeline():
+        """Timeline vide en cas de données manquantes"""
+        fig = go.Figure()
+        fig.add_annotation(
+            text="Aucune phase disponible pour cette opération",
+            xref="paper", yref="paper",
+            x=0.5, y=0.5, 
+            showarrow=False,
+            font=dict(size=16, color="#666666")
+        )
+        fig.update_layout(
+            title="Timeline - Aucune donnée",
+            height=300,
+            xaxis=dict(visible=False),
+            yaxis=dict(visible=False),
+            plot_bgcolor='white',
+            paper_bgcolor='white'
+        )
+        return fig, {}
     
-    # Préparation données timeline infographique
-    fig = go.Figure()
+    def create_fallback_timeline(error_msg=""):
+        """Timeline de fallback en cas d'erreur"""
+        fig = go.Figure()
+        fig.add_annotation(
+            text=f"Erreur lors de la génération de la timeline\n{error_msg}",
+            xref="paper", yref="paper",
+            x=0.5, y=0.5,
+            showarrow=False,
+            font=dict(size=14, color="#d32f2f")
+        )
+        fig.update_layout(
+            title="Timeline - Erreur de chargement",
+            height=300,
+            xaxis=dict(visible=False),
+            yaxis=dict(visible=False),
+            plot_bgcolor='white',
+            paper_bgcolor='white'
+        )
+        return fig, {}
     
-    # Calcul des positions temporelles
-    dates_debut = []
-    dates_fin = []
-    for phase in phases_data:
-        debut = pd.to_datetime(phase.get('date_debut_prevue', datetime.now()))
-        fin = pd.to_datetime(phase.get('date_fin_prevue', datetime.now() + timedelta(days=30)))
-        dates_debut.append(debut)
-        dates_fin.append(fin)
-    
-    date_min = min(dates_debut)
-    date_max = max(dates_fin)
-    
-    # BARRE HORIZONTALE CONTINUE (style roadmap)
-    fig.add_trace(go.Scatter(
-        x=[date_min, date_max],
-        y=[0, 0],
-        mode='lines',
-        line=dict(
-            width=12,
-            color='rgba(0, 102, 204, 0.6)'  # Bleu SPIC semi-transparent
-        ),
-        name='Timeline Principale',
-        showlegend=False,
-        hoverinfo='skip'
-    ))
-    
-    # JALONS COLORÉS et TEXTES CONNECTÉS
-    for i, phase in enumerate(phases_data):
-        debut = dates_debut[i]
-        fin = dates_fin[i]
-        statut = phase.get('statut', 'NON_DEMARREE')
+    try:
+        # VALIDATION DONNÉES D'ENTRÉE
+        if not operation_data:
+            st.warning("⚠️ Données d'opération manquantes")
+            return create_empty_timeline()
         
-        # Couleurs vives style infographique
-        couleurs_infographiques = {
-            "VALIDEE": "#4CAF50",       # Vert vif
-            "EN_COURS": "#2196F3",      # Bleu vif
-            "EN_ATTENTE": "#FF9800",    # Orange vif
-            "RETARD": "#F44336",        # Rouge vif
-            "CRITIQUE": "#E91E63",      # Rose vif
-            "NON_DEMARREE": "#9E9E9E",  # Gris
-            "VALIDATION_REQUISE": "#FF5722"  # Orange rouge
-        }
-        couleur = couleurs_infographiques.get(statut, "#0066cc")
+        if not phases_data or len(phases_data) == 0:
+            st.info("ℹ️ Aucune phase définie pour cette opération")
+            return create_empty_timeline()
         
-        # JALON DÉBUT - Cercle coloré sur la barre
+        # Validation que phases_data est une liste
+        if not isinstance(phases_data, list):
+            st.error("❌ Format de données phases incorrect")
+            return create_fallback_timeline("Format phases_data incorrect")
+        
+        # PRÉPARATION DONNÉES SÉCURISÉE
+        fig = go.Figure()
+        
+        # Validation et préparation des dates
+        dates_debut = []
+        dates_fin = []
+        phases_valides = []
+        
+        for i, phase in enumerate(phases_data):
+            try:
+                # Vérification que phase est un dict
+                if not isinstance(phase, dict):
+                    continue
+                
+                # Gestion sécurisée des dates
+                date_debut_str = phase.get('date_debut_prevue')
+                date_fin_str = phase.get('date_fin_prevue')
+                
+                # Dates par défaut si manquantes
+                if not date_debut_str:
+                    debut = datetime.now() + timedelta(days=i*30)
+                else:
+                    debut = pd.to_datetime(date_debut_str)
+                
+                if not date_fin_str:
+                    fin = debut + timedelta(days=30)
+                else:
+                    fin = pd.to_datetime(date_fin_str)
+                
+                # Validation cohérence dates
+                if fin < debut:
+                    fin = debut + timedelta(days=30)
+                
+                dates_debut.append(debut)
+                dates_fin.append(fin)
+                phases_valides.append(phase)
+                
+            except Exception as e:
+                # Log de l'erreur mais continue avec les autres phases
+                st.warning(f"⚠️ Erreur phase {i+1}: {str(e)}")
+                continue
+        
+        # Vérification qu'on a au moins une phase valide
+        if not phases_valides:
+            st.error("❌ Aucune phase valide trouvée")
+            return create_fallback_timeline("Aucune phase valide")
+        
+        # Calcul des bornes temporelles
+        date_min = min(dates_debut)
+        date_max = max(dates_fin)
+        
+        # BARRE HORIZONTALE PRINCIPALE
         fig.add_trace(go.Scatter(
-            x=[debut],
-            y=[0],
-            mode='markers+text',
-            marker=dict(
-                size=35,
-                color=couleur,
-                symbol='circle',
-                line=dict(width=4, color='white')
-            ),
-            text=[f"{i+1}"],
-            textfont=dict(size=14, color='white', family='Arial Black'),
-            textposition='middle center',
-            name=f"Phase {i+1}",
-            showlegend=False,
-            hovertemplate=f"<b>Phase {i+1}</b><br>" +
-                         f"{phase['nom']}<br>" +
-                         f"Début: {debut.strftime('%d/%m/%Y')}<br>" +
-                         f"Statut: {statut}<br>" +
-                         f"Responsable: {phase.get('responsable', 'Non assigné')}<extra></extra>"
-        ))
-        
-        # LIGNE VERTICALE CONNECTRICE (style infographique)
-        y_text = 0.8 if i % 2 == 0 else -0.8  # Alternance haut/bas
-        fig.add_trace(go.Scatter(
-            x=[debut, debut],
-            y=[0.2, y_text - 0.1],
+            x=[date_min, date_max],
+            y=[0, 0],
             mode='lines',
-            line=dict(width=2, color=couleur, dash='dot'),
+            line=dict(
+                width=12,
+                color='rgba(0, 102, 204, 0.6)'
+            ),
+            name='Timeline Principale',
             showlegend=False,
             hoverinfo='skip'
         ))
         
-        # TEXTE CONNECTÉ (nom de la phase)
-        fig.add_trace(go.Scatter(
-            x=[debut],
-            y=[y_text],
-            mode='text',
-            text=[f"<b>{phase['nom'][:20]}{'...' if len(phase['nom']) > 20 else ''}</b><br>" +
-                  f"<span style='color:{couleur}'>{statut}</span>"],
-            textfont=dict(size=12, color='#333333', family='Arial'),
-            textposition='middle center',
-            showlegend=False,
-            hoverinfo='skip'
-        ))
+        # JALONS ET TEXTES pour chaque phase valide
+        for i, phase in enumerate(phases_valides):
+            try:
+                debut = dates_debut[i]
+                fin = dates_fin[i] 
+                statut = phase.get('statut', 'NON_DEMARREE')
+                nom_phase = phase.get('nom', f'Phase {i+1}')
+                responsable = phase.get('responsable', 'Non assigné')
+                
+                # Couleurs sécurisées
+                couleurs_infographiques = {
+                    "VALIDEE": "#4CAF50",
+                    "EN_COURS": "#2196F3", 
+                    "EN_ATTENTE": "#FF9800",
+                    "RETARD": "#F44336",
+                    "CRITIQUE": "#E91E63",
+                    "NON_DEMARREE": "#9E9E9E",
+                    "VALIDATION_REQUISE": "#FF5722"
+                }
+                couleur = couleurs_infographiques.get(statut, "#0066cc")
+                
+                # JALON PRINCIPAL
+                fig.add_trace(go.Scatter(
+                    x=[debut],
+                    y=[0],
+                    mode='markers+text',
+                    marker=dict(
+                        size=35,
+                        color=couleur,
+                        symbol='circle',
+                        line=dict(width=4, color='white')
+                    ),
+                    text=[str(i+1)],
+                    textfont=dict(size=14, color='white', family='Arial Black'),
+                    textposition='middle center',
+                    name=f"Phase {i+1}",
+                    showlegend=False,
+                    hovertemplate=(
+                        f"<b>Phase {i+1}</b><br>" +
+                        f"{nom_phase}<br>" +
+                        f"Début: {debut.strftime('%d/%m/%Y')}<br>" +
+                        f"Statut: {statut}<br>" +
+                        f"Responsable: {responsable}<extra></extra>"
+                    )
+                ))
+                
+                # LIGNE CONNECTRICE
+                y_text = 0.8 if i % 2 == 0 else -0.8
+                fig.add_trace(go.Scatter(
+                    x=[debut, debut],
+                    y=[0.2, y_text - 0.1],
+                    mode='lines',
+                    line=dict(width=2, color=couleur, dash='dot'),
+                    showlegend=False,
+                    hoverinfo='skip'
+                ))
+                
+                # TEXTE DESCRIPTIF
+                nom_court = nom_phase[:25] + '...' if len(nom_phase) > 25 else nom_phase
+                fig.add_trace(go.Scatter(
+                    x=[debut],
+                    y=[y_text],
+                    mode='text',
+                    text=[f"<b>{nom_court}</b><br><span style='color:{couleur}'>{statut}</span>"],
+                    textfont=dict(size=12, color='#333333', family='Arial'),
+                    textposition='middle center',
+                    showlegend=False,
+                    hoverinfo='skip'
+                ))
+                
+                # JALON FIN (si phase longue)
+                if (fin - debut).days > 7:
+                    fig.add_trace(go.Scatter(
+                        x=[fin],
+                        y=[0],
+                        mode='markers',
+                        marker=dict(
+                            size=25,
+                            color=couleur,
+                            symbol='square' if phase.get('est_critique', False) else 'circle',
+                            line=dict(width=3, color='white')
+                        ),
+                        showlegend=False,
+                        hovertemplate=f"<b>Fin Phase {i+1}</b><br>Date: {fin.strftime('%d/%m/%Y')}<extra></extra>"
+                    ))
+                
+                # INDICATEUR FREIN
+                if statut in ['RETARD', 'CRITIQUE']:
+                    fig.add_trace(go.Scatter(
+                        x=[debut],
+                        y=[0.4],
+                        mode='markers+text',
+                        marker=dict(size=20, color='red', symbol='diamond'),
+                        text=['⚠️'],
+                        textfont=dict(size=16),
+                        textposition='middle center',
+                        showlegend=False,
+                        hovertemplate="<b>ATTENTION</b><br>Frein détecté<extra></extra>"
+                    ))
+                    
+            except Exception as e:
+                st.warning(f"⚠️ Erreur jalon phase {i+1}: {str(e)}")
+                continue
         
-        # JALON FIN si différent du début (pour les phases longues)
-        if (fin - debut).days > 7:  # Seulement si phase > 7 jours
-            fig.add_trace(go.Scatter(
-                x=[fin],
-                y=[0],
-                mode='markers',
-                marker=dict(
-                    size=25,
-                    color=couleur,
-                    symbol='square' if phase.get('est_critique', False) else 'circle',
-                    line=dict(width=3, color='white')
-                ),
-                name=f"Fin Phase {i+1}",
-                showlegend=False,
-                hovertemplate=f"<b>Fin Phase {i+1}</b><br>" +
-                             f"Date: {fin.strftime('%d/%m/%Y')}<extra></extra>"
-            ))
+        # LAYOUT SÉCURISÉ
+        operation_nom = operation_data.get('nom', 'Opération') if isinstance(operation_data, dict) else 'Opération'
         
-        # INDICATEUR FREIN (style alerte visuelle)
-        if statut in ['RETARD', 'CRITIQUE']:
-            fig.add_trace(go.Scatter(
-                x=[debut],
-                y=[0.4],
-                mode='markers+text',
-                marker=dict(size=20, color='red', symbol='diamond'),
-                text=['⚠️'],
-                textfont=dict(size=16),
-                textposition='middle center',
-                showlegend=False,
-                hovertemplate="<b>ATTENTION</b><br>Frein détecté<extra></extra>"
-            ))
-    
-    # LAYOUT STYLE INFOGRAPHIQUE MODERNE
-    fig.update_layout(
-        title={
-            'text': f"🗓️ Timeline Interactive - {operation_data.get('nom', 'Opération')}",
-            'x': 0.5,
-            'xanchor': 'center',
-            'font': {'size': 22, 'color': '#0066cc', 'family': 'Arial Black'}
-        },
+        fig.update_layout(
+            title={
+                'text': f"🗓️ Timeline Interactive - {operation_nom}",
+                'x': 0.5,
+                'xanchor': 'center',
+                'font': {'size': 22, 'color': '#0066cc', 'family': 'Arial Black'}
+            },
+            plot_bgcolor='rgba(248, 249, 250, 0.8)',
+            paper_bgcolor='white',
+            xaxis=dict(
+                title="📅 Chronologie du Projet",
+                type='date',
+                showgrid=True,
+                gridcolor='rgba(0, 0, 0, 0.1)',
+                gridwidth=1,
+                tickformat='%b %Y',
+                tickfont=dict(size=12, color='#333333', family='Arial'),
+                titlefont=dict(size=14, color='#333333', family='Arial Bold'),
+                showline=True,
+                linecolor='#333333',
+                linewidth=2
+            ),
+            yaxis=dict(
+                range=[-1.5, 1.5],
+                showgrid=False,
+                showticklabels=False,
+                zeroline=False,
+                showline=False
+            ),
+            height=500,
+            margin=dict(l=80, r=80, t=100, b=80),
+            hovermode='closest',
+            dragmode='pan',
+            font=dict(size=12, color='#333333', family='Arial'),
+            showlegend=False
+        )
         
-        # Fond style infographique
-        plot_bgcolor='rgba(248, 249, 250, 0.8)',  # Fond très légèrement gris
-        paper_bgcolor='white',
-        
-        # AXES LISIBLES ET CONTRASTÉS
-        xaxis=dict(
-            title="📅 Chronologie du Projet",
-            type='date',
-            showgrid=True,
-            gridcolor='rgba(0, 0, 0, 0.1)',
-            gridwidth=1,
-            tickformat='%b %Y',
-            tickfont=dict(size=12, color='#333333', family='Arial'),
-            titlefont=dict(size=14, color='#333333', family='Arial Bold'),
-            showline=True,
-            linecolor='#333333',
-            linewidth=2
-        ),
-        
-        yaxis=dict(
-            range=[-1.5, 1.5],
-            showgrid=False,
-            showticklabels=False,
-            zeroline=False,
-            showline=False
-        ),
-        
-        # Dimensions et marges
-        height=500,
-        margin=dict(l=80, r=80, t=100, b=80),
-        
-        # Interactivité
-        hovermode='closest',
-        dragmode='pan',
-        
-        # Police générale lisible
-        font=dict(size=12, color='#333333', family='Arial'),
-        
-        showlegend=False
-    )
-    
-    # Configuration outils interactifs
-    config = {
-        'displayModeBar': True,
-        'modeBarButtonsToAdd': ['pan2d', 'zoomin2d', 'zoomout2d', 'resetScale2d'],
-        'modeBarButtonsToRemove': ['lasso2d', 'select2d', 'autoScale2d'],
-        'displaylogo': False,
-        'toImageButtonOptions': {
-            'format': 'png',
-            'filename': f"timeline_{operation_data.get('nom', 'operation')}",
-            'height': 500,
-            'width': 1200,
-            'scale': 2
+        # Configuration outils
+        config = {
+            'displayModeBar': True,
+            'modeBarButtonsToAdd': ['pan2d', 'zoomin2d', 'zoomout2d', 'resetScale2d'],
+            'modeBarButtonsToRemove': ['lasso2d', 'select2d', 'autoScale2d'],
+            'displaylogo': False,
+            'toImageButtonOptions': {
+                'format': 'png',
+                'filename': f"timeline_{operation_nom.replace(' ', '_')}",
+                'height': 500,
+                'width': 1200,
+                'scale': 2
+            }
         }
-    }
-    
-    return fig, config
+        
+        return fig, config
+        
+    except Exception as e:
+        # Gestion d'erreur globale
+        error_msg = str(e)
+        st.error(f"❌ Erreur critique timeline: {error_msg}")
+        return create_fallback_timeline(error_msg)
 
 # ==============================================================================
 # 3. MODULES INTÉGRÉS PAR OPÉRATION
