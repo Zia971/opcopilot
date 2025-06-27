@@ -374,7 +374,7 @@ def create_timeline_horizontal(operation_data, phases_data):
                 st.warning(f"⚠️ Erreur jalon phase {i+1}: {str(e)}")
                 continue
         
-        # LAYOUT SÉCURISÉ
+        # LAYOUT SÉCURISÉ avec propriétés Plotly VALIDES
         operation_nom = operation_data.get('nom', 'Opération') if isinstance(operation_data, dict) else 'Opération'
         
         fig.update_layout(
@@ -387,14 +387,16 @@ def create_timeline_horizontal(operation_data, phases_data):
             plot_bgcolor='rgba(248, 249, 250, 0.8)',
             paper_bgcolor='white',
             xaxis=dict(
-                title="📅 Chronologie du Projet",
+                title=dict(
+                    text="📅 Chronologie du Projet",
+                    font=dict(size=14, color='#333333', family='Arial Bold')
+                ),
                 type='date',
                 showgrid=True,
                 gridcolor='rgba(0, 0, 0, 0.1)',
                 gridwidth=1,
                 tickformat='%b %Y',
                 tickfont=dict(size=12, color='#333333', family='Arial'),
-                titlefont=dict(size=14, color='#333333', family='Arial Bold'),
                 showline=True,
                 linecolor='#333333',
                 linewidth=2
