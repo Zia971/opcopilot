@@ -306,7 +306,7 @@ def create_timeline_horizontal(operation_data, phases_data):
                     hoverinfo='skip'
                 ))
         
-        # CERCLES ET TEXTES - Style modèle exact avec alternance vraie
+        # CERCLES AVEC DATES INTÉGRÉES - Style auto-suffisant
         for i, phase in enumerate(phases_valides):
             try:
                 debut = dates_debut[i]
@@ -335,26 +335,29 @@ def create_timeline_horizontal(operation_data, phases_data):
                     hoverinfo='skip'
                 ))
                 
-                # CERCLE PRINCIPAL avec année/numéro (style modèle)
+                # FORMAT DATE MM/YY pour cercle
+                date_formatted = debut.strftime('%m/%y')  # Format 07/25, 01/26, etc.
+                
+                # CERCLE PRINCIPAL avec DATE INTÉGRÉE (auto-suffisant)
                 fig.add_trace(go.Scatter(
                     x=[debut],
                     y=[y_cercle],
                     mode='markers+text',
                     marker=dict(
-                        size=50,  # Très gros comme modèle
+                        size=80,  # Plus gros pour date complète
                         color=couleur,
                         symbol='circle',
-                        line=dict(width=4, color='white')
+                        line=dict(width=5, color='white')
                     ),
-                    text=[str(2023 + i)],  # Années comme modèle
-                    textfont=dict(size=18, color='white', family='Arial Black'),
+                    text=[date_formatted],  # DATE MM/YY dans cercle
+                    textfont=dict(size=16, color='white', family='Arial Bold'),
                     textposition='middle center',
                     showlegend=False,
-                    hovertemplate=f"<b>Phase {i+1}</b><br>{nom_phase}<extra></extra>"
+                    hovertemplate=f"<b>Phase {i+1}</b><br>{nom_phase}<br>Date: {debut.strftime('%d/%m/%Y')}<extra></extra>"
                 ))
                 
                 # TITRE ET DESCRIPTION (style modèle)
-                nom_court = nom_phase[:20] + '...' if len(nom_phase) > 20 else nom_phase
+                nom_court = nom_phase[:25] + '...' if len(nom_phase) > 25 else nom_phase
                 
                 # Titre principal
                 y_titre = y_cercle + (0.4 if est_en_haut else -0.4)
@@ -363,7 +366,7 @@ def create_timeline_horizontal(operation_data, phases_data):
                     y=[y_titre],
                     mode='text',
                     text=[f"<b>PHASE {i+1:02d}</b>"],
-                    textfont=dict(size=14, color='#333333', family='Arial Black'),
+                    textfont=dict(size=15, color='#333333', family='Arial Black'),
                     textposition='middle center',
                     showlegend=False,
                     hoverinfo='skip'
@@ -376,7 +379,7 @@ def create_timeline_horizontal(operation_data, phases_data):
                     y=[y_desc],
                     mode='text',
                     text=[f"{nom_court}<br><span style='color:#999999;font-size:10px'>Statut: {statut}</span>"],
-                    textfont=dict(size=11, color='#666666', family='Arial'),
+                    textfont=dict(size=12, color='#666666', family='Arial'),
                     textposition='middle center',
                     showlegend=False,
                     hoverinfo='skip'
@@ -386,7 +389,7 @@ def create_timeline_horizontal(operation_data, phases_data):
                 st.warning(f"⚠️ Erreur phase {i+1}: {str(e)}")
                 continue
         
-        # LAYOUT STYLE MODÈLE EXACT
+        # LAYOUT TIMELINE AUTO-SUFFISANTE (sans axes)
         operation_nom = operation_data.get('nom', 'Opération') if isinstance(operation_data, dict) else 'Opération'
         
         fig.update_layout(
@@ -400,20 +403,18 @@ def create_timeline_horizontal(operation_data, phases_data):
             plot_bgcolor='rgba(240, 240, 240, 0.3)',
             paper_bgcolor='#f5f5f5',
             
+            # SUPPRESSION COMPLÈTE AXE X (auto-suffisant)
             xaxis=dict(
-                title=dict(
-                    text="📅 Chronologie du Projet",
-                    font=dict(size=14, color='#333333', family='Arial Bold')
-                ),
-                type='date',
-                showgrid=False,  # Pas de grille comme modèle
-                tickformat='%b %Y',
-                tickfont=dict(size=12, color='#333333', family='Arial'),
-                showline=False,  # Pas de ligne d'axe comme modèle
-                zeroline=False
+                visible=False,        # Complètement invisible
+                showticklabels=False,
+                showgrid=False,
+                zeroline=False,
+                showline=False
             ),
+            # SUPPRESSION COMPLÈTE AXE Y
             yaxis=dict(
-                range=[-1.8, 1.8],  # Range élargie pour vraie alternance
+                range=[-1.8, 1.8],    # Range élargie pour vraie alternance
+                visible=False,        # Complètement invisible
                 showgrid=False,
                 showticklabels=False,
                 zeroline=False,
