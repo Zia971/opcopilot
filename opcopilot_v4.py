@@ -1587,7 +1587,7 @@ def page_dashboard():
     
     /* ACTIONS RÉALISÉES - VERT FORCÉ (pas violet) */
     .stButton > button[data-testid="baseButton-primary"] {
-        background: linear-gradient(145deg, #D1FAE5, #10B981) !important;
+        background: linear-gradient(145deg, #10B981, #D1FAE5) !important;
         border: none !important;
         border-left: 4px solid #10B981 !important;
         border-radius: 15px !important;
@@ -1613,7 +1613,57 @@ def page_dashboard():
     with col_alert1:
         st.markdown("#### Alertes Critiques")
         
-        # ALERTE 1 - CRITIQUE ROUGE (Card seule, sans bouton)
+        # Boutons cachés pour la navigation (invisibles)
+        if st.button("nav_cour_charneau", key="hidden_cour_charneau", help="Navigation", label_visibility="hidden"):
+            # Navigation vers COUR CHARNEAU
+            demo_data = load_demo_data()
+            operations = demo_data.get('operations_demo', [])
+            cour_charneau = next((op for op in operations if "COUR CHARNEAU" in op['nom']), None)
+            if cour_charneau:
+                st.session_state.selected_operation = cour_charneau
+                st.session_state.selected_operation_id = cour_charneau['id']
+                st.session_state.page = "operation_details"
+                st.rerun()
+        
+        if st.button("nav_vefa_belcourt", key="hidden_vefa_belcourt", help="Navigation", label_visibility="hidden"):
+            # Navigation vers VEFA BELCOURT
+            demo_data = load_demo_data()
+            operations = demo_data.get('operations_demo', [])
+            vefa_belcourt = next((op for op in operations if "VEFA BELCOURT" in op['nom']), None)
+            if vefa_belcourt:
+                st.session_state.selected_operation = vefa_belcourt
+                st.session_state.selected_operation_id = vefa_belcourt['id']
+                st.session_state.page = "operation_details"
+                st.rerun()
+        
+        if st.button("nav_residence_soleil", key="hidden_residence_soleil", help="Navigation", label_visibility="hidden"):
+            # Navigation vers RÉSIDENCE SOLEIL
+            demo_data = load_demo_data()
+            operations = demo_data.get('operations_demo', [])
+            residence_soleil = next((op for op in operations if "RÉSIDENCE SOLEIL" in op['nom']), None)
+            if residence_soleil:
+                st.session_state.selected_operation = residence_soleil
+                st.session_state.selected_operation_id = residence_soleil['id']
+                st.session_state.page = "operation_details"
+                st.rerun()
+        
+        # CSS pour cacher les boutons
+        st.markdown("""
+        <style>
+        button[kind="secondary"][key="hidden_cour_charneau"],
+        button[kind="secondary"][key="hidden_vefa_belcourt"], 
+        button[kind="secondary"][key="hidden_residence_soleil"],
+        button[kind="secondary"][key="hidden_action_1"],
+        button[kind="secondary"][key="hidden_action_2"],
+        button[kind="secondary"][key="hidden_action_3"],
+        button[kind="secondary"][key="hidden_action_4"],
+        button[kind="secondary"][key="hidden_action_5"] {
+            display: none !important;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+        
+        # ALERTE 1 - CRITIQUE ROUGE (Card cliquable)
         st.markdown("""
         <div style="background: linear-gradient(145deg, #FEE2E2, #FECACA); 
                     border-left: 4px solid #EF4444; 
@@ -1624,14 +1674,15 @@ def page_dashboard():
                     cursor: pointer; 
                     transition: all 0.3s ease;"
              onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 30px rgba(239, 68, 68, 0.25)'"
-             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 6px 20px rgba(239, 68, 68, 0.15)'">
+             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 6px 20px rgba(239, 68, 68, 0.15)'"
+             onclick="document.querySelector('button[key=hidden_cour_charneau]').click()">
             <div style="font-weight: 700; font-size: 1.1rem; color: #DC2626; margin-bottom: 0.5rem;">🏗️ COUR CHARNEAU</div>
             <div style="color: #DC2626; margin: 0.5rem 0; font-size: 0.95rem;">Retard MOE 5 jours sur phase LBU</div>
             <div style="color: #DC2626; font-style: italic; font-size: 0.9rem; opacity: 0.9;">Action: Relance urgente MOE</div>
         </div>
         """, unsafe_allow_html=True)
         
-        # ALERTE 2 - ATTENTION JAUNE (Card seule, sans bouton)
+        # ALERTE 2 - ATTENTION JAUNE (Card cliquable)
         st.markdown("""
         <div style="background: linear-gradient(145deg, #FEF3C7, #FDE68A); 
                     border-left: 4px solid #F59E0B; 
@@ -1642,14 +1693,15 @@ def page_dashboard():
                     cursor: pointer; 
                     transition: all 0.3s ease;"
              onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 30px rgba(245, 158, 11, 0.25)'"
-             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 6px 20px rgba(245, 158, 11, 0.15)'">
+             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 6px 20px rgba(245, 158, 11, 0.15)'"
+             onclick="document.querySelector('button[key=hidden_vefa_belcourt]').click()">
             <div style="font-weight: 700; font-size: 1.1rem; color: #D97706; margin-bottom: 0.5rem;">🏠 VEFA BELCOURT</div>
             <div style="color: #D97706; margin: 0.5rem 0; font-size: 0.95rem;">Validation promoteur en attente</div>
             <div style="color: #D97706; font-style: italic; font-size: 0.9rem; opacity: 0.9;">Action: RDV programmé cette semaine</div>
         </div>
         """, unsafe_allow_html=True)
         
-        # ALERTE 3 - INFORMATION BLEU CLAIR (Card seule, sans bouton)
+        # ALERTE 3 - INFORMATION BLEU CLAIR (Card cliquable)
         st.markdown("""
         <div style="background: linear-gradient(145deg, #DBEAFE, #BFDBFE); 
                     border-left: 4px solid #3B82F6; 
@@ -1660,7 +1712,8 @@ def page_dashboard():
                     cursor: pointer; 
                     transition: all 0.3s ease;"
              onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 30px rgba(59, 130, 246, 0.25)'"
-             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 6px 20px rgba(59, 130, 246, 0.15)'">
+             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 6px 20px rgba(59, 130, 246, 0.15)'"
+             onclick="document.querySelector('button[key=hidden_residence_soleil]').click()">
             <div style="font-weight: 700; font-size: 1.1rem; color: #2563EB; margin-bottom: 0.5rem;">🏗️ RÉSIDENCE SOLEIL</div>
             <div style="color: #2563EB; margin: 0.5rem 0; font-size: 0.95rem;">Phase Travaux en cours - bon avancement</div>
             <div style="color: #2563EB; font-style: italic; font-size: 0.9rem; opacity: 0.9;">Action: Suivi hebdomadaire maintenu</div>
@@ -1670,9 +1723,55 @@ def page_dashboard():
     with col_alert2:
         st.markdown("#### Actions Réalisées Aujourd'hui")
         
-        # ACTION 1 - VERTE avec coche alignée à gauche (HTML direct)
+        # Boutons cachés pour les actions réalisées
+        if st.button("nav_action_1", key="hidden_action_1", help="Navigation", label_visibility="hidden"):
+            # Navigation vers RÉSIDENCE SOLEIL + module DGD
+            demo_data = load_demo_data()
+            operations = demo_data.get('operations_demo', [])
+            residence_soleil = next((op for op in operations if "RÉSIDENCE SOLEIL" in op['nom']), None)
+            if residence_soleil:
+                st.session_state.selected_operation = residence_soleil
+                st.session_state.selected_operation_id = residence_soleil['id']
+                st.session_state.page = "operation_details"
+                st.session_state.active_tab = "dgd"
+                st.rerun()
+        
+        if st.button("nav_action_2", key="hidden_action_2", help="Navigation", label_visibility="hidden"):
+            # Navigation vers COUR CHARNEAU + timeline
+            demo_data = load_demo_data()
+            operations = demo_data.get('operations_demo', [])
+            cour_charneau = next((op for op in operations if "COUR CHARNEAU" in op['nom']), None)
+            if cour_charneau:
+                st.session_state.selected_operation = cour_charneau
+                st.session_state.selected_operation_id = cour_charneau['id']
+                st.session_state.page = "operation_details"
+                st.session_state.active_tab = "timeline"
+                st.rerun()
+        
+        if st.button("nav_action_3", key="hidden_action_3", help="Navigation", label_visibility="hidden"):
+            # Navigation vers gestion MED (page générale)
+            st.session_state.page = "gestion_freins"
+            st.rerun()
+        
+        if st.button("nav_action_4", key="hidden_action_4", help="Navigation", label_visibility="hidden"):
+            # Navigation vers analyse REM
+            st.info("📊 Analyse REM détaillée - En développement")
+        
+        if st.button("nav_action_5", key="hidden_action_5", help="Navigation", label_visibility="hidden"):
+            # Navigation vers VEFA BELCOURT + timeline
+            demo_data = load_demo_data()
+            operations = demo_data.get('operations_demo', [])
+            vefa_belcourt = next((op for op in operations if "VEFA BELCOURT" in op['nom']), None)
+            if vefa_belcourt:
+                st.session_state.selected_operation = vefa_belcourt
+                st.session_state.selected_operation_id = vefa_belcourt['id']
+                st.session_state.page = "operation_details"
+                st.session_state.active_tab = "timeline"
+                st.rerun()
+        
+        # ACTION 1 - VERTE avec coche alignée à gauche (HTML direct cliquable)
         st.markdown("""
-        <div style="background: linear-gradient(145deg, #D1FAE5, #10B981); 
+        <div style="background: linear-gradient(145deg, #10B981, #D1FAE5); 
                     border-left: 4px solid #10B981; 
                     border-radius: 15px; 
                     padding: 1rem; 
@@ -1683,7 +1782,8 @@ def page_dashboard():
                     display: flex;
                     align-items: flex-start;"
              onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.25)'"
-             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'">
+             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'"
+             onclick="document.querySelector('button[key=hidden_action_1]').click()">
             <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: white;">✅</div>
             <div style="flex-grow: 1; color: white;">
                 <div style="font-weight: 600; font-size: 1rem;">DGD validé - RÉSIDENCE SOLEIL</div>
@@ -1692,9 +1792,9 @@ def page_dashboard():
         </div>
         """, unsafe_allow_html=True)
         
-        # ACTION 2 - VERTE avec coche alignée à gauche (HTML direct)
+        # ACTION 2 - VERTE avec coche alignée à gauche (HTML direct cliquable)
         st.markdown("""
-        <div style="background: linear-gradient(145deg, #D1FAE5, #10B981); 
+        <div style="background: linear-gradient(145deg, #10B981, #D1FAE5); 
                     border-left: 4px solid #10B981; 
                     border-radius: 15px; 
                     padding: 1rem; 
@@ -1705,7 +1805,8 @@ def page_dashboard():
                     display: flex;
                     align-items: flex-start;"
              onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.25)'"
-             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'">
+             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'"
+             onclick="document.querySelector('button[key=hidden_action_2]').click()">
             <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: white;">✅</div>
             <div style="flex-grow: 1; color: white;">
                 <div style="font-weight: 600; font-size: 1rem;">Phase ESQ terminée - COUR CHARNEAU</div>
@@ -1714,9 +1815,9 @@ def page_dashboard():
         </div>
         """, unsafe_allow_html=True)
         
-        # ACTION 3 - VERTE avec coche alignée à gauche (HTML direct)
+        # ACTION 3 - VERTE avec coche alignée à gauche (HTML direct cliquable)
         st.markdown("""
-        <div style="background: linear-gradient(145deg, #D1FAE5, #10B981); 
+        <div style="background: linear-gradient(145deg, #10B981, #D1FAE5); 
                     border-left: 4px solid #10B981; 
                     border-radius: 15px; 
                     padding: 1rem; 
@@ -1727,7 +1828,8 @@ def page_dashboard():
                     display: flex;
                     align-items: flex-start;"
              onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.25)'"
-             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'">
+             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'"
+             onclick="document.querySelector('button[key=hidden_action_3]').click()">
             <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: white;">✅</div>
             <div style="flex-grow: 1; color: white;">
                 <div style="font-weight: 600; font-size: 1rem;">MED envoyé - MANDAT ÉCOLE</div>
@@ -1736,9 +1838,9 @@ def page_dashboard():
         </div>
         """, unsafe_allow_html=True)
         
-        # ACTION 4 - VERTE avec coche alignée à gauche (HTML direct)
+        # ACTION 4 - VERTE avec coche alignée à gauche (HTML direct cliquable)
         st.markdown("""
-        <div style="background: linear-gradient(145deg, #D1FAE5, #10B981); 
+        <div style="background: linear-gradient(145deg, #10B981, #D1FAE5); 
                     border-left: 4px solid #10B981; 
                     border-radius: 15px; 
                     padding: 1rem; 
@@ -1749,7 +1851,8 @@ def page_dashboard():
                     display: flex;
                     align-items: flex-start;"
              onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.25)'"
-             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'">
+             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'"
+             onclick="document.querySelector('button[key=hidden_action_4]').click()">
             <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: white;">✅</div>
             <div style="flex-grow: 1; color: white;">
                 <div style="font-weight: 600; font-size: 1rem;">REM T3 saisi - 3 opérations</div>
@@ -1758,9 +1861,9 @@ def page_dashboard():
         </div>
         """, unsafe_allow_html=True)
         
-        # ACTION 5 - VERTE avec coche alignée à gauche (HTML direct)
+        # ACTION 5 - VERTE avec coche alignée à gauche (HTML direct cliquable)
         st.markdown("""
-        <div style="background: linear-gradient(145deg, #D1FAE5, #10B981); 
+        <div style="background: linear-gradient(145deg, #10B981, #D1FAE5); 
                     border-left: 4px solid #10B981; 
                     border-radius: 15px; 
                     padding: 1rem; 
@@ -1771,7 +1874,8 @@ def page_dashboard():
                     display: flex;
                     align-items: flex-start;"
              onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.25)'"
-             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'">
+             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'"
+             onclick="document.querySelector('button[key=hidden_action_5]').click()">
             <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: white;">✅</div>
             <div style="flex-grow: 1; color: white;">
                 <div style="font-weight: 600; font-size: 1rem;">Timeline mise à jour - VEFA BELCOURT</div>
