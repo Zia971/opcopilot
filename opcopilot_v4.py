@@ -1573,7 +1573,7 @@ def page_dashboard():
     # Alertes et actions MODERNISÉES ET SIMPLIFIÉES
     st.markdown("### 🚨 Alertes et Actions Prioritaires")
     
-    # CSS simplifié pour actions réalisées uniquement
+    # CSS simplifié
     st.markdown("""
     <style>
     /* SIDEBAR RESTAURÉE à l'état original */
@@ -1585,28 +1585,93 @@ def page_dashboard():
         background-color: #F8FAFC !important;
     }
     
-    /* ACTIONS RÉALISÉES - VERT FORCÉ (pas violet) */
-    .stButton > button[data-testid="baseButton-primary"] {
-        background: linear-gradient(145deg, #10B981, #D1FAE5) !important;
-        border: none !important;
-        border-left: 4px solid #10B981 !important;
-        border-radius: 15px !important;
-        padding: 1rem !important;
-        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15) !important;
-        transition: all 0.3s ease !important;
-        width: 100% !important;
-        color: white !important;
-        font-weight: 600 !important;
-        text-align: left !important;
-        white-space: pre-line !important;
-    }
-    
-    .stButton > button[data-testid="baseButton-primary"]:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25) !important;
+    /* CACHER LES BOUTONS DE NAVIGATION INVISIBLES */
+    .hidden-buttons {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        overflow: hidden !important;
     }
     </style>
     """, unsafe_allow_html=True)
+    
+    # NAVIGATION CACHÉE - Boutons invisibles pour la navigation
+    with st.container():
+        st.markdown('<div class="hidden-buttons">', unsafe_allow_html=True)
+        
+        # Boutons pour alertes
+        if st.button("hidden_nav_cour", key="nav_alert_cour"):
+            demo_data = load_demo_data()
+            operations = demo_data.get('operations_demo', [])
+            cour_charneau = next((op for op in operations if "COUR CHARNEAU" in op['nom']), None)
+            if cour_charneau:
+                st.session_state.selected_operation = cour_charneau
+                st.session_state.selected_operation_id = cour_charneau['id']
+                st.session_state.page = "operation_details"
+                st.rerun()
+        
+        if st.button("hidden_nav_vefa", key="nav_alert_vefa"):
+            demo_data = load_demo_data()
+            operations = demo_data.get('operations_demo', [])
+            vefa_belcourt = next((op for op in operations if "VEFA BELCOURT" in op['nom']), None)
+            if vefa_belcourt:
+                st.session_state.selected_operation = vefa_belcourt
+                st.session_state.selected_operation_id = vefa_belcourt['id']
+                st.session_state.page = "operation_details"
+                st.rerun()
+        
+        if st.button("hidden_nav_residence", key="nav_alert_residence"):
+            demo_data = load_demo_data()
+            operations = demo_data.get('operations_demo', [])
+            residence_soleil = next((op for op in operations if "RÉSIDENCE SOLEIL" in op['nom']), None)
+            if residence_soleil:
+                st.session_state.selected_operation = residence_soleil
+                st.session_state.selected_operation_id = residence_soleil['id']
+                st.session_state.page = "operation_details"
+                st.rerun()
+        
+        # Boutons pour actions
+        if st.button("hidden_action_dgd", key="nav_action_dgd"):
+            demo_data = load_demo_data()
+            operations = demo_data.get('operations_demo', [])
+            residence_soleil = next((op for op in operations if "RÉSIDENCE SOLEIL" in op['nom']), None)
+            if residence_soleil:
+                st.session_state.selected_operation = residence_soleil
+                st.session_state.selected_operation_id = residence_soleil['id']
+                st.session_state.page = "operation_details"
+                st.session_state.active_tab = "dgd"
+                st.rerun()
+        
+        if st.button("hidden_action_timeline_cour", key="nav_action_timeline_cour"):
+            demo_data = load_demo_data()
+            operations = demo_data.get('operations_demo', [])
+            cour_charneau = next((op for op in operations if "COUR CHARNEAU" in op['nom']), None)
+            if cour_charneau:
+                st.session_state.selected_operation = cour_charneau
+                st.session_state.selected_operation_id = cour_charneau['id']
+                st.session_state.page = "operation_details"
+                st.session_state.active_tab = "timeline"
+                st.rerun()
+        
+        if st.button("hidden_action_med", key="nav_action_med"):
+            st.session_state.page = "gestion_freins"
+            st.rerun()
+        
+        if st.button("hidden_action_rem", key="nav_action_rem"):
+            st.info("📊 Analyse REM détaillée - En développement")
+        
+        if st.button("hidden_action_timeline_vefa", key="nav_action_timeline_vefa"):
+            demo_data = load_demo_data()
+            operations = demo_data.get('operations_demo', [])
+            vefa_belcourt = next((op for op in operations if "VEFA BELCOURT" in op['nom']), None)
+            if vefa_belcourt:
+                st.session_state.selected_operation = vefa_belcourt
+                st.session_state.selected_operation_id = vefa_belcourt['id']
+                st.session_state.page = "operation_details"
+                st.session_state.active_tab = "timeline"
+                st.rerun()
+        
+        st.markdown('</div>', unsafe_allow_html=True)
     
     col_alert1, col_alert2 = st.columns(2)
     
@@ -1614,7 +1679,7 @@ def page_dashboard():
         st.markdown("#### Alertes Critiques")
         
         # Boutons cachés pour la navigation (invisibles)
-        if st.button("nav_cour_charneau", key="hidden_cour_charneau", help="Navigation", label_visibility="hidden"):
+        if st.button("nav_cour_charneau", key="hidden_cour_charneau"):
             # Navigation vers COUR CHARNEAU
             demo_data = load_demo_data()
             operations = demo_data.get('operations_demo', [])
@@ -1625,7 +1690,7 @@ def page_dashboard():
                 st.session_state.page = "operation_details"
                 st.rerun()
         
-        if st.button("nav_vefa_belcourt", key="hidden_vefa_belcourt", help="Navigation", label_visibility="hidden"):
+        if st.button("nav_vefa_belcourt", key="hidden_vefa_belcourt"):
             # Navigation vers VEFA BELCOURT
             demo_data = load_demo_data()
             operations = demo_data.get('operations_demo', [])
@@ -1636,7 +1701,16 @@ def page_dashboard():
                 st.session_state.page = "operation_details"
                 st.rerun()
         
-        if st.button("nav_residence_soleil", key="hidden_residence_soleil", help="Navigation", label_visibility="hidden"):
+        if st.button("nav_residence_soleil", key="hidden_residence_soleil"):
+            # Navigation vers RÉSIDENCE SOLEIL
+            demo_data = load_demo_data()
+            operations = demo_data.get('operations_demo', [])
+            residence_soleil = next((op for op in operations if "RÉSIDENCE SOLEIL" in op['nom']), None)
+            if residence_soleil:
+                st.session_state.selected_operation = residence_soleil
+                st.session_state.selected_operation_id = residence_soleil['id']
+                st.session_state.page = "operation_details"
+                st.rerun()
             # Navigation vers RÉSIDENCE SOLEIL
             demo_data = load_demo_data()
             operations = demo_data.get('operations_demo', [])
@@ -1650,14 +1724,14 @@ def page_dashboard():
         # CSS pour cacher les boutons
         st.markdown("""
         <style>
-        button[kind="secondary"][key="hidden_cour_charneau"],
-        button[kind="secondary"][key="hidden_vefa_belcourt"], 
-        button[kind="secondary"][key="hidden_residence_soleil"],
-        button[kind="secondary"][key="hidden_action_1"],
-        button[kind="secondary"][key="hidden_action_2"],
-        button[kind="secondary"][key="hidden_action_3"],
-        button[kind="secondary"][key="hidden_action_4"],
-        button[kind="secondary"][key="hidden_action_5"] {
+        button[key="hidden_cour_charneau"],
+        button[key="hidden_vefa_belcourt"], 
+        button[key="hidden_residence_soleil"],
+        button[key="hidden_action_1"],
+        button[key="hidden_action_2"],
+        button[key="hidden_action_3"],
+        button[key="hidden_action_4"],
+        button[key="hidden_action_5"] {
             display: none !important;
         }
         </style>
@@ -1724,7 +1798,7 @@ def page_dashboard():
         st.markdown("#### Actions Réalisées Aujourd'hui")
         
         # Boutons cachés pour les actions réalisées
-        if st.button("nav_action_1", key="hidden_action_1", help="Navigation", label_visibility="hidden"):
+        if st.button("nav_action_1", key="hidden_action_1"):
             # Navigation vers RÉSIDENCE SOLEIL + module DGD
             demo_data = load_demo_data()
             operations = demo_data.get('operations_demo', [])
@@ -1736,7 +1810,7 @@ def page_dashboard():
                 st.session_state.active_tab = "dgd"
                 st.rerun()
         
-        if st.button("nav_action_2", key="hidden_action_2", help="Navigation", label_visibility="hidden"):
+        if st.button("nav_action_2", key="hidden_action_2"):
             # Navigation vers COUR CHARNEAU + timeline
             demo_data = load_demo_data()
             operations = demo_data.get('operations_demo', [])
@@ -1748,16 +1822,26 @@ def page_dashboard():
                 st.session_state.active_tab = "timeline"
                 st.rerun()
         
-        if st.button("nav_action_3", key="hidden_action_3", help="Navigation", label_visibility="hidden"):
+        if st.button("nav_action_3", key="hidden_action_3"):
             # Navigation vers gestion MED (page générale)
             st.session_state.page = "gestion_freins"
             st.rerun()
         
-        if st.button("nav_action_4", key="hidden_action_4", help="Navigation", label_visibility="hidden"):
+        if st.button("nav_action_4", key="hidden_action_4"):
             # Navigation vers analyse REM
             st.info("📊 Analyse REM détaillée - En développement")
         
-        if st.button("nav_action_5", key="hidden_action_5", help="Navigation", label_visibility="hidden"):
+        if st.button("nav_action_5", key="hidden_action_5"):
+            # Navigation vers VEFA BELCOURT + timeline
+            demo_data = load_demo_data()
+            operations = demo_data.get('operations_demo', [])
+            vefa_belcourt = next((op for op in operations if "VEFA BELCOURT" in op['nom']), None)
+            if vefa_belcourt:
+                st.session_state.selected_operation = vefa_belcourt
+                st.session_state.selected_operation_id = vefa_belcourt['id']
+                st.session_state.page = "operation_details"
+                st.session_state.active_tab = "timeline"
+                st.rerun()
             # Navigation vers VEFA BELCOURT + timeline
             demo_data = load_demo_data()
             operations = demo_data.get('operations_demo', [])
@@ -1828,4 +1912,663 @@ def page_dashboard():
                     display: flex;
                     align-items: flex-start;"
              onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.25)'"
-             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4
+             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'"
+             onclick="document.querySelector('button[key=hidden_action_3]').click()">
+            <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: white;">✅</div>
+            <div style="flex-grow: 1; color: white;">
+                <div style="font-weight: 600; font-size: 1rem;">MED envoyé - MANDAT ÉCOLE</div>
+                <div style="font-size: 0.9rem; margin-top: 0.25rem; opacity: 0.9;">Mise en demeure promoteur envoyée</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # ACTION 4 - VERTE avec coche alignée à gauche (HTML direct cliquable)
+        st.markdown("""
+        <div style="background: linear-gradient(145deg, #10B981, #D1FAE5); 
+                    border-left: 4px solid #10B981; 
+                    border-radius: 15px; 
+                    padding: 1rem; 
+                    margin: 0.5rem 0; 
+                    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15); 
+                    cursor: pointer; 
+                    transition: all 0.3s ease;
+                    display: flex;
+                    align-items: flex-start;"
+             onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.25)'"
+             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'"
+             onclick="document.querySelector('button[key=hidden_action_4]').click()">
+            <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: white;">✅</div>
+            <div style="flex-grow: 1; color: white;">
+                <div style="font-weight: 600; font-size: 1rem;">REM T3 saisi - 3 opérations</div>
+                <div style="font-size: 0.9rem; margin-top: 0.25rem; opacity: 0.9;">Trimestre 3 validé et saisi</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # ACTION 5 - VERTE avec coche alignée à gauche (HTML direct cliquable)
+        st.markdown("""
+        <div style="background: linear-gradient(145deg, #10B981, #D1FAE5); 
+                    border-left: 4px solid #10B981; 
+                    border-radius: 15px; 
+                    padding: 1rem; 
+                    margin: 0.5rem 0; 
+                    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15); 
+                    cursor: pointer; 
+                    transition: all 0.3s ease;
+                    display: flex;
+                    align-items: flex-start;"
+             onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.25)'"
+             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'"
+             onclick="document.querySelector('button[key=hidden_action_5]').click()">
+            <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: white;">✅</div>
+            <div style="flex-grow: 1; color: white;">
+                <div style="font-weight: 600; font-size: 1rem;">Timeline mise à jour - VEFA BELCOURT</div>
+                <div style="font-size: 0.9rem; margin-top: 0.25rem; opacity: 0.9;">Planning actualisé avec nouvelles échéances</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    # Graphique d'activité MODERNISÉ
+    st.markdown("### 📈 Activité Mensuelle")
+    
+    if activite_data and activite_data.get('mois'):
+        fig_dashboard = go.Figure()
+        
+        # REM mensuelle avec dégradé modernisé
+        fig_dashboard.add_trace(go.Scatter(
+            x=activite_data['mois'],
+            y=activite_data['rem_mensuelle'],
+            mode='lines+markers',
+            name='REM Mensuelle (€)',
+            yaxis='y',
+            line=dict(color='#8B5CF6', width=3),
+            marker=dict(size=8, color='#8B5CF6')
+        ))
+        
+        # Opérations actives
+        fig_dashboard.add_trace(go.Scatter(
+            x=activite_data['mois'],
+            y=activite_data['operations_actives'],
+            mode='lines+markers',
+            name='Opérations Actives',
+            yaxis='y2',
+            line=dict(color='#10B981', width=3),
+            marker=dict(size=8, color='#10B981')
+        ))
+        
+        fig_dashboard.update_layout(
+            title=f"Évolution Activité {nom_aco} - 2024",
+            xaxis=dict(title="Mois"),
+            yaxis=dict(title="REM (€)", side="left"),
+            yaxis2=dict(title="Nb Opérations", side="right", overlaying="y"),
+            height=450,
+            hovermode='x unified',
+            plot_bgcolor='rgba(139, 92, 246, 0.02)',
+            paper_bgcolor='#f9fafb'
+        )
+        
+        st.plotly_chart(fig_dashboard, use_container_width=True)
+    else:
+        st.info("📊 Données d'activité en cours de chargement...")
+
+def page_gestion_freins():
+    """Page de gestion des freins"""
+    st.markdown("### 🚨 Gestion des Freins Opérationnels")
+    
+    # Liste des freins
+    freins_data = [
+        {
+            "Opération": "COUR CHARNEAU",
+            "Phase": "Demande LBU", 
+            "Type": "RETARD",
+            "Durée": "5 jours",
+            "Impact": "Critique",
+            "Responsable": "MOE ARCHI-CONSEIL",
+            "Action": "Relance urgente"
+        },
+        {
+            "Opération": "MANDAT ÉCOLE",
+            "Phase": "Validation budget",
+            "Type": "BLOCAGE",
+            "Durée": "12 jours", 
+            "Impact": "Majeur",
+            "Responsable": "Commune Basse-Terre",
+            "Action": "RDV programmé"
+        },
+        {
+            "Opération": "VEFA BELCOURT",
+            "Phase": "Signature protocole",
+            "Type": "ATTENTE",
+            "Durée": "3 jours",
+            "Impact": "Mineur", 
+            "Responsable": "SOGEPROM",
+            "Action": "Suivi normal"
+        }
+    ]
+    
+    df_freins = pd.DataFrame(freins_data)
+    st.dataframe(df_freins, use_container_width=True)
+    
+    # Actions de résolution
+    st.markdown("#### Actions de Résolution")
+    
+    col_action1, col_action2, col_action3 = st.columns(3)
+    
+    with col_action1:
+        if st.button("📞 Relancer tous les responsables"):
+            st.success("📧 Relances envoyées automatiquement")
+    
+    with col_action2:
+        if st.button("📊 Rapport freins hebdomadaire"):
+            st.info("📋 Génération rapport en cours...")
+    
+    with col_action3:
+        if st.button("⚠️ Escalade hiérarchique"):
+            st.warning("📈 Escalade programmée vers direction")
+
+def page_planning_echeances():
+    """Page de planning des échéances"""
+    st.markdown("### 📅 Planning des Échéances")
+    
+    # Échéances de la semaine
+    echeances_data = [
+        {
+            "Date": "Lundi 28/10",
+            "Opération": "COUR CHARNEAU",
+            "Échéance": "Réception provisoire",
+            "Type": "JALON",
+            "Priorité": "Haute"
+        },
+        {
+            "Date": "Mercredi 30/10", 
+            "Opération": "RÉSIDENCE SOLEIL",
+            "Échéance": "Validation DGD",
+            "Type": "VALIDATION",
+            "Priorité": "Moyenne"
+        },
+        {
+            "Date": "Vendredi 01/11",
+            "Opération": "MANDAT ÉCOLE",
+            "Échéance": "Remise livrables",
+            "Type": "LIVRABLE",
+            "Priorité": "Haute"
+        }
+    ]
+    
+    df_echeances = pd.DataFrame(echeances_data)
+    st.dataframe(df_echeances, use_container_width=True)
+    
+    # Calendrier de la semaine
+    st.markdown("#### 📆 Vue Calendaire")
+    
+    col_lun, col_mar, col_mer, col_jeu, col_ven = st.columns(5)
+    
+    with col_lun:
+        st.markdown("**Lundi 28**")
+        st.info("🏗️ Réception COUR CHARNEAU")
+    
+    with col_mar:
+        st.markdown("**Mardi 29**")
+        st.success("✅ Pas d'échéance")
+    
+    with col_mer:
+        st.markdown("**Mercredi 30**")
+        st.warning("📊 Validation DGD")
+    
+    with col_jeu:
+        st.markdown("**Jeudi 31**")
+        st.success("✅ Pas d'échéance")
+    
+    with col_ven:
+        st.markdown("**Vendredi 01**")
+        st.error("📋 Remise livrables")
+
+def page_portefeuille_aco():
+    """Portefeuille ACO avec liste des opérations"""
+    user_data = st.session_state.user_data
+    nom_aco = user_data.get('nom', 'ACO')
+    
+    st.markdown(f"### 📂 Mon Portefeuille - {nom_aco}")
+    
+    # Chargement données
+    demo_data = load_demo_data()
+    operations_data = demo_data.get('operations_demo', [])
+    
+    # Filtres
+    col_filter1, col_filter2, col_filter3, col_filter4 = st.columns(4)
+    
+    with col_filter1:
+        filtre_type = st.selectbox("Type Opération", ["Tous", "OPP", "VEFA", "MANDAT_ETUDES", "MANDAT_REALISATION", "AMO"])
+    
+    with col_filter2:
+        filtre_statut = st.selectbox("Statut", ["Tous", "EN_MONTAGE", "EN_COURS", "EN_RECEPTION", "CLOTUREE"])
+    
+    with col_filter3:
+        filtre_commune = st.selectbox("Commune", ["Toutes", "Les Abymes", "Pointe-à-Pitre", "Basse-Terre", "Sainte-Anne"])
+    
+    with col_filter4:
+        if st.button("➕ Nouvelle Opération", type="primary"):
+            st.session_state.page = "creation_operation"
+            st.rerun()
+    
+    # Application des filtres
+    operations_filtrees = operations_data
+    if filtre_type != "Tous":
+        operations_filtrees = [op for op in operations_filtrees if op['type_operation'] == filtre_type]
+    if filtre_statut != "Tous":
+        operations_filtrees = [op for op in operations_filtrees if op['statut'] == filtre_statut]
+    if filtre_commune != "Toutes":
+        operations_filtrees = [op for op in operations_filtrees if op['commune'] == filtre_commune]
+    
+    # Liste des opérations
+    st.markdown(f"#### 📋 Mes Opérations ({len(operations_filtrees)} affichées)")
+    
+    for op in operations_filtrees:
+        with st.container():
+            st.markdown(f"""
+            <div class="operation-card">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h4>🏗️ {op['nom']} - {op['type_operation']}</h4>
+                        <p><strong>📍 {op['commune']}</strong> • {op.get('nb_logements_total', 0)} logements • {op.get('budget_total', 0):,} €</p>
+                        <p><em>Créé le {op['date_creation']} • Fin prévue {op['date_fin_prevue']}</em></p>
+                    </div>
+                    <div style="text-align: right;">
+                        <p><strong>Avancement: {op['avancement']}%</strong></p>
+                        <p>Statut: <span style="color: {'#10B981' if op['statut'] == 'EN_COURS' else '#F59E0B'}">{op['statut']}</span></p>
+                        {f"<p style='color: #EF4444;'>⚠️ {op.get('freins_actifs', 0)} frein(s)</p>" if op.get('freins_actifs', 0) > 0 else ""}
+                    </div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            col_btn1, col_btn2, col_btn3 = st.columns([1, 1, 2])
+            
+            with col_btn1:
+                if st.button(f"📂 Ouvrir", key=f"open_{op['id']}"):
+                    st.session_state.selected_operation_id = op['id']
+                    st.session_state.selected_operation = op
+                    st.session_state.page = "operation_details"
+                    st.rerun()
+            
+            with col_btn2:
+                if st.button(f"📊 Timeline", key=f"timeline_{op['id']}"):
+                    st.session_state.selected_operation_id = op['id']
+                    st.session_state.selected_operation = op
+                    st.session_state.page = "operation_details"
+                    st.session_state.active_tab = "timeline"
+                    st.rerun()
+
+def page_operation_details(operation_id=None):
+    """Page détail opération avec timeline et modules intégrés"""
+    
+    # Récupération données utilisateur
+    user_data = st.session_state.user_data
+    nom_aco = user_data.get('nom', 'ACO')
+    
+    # Récupération de l'opération
+    if operation_id is None and 'selected_operation_id' in st.session_state:
+        operation_id = st.session_state.selected_operation_id
+    
+    if 'selected_operation' in st.session_state:
+        operation = st.session_state.selected_operation
+    else:
+        # Fallback avec données de démo
+        demo_data = load_demo_data()
+        operations_data = demo_data.get('operations_demo', [])
+        operation = operations_data[0] if operations_data else {}
+        operation_id = operation.get('id', 1)
+    
+    # En-tête opération
+    st.markdown(f"""
+    <div class="main-header">
+        <h1>🏗️ {operation.get('nom', 'Opération')} - {operation.get('type_operation', 'OPP')}</h1>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <p><strong>📍 {operation.get('commune', 'Commune')}</strong> • {operation.get('nb_logements_total', 0)} logements • ACO {nom_aco}</p>
+            </div>
+            <div>
+                <p><strong>Budget:</strong> {operation.get('budget_total', 0):,} € • <strong>Avancement:</strong> {operation.get('avancement', 0)}%</p>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Bouton retour
+    if st.button("← Retour au Portefeuille"):
+        st.session_state.page = "portefeuille"
+        st.rerun()
+    
+    # Onglets modules intégrés
+    tab_timeline, tab_rem, tab_avenants, tab_med, tab_concess, tab_dgd, tab_gpa, tab_cloture = st.tabs([
+        "📅 Timeline", "💰 REM", "📝 Avenants", "⚖️ MED", 
+        "🔌 Concess.", "📊 DGD", "🛡️ GPA", "✅ Clôture"
+    ])
+    
+    with tab_timeline:
+        st.markdown("### 📅 Timeline Horizontale - Gestion des Phases")
+        
+        # Chargement des phases
+        demo_data = load_demo_data()
+        phases_data = demo_data.get('phases_demo', {}).get(f'operation_{operation_id}', [])
+        
+        # Si pas de phases spécifiques, on charge un template selon le type
+        if not phases_data:
+            templates = load_templates_phases()
+            type_op = operation.get('type_operation', 'OPP')
+            template_phases = templates.get(type_op, {}).get('phases', [])
+            
+            # Conversion template en phases avec dates
+            phases_data = []
+            date_courante = datetime.now()
+            
+            for i, phase_template in enumerate(template_phases[:8]):  # Limite pour démo
+                debut = date_courante + timedelta(days=i*20)
+                fin = debut + timedelta(days=phase_template.get('duree_jours', 30))
+                
+                statuts_demo = ["VALIDEE", "EN_COURS", "EN_ATTENTE", "NON_DEMARREE"]
+                statut = statuts_demo[i % len(statuts_demo)]
+                
+                phases_data.append({
+                    "nom": phase_template['nom'],
+                    "date_debut_prevue": debut.isoformat(),
+                    "date_fin_prevue": fin.isoformat(),
+                    "statut": statut,
+                    "responsable": phase_template.get('responsable_type', 'ACO'),
+                    "est_critique": phase_template.get('est_critique', False)
+                })
+        
+        # Affichage timeline horizontale
+        if phases_data:
+            timeline_fig, config = create_timeline_horizontal(operation, phases_data)
+            if timeline_fig:
+                st.plotly_chart(timeline_fig, use_container_width=True, config=config)
+                
+                # Gestion des phases
+                st.markdown("#### 🔧 Gestion des Phases")
+                
+                col_phase1, col_phase2, col_phase3, col_phase4 = st.columns(4)
+                
+                with col_phase1:
+                    if st.button("➕ Ajouter Phase"):
+                        st.success("✅ Interface d'ajout de phase")
+                
+                with col_phase2:
+                    if st.button("✏️ Modifier Phase"):
+                        st.info("🔄 Mode modification activé")
+                
+                with col_phase3:
+                    if st.button("⚠️ Signaler Frein"):
+                        st.warning("🚨 Frein signalé sur phase sélectionnée")
+                
+                with col_phase4:
+                    if st.button("📊 Exporter Planning"):
+                        st.info("📁 Export Excel en cours...")
+        else:
+            st.warning("⚠️ Aucune phase définie pour cette opération")
+    
+    with tab_rem:
+        module_rem(operation_id)
+    
+    with tab_avenants:
+        module_avenants(operation_id)
+    
+    with tab_med:
+        module_med(operation_id)
+    
+    with tab_concess:
+        module_concessionnaires(operation_id)
+    
+    with tab_dgd:
+        module_dgd(operation_id)
+    
+    with tab_gpa:
+        module_gpa(operation_id)
+    
+    with tab_cloture:
+        module_cloture(operation_id)
+
+def page_creation_operation():
+    """Page de création nouvelle opération"""
+    user_data = st.session_state.user_data
+    nom_aco = user_data.get('nom', 'ACO')
+    
+    st.markdown("### ➕ Nouvelle Opération")
+    
+    # Chargement des templates
+    templates = load_templates_phases()
+    
+    with st.form("creation_operation"):
+        st.markdown("#### 📝 Informations Générales")
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            nom_operation = st.text_input("Nom Opération *", placeholder="Ex: RÉSIDENCE LES JARDINS")
+            type_operation = st.selectbox("Type Opération *", list(templates.keys()))
+            commune = st.selectbox("Commune *", [
+                "Les Abymes", "Pointe-à-Pitre", "Basse-Terre", 
+                "Sainte-Anne", "Le Gosier", "Petit-Bourg",
+                "Baie-Mahault", "Lamentin"
+            ])
+        
+        with col2:
+            aco_responsable = st.text_input("ACO Responsable", value=nom_aco)
+            adresse = st.text_area("Adresse")
+            parcelle = st.text_input("Parcelle Cadastrale")
+        
+        # Formulaire adaptatif selon le type
+        template_info = templates.get(type_operation, {})
+        st.markdown(f"#### 🏠 Spécifique {type_operation}")
+        st.info(f"📋 {template_info.get('description', '')} - {template_info.get('nb_phases', 0)} phases")
+        
+        if type_operation == "OPP":
+            col_opp1, col_opp2 = st.columns(2)
+            
+            with col_opp1:
+                nb_logements_total = st.number_input("Nombre Total Logements *", min_value=1, value=40)
+                nb_lls = st.number_input("LLS (Logements Locatifs Sociaux)", min_value=0, value=25)
+                nb_lts = st.number_input("LTS (Logements Très Sociaux)", min_value=0, value=10)
+                nb_pls = st.number_input("PLS (Prêt Locatif Social)", min_value=0, value=5)
+                type_logement = st.selectbox("Type", ["Collectif", "Individuel", "Mixte"])
+            
+            with col_opp2:
+                budget_total = st.number_input("Budget Total (€)", min_value=0, value=2000000)
+                rem_totale = st.number_input("REM Totale Prévue (€)", min_value=0, value=120000)
+                financement = st.multiselect("Financement", ["CDC", "Région", "DEAL", "Fonds Propres"])
+        
+        elif type_operation == "VEFA":
+            col_vefa1, col_vefa2 = st.columns(2)
+            
+            with col_vefa1:
+                promoteur_nom = st.text_input("Nom Promoteur *")
+                contact_promoteur = st.text_input("Contact Promoteur")
+                nom_programme = st.text_input("Nom Programme")
+            
+            with col_vefa2:
+                nb_logements_reserves = st.number_input("Logements Réservés *", min_value=1, value=20)
+                prix_total_reservation = st.number_input("Prix Total Réservation (€)", min_value=0, value=1500000)
+                garantie_financiere = st.number_input("Garantie Financière (€)", min_value=0, value=150000)
+        
+        # Dates prévisionnelles
+        st.markdown("#### 📅 Planning Prévisionnel")
+        
+        col_date1, col_date2 = st.columns(2)
+        
+        with col_date1:
+            date_debut = st.date_input("Date Début Prévue", value=datetime.now())
+        
+        with col_date2:
+            date_fin = st.date_input("Date Fin Prévue", value=datetime.now() + timedelta(days=730))
+        
+        # Validation
+        submitted = st.form_submit_button("🎯 Créer Opération & Générer Timeline", type="primary")
+        
+        if submitted:
+            if nom_operation and type_operation and commune:
+                # Génération automatique des phases selon le type
+                phases_template = template_info.get('phases', [])
+                
+                st.success(f"✅ Opération '{nom_operation}' créée avec succès!")
+                st.info(f"📋 {len(phases_template)} phases générées automatiquement selon le référentiel {type_operation}")
+                
+                # Simulation de sauvegarde
+                nouvelle_operation = {
+                    "id": 999,  # ID temporaire pour la démo
+                    "nom": nom_operation,
+                    "type_operation": type_operation,
+                    "commune": commune,
+                    "aco_responsable": aco_responsable,
+                    "budget_total": locals().get('budget_total', 0),
+                    "avancement": 0,
+                    "statut": "EN_MONTAGE",
+                    "date_creation": datetime.now().strftime("%Y-%m-%d"),
+                    "date_debut_prevue": date_debut.strftime("%Y-%m-%d"),
+                    "date_fin_prevue": date_fin.strftime("%Y-%m-%d")
+                }
+                
+                st.session_state.selected_operation = nouvelle_operation
+                st.session_state.selected_operation_id = 999
+                st.session_state.page = "operation_details"
+                
+                if st.button("📂 Ouvrir l'opération créée"):
+                    st.rerun()
+            else:
+                st.error("❌ Veuillez remplir tous les champs obligatoires (*)")
+
+# ==============================================================================
+# 5. APPLICATION PRINCIPALE AVEC AUTHENTIFICATION CORRIGÉE
+# ==============================================================================
+
+def main():
+    """Point d'entrée avec authentification et navigation moderne CORRIGÉE"""
+    
+    # Initialisation session state
+    init_session_state()
+    
+    # Vérification authentification
+    if not st.session_state.authenticated:
+        # Pages publiques (non authentifiées)
+        if st.session_state.get("page") == "reset_password":
+            page_reset_password()
+        else:
+            page_login()
+        return
+    
+    # Navigation authentifiée
+    user_data = st.session_state.user_data
+    nom_aco = user_data.get('nom', 'ACO')
+    role = user_data.get('role', 'ACO')
+    
+    # Sidebar navigation moderne
+    with st.sidebar:
+        # Header utilisateur
+        st.markdown(f"""
+        <div class="sidebar-header">
+            <h3>👤 {nom_aco}</h3>
+            <p>{role} - Chargé d'Opérations</p>
+            <small>🏢 SPIC Guadeloupe</small>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Navigation principale
+        st.markdown("### 🎯 Navigation Principale")
+        
+        nav_buttons = [
+            ("🏠 Dashboard", "dashboard"),
+            ("📂 Mon Portefeuille", "portefeuille"),
+            ("➕ Nouvelle Opération", "creation_operation"),
+        ]
+        
+        for label, page_key in nav_buttons:
+            is_current = st.session_state.page == page_key
+            button_type = "primary" if is_current else "secondary"
+            
+            if st.button(label, use_container_width=True, type=button_type, key=f"nav_{page_key}"):
+                st.session_state.page = page_key
+                st.rerun()
+        
+        st.markdown("---")
+        
+        # Pages spécialisées
+        st.markdown("### 📊 Analyses & Rapports")
+        
+        special_buttons = [
+            ("🚨 Gestion Freins", "gestion_freins"),
+            ("📅 Planning Échéances", "planning_echeances"),
+        ]
+        
+        for label, page_key in special_buttons:
+            if st.button(label, use_container_width=True, key=f"special_{page_key}"):
+                st.session_state.page = page_key
+                st.rerun()
+        
+        st.markdown("---")
+        
+        # Opérations courantes (raccourcis)
+        st.markdown("### 📋 Accès Rapide Opérations")
+        
+        demo_data = load_demo_data()
+        operations_demo = demo_data.get('operations_demo', [])
+        
+        for op in operations_demo[:4]:  # Limite à 4 pour la sidebar
+            progress_color = "🟢" if op['avancement'] > 80 else "🟡" if op['avancement'] > 50 else "🔴"
+            button_text = f"{progress_color} {op['nom']} ({op['avancement']}%)"
+            
+            if st.button(button_text, use_container_width=True, key=f"sidebar_{op['id']}"):
+                st.session_state.selected_operation = op
+                st.session_state.selected_operation_id = op['id']
+                st.session_state.page = "operation_details"
+                st.rerun()
+        
+        st.markdown("---")
+        
+        # Administration (si admin)
+        if role == "ADMIN":
+            st.markdown("### 🔧 Administration")
+            if st.button("⚙️ Panel Admin", use_container_width=True, key="admin_panel"):
+                st.session_state.page = "admin"
+                st.rerun()
+            st.markdown("---")
+        
+        # Informations système et déconnexion
+        st.markdown("### ℹ️ Système")
+        
+        # Statut données
+        if demo_data:
+            st.success("✅ Données chargées")
+        else:
+            st.error("❌ Erreur données")
+        
+        st.markdown("**OPCOPILOT v4.0**")
+        st.markdown("*SPIC Guadeloupe*")
+        st.markdown("*Architecture ACO-centrique*")
+        
+        # Bouton déconnexion
+        if st.button("🚪 Déconnexion", use_container_width=True, type="primary", key="logout_btn"):
+            logout()
+            st.rerun()
+    
+    # Routage des pages authentifiées
+    current_page = st.session_state.page
+    
+    if current_page == "dashboard":
+        page_dashboard()
+    elif current_page == "portefeuille":
+        page_portefeuille_aco()
+    elif current_page == "creation_operation":
+        page_creation_operation()
+    elif current_page == "operation_details":
+        page_operation_details()
+    elif current_page == "gestion_freins":
+        page_gestion_freins()
+    elif current_page == "planning_echeances":
+        page_planning_echeances()
+    elif current_page == "admin":
+        page_admin()
+    else:
+        # Page par défaut
+        page_dashboard()
+
+if __name__ == "__main__":
+    main()
