@@ -1585,9 +1585,9 @@ def page_dashboard():
         background-color: #F8FAFC !important;
     }
     
-    /* ACTIONS RÉALISÉES - Style vert (inchangé) */
+    /* ACTIONS RÉALISÉES - VERT FORCÉ (pas violet) */
     .stButton > button[data-testid="baseButton-primary"] {
-        background: linear-gradient(145deg, #D1FAE5, #A7F3D0) !important;
+        background: linear-gradient(145deg, #D1FAE5, #10B981) !important;
         border: none !important;
         border-left: 4px solid #10B981 !important;
         border-radius: 15px !important;
@@ -1595,10 +1595,8 @@ def page_dashboard():
         box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15) !important;
         transition: all 0.3s ease !important;
         width: 100% !important;
-        color: #047857 !important;
+        color: white !important;
         font-weight: 600 !important;
-        display: flex !important;
-        align-items: flex-start !important;
         text-align: left !important;
         white-space: pre-line !important;
     }
@@ -1672,7 +1670,7 @@ def page_dashboard():
     with col_alert2:
         st.markdown("#### Actions Réalisées Aujourd'hui")
         
-        # ACTION 1 - Card cliquable directe avec coche alignée
+        # ACTION 1 - Card verte avec coche alignée à gauche
         if st.button("✅   DGD validé - RÉSIDENCE SOLEIL\n      Décompte général définitif approuvé", 
                     key="action_dgd_soleil", 
                     use_container_width=True, 
@@ -1687,7 +1685,7 @@ def page_dashboard():
                 st.session_state.page = "operation_details"
                 st.rerun()
         
-        # ACTION 2 - Card cliquable directe avec coche alignée
+        # ACTION 2 - Card verte avec coche alignée à gauche
         if st.button("✅   Phase ESQ terminée - COUR CHARNEAU\n      Études esquisse validées par SPIC", 
                     key="action_esq_charneau", 
                     use_container_width=True, 
@@ -1702,21 +1700,21 @@ def page_dashboard():
                 st.session_state.page = "operation_details"
                 st.rerun()
         
-        # ACTION 3 - Card cliquable directe avec coche alignée
+        # ACTION 3 - Card verte avec coche alignée à gauche
         if st.button("✅   MED envoyé - MANDAT ÉCOLE\n      Mise en demeure promoteur envoyée", 
                     key="action_med_ecole", 
                     use_container_width=True, 
                     type="primary"):
             st.info("Navigation vers MANDAT ÉCOLE - Module en développement")
         
-        # ACTION 4 - Card cliquable directe avec coche alignée
+        # ACTION 4 - Card verte avec coche alignée à gauche
         if st.button("✅   REM T3 saisi - 3 opérations\n      Trimestre 3 validé et saisi", 
                     key="action_rem_t3", 
                     use_container_width=True, 
                     type="primary"):
             st.info("Navigation vers module REM - En développement")
         
-        # ACTION 5 - Card cliquable directe avec coche alignée
+        # ACTION 5 - Card verte avec coche alignée à gauche
         if st.button("✅   Timeline mise à jour - VEFA BELCOURT\n      Planning actualisé avec nouvelles échéances", 
                     key="action_timeline_belcourt", 
                     use_container_width=True, 
