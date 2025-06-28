@@ -96,6 +96,61 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# ---- AUTHENTIFICATION MULTI-ACO ----
+# Liste d'ACO démo (login/mdp)
+DEMO_ACO_USERS = {
+    "aco1": "password1",
+    "aco2": "password2",
+    "aco3": "password3"
+}
+
+def login_form():
+    st.markdown(
+        """
+        <div style="background-color:#23272F; padding:2em; border-radius:10px; box-shadow:0 0 10px #111;">
+            <h2 style="color:#E1E1E1;">Authentification ACO</h2>
+        </div>
+        """, unsafe_allow_html=True
+    )
+    login = st.text_input("Identifiant ACO", key="login_input")
+    pwd = st.text_input("Mot de passe", type="password", key="pwd_input")
+    login_btn = st.button("Se connecter", key="login_btn")
+    if login_btn:
+        if login in DEMO_ACO_USERS and DEMO_ACO_USERS[login] == pwd:
+            st.session_state["authenticated"] = True
+            st.session_state["aco_user"] = login
+            st.experimental_rerun()
+        else:
+            st.error("Identifiant ou mot de passe incorrect.")
+
+def logout():
+    if st.button("Se déconnecter", key="logout_btn"):
+        st.session_state["authenticated"] = False
+        st.session_state["aco_user"] = None
+        st.experimental_rerun()
+
+# Initialisation de l'état de session
+if "authenticated" not in st.session_state:
+    st.session_state["authenticated"] = False
+    st.session_state["aco_user"] = None
+
+if not st.session_state["authenticated"]:
+    st.markdown(
+        """
+        <style>
+        /* Centrage vertical et fond sombre */
+        .block-container { display: flex; align-items: center; justify-content: center; height: 100vh; background: #181C22; }
+        </style>
+        """, unsafe_allow_html=True
+    )
+    login_form()
+    st.stop()
+else:
+    # Affiche le bouton de déconnexion dans la barre latérale
+    with st.sidebar:
+        st.markdown(f"**ACO connecté :** {st.session_state['aco_user']}", unsafe_allow_html=True)
+        logout()
+
 # ==============================================================================
 # 1. CONFIGURATION & CHARGEMENT DONNÉES
 # ==============================================================================
