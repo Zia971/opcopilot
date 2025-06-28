@@ -1449,7 +1449,7 @@ def page_dashboard():
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
     }
     
-    /* CONTENU CENTRÉ */
+    /* CONTENU CENTRÉ DANS LES CARDS */
     .kpi-content {
         flex-grow: 1;
         display: flex;
@@ -1457,6 +1457,33 @@ def page_dashboard():
         justify-content: center;
         align-items: center;
         text-align: center;
+        color: white !important;
+    }
+    
+    /* GROS CHIFFRE BLANC */
+    .kpi-value {
+        font-size: 2.5rem !important;
+        font-weight: bold !important;
+        color: white !important;
+        margin: 0.5rem 0 !important;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* LABEL PRINCIPAL BLANC */
+    .kpi-label {
+        font-size: 1rem !important;
+        font-weight: 600 !important;
+        color: white !important;
+        margin-bottom: 0.25rem !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* DÉTAIL BLANC */
+    .kpi-detail {
+        font-size: 0.875rem !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+        margin-bottom: 1rem !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     }
     </style>
     """, unsafe_allow_html=True)
@@ -1471,9 +1498,9 @@ def page_dashboard():
         <div class="kpi-operations">
             <div class="kpi-content">
                 <div class="kpi-icon-operations"></div>
-                <div style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem;">{operations_actives}</div>
-                <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">Opérations Actives</div>
-                <div style="font-size: 1rem; opacity: 0.9;">{operations_cloturees} clôturées</div>
+                <div class="kpi-value">{operations_actives}</div>
+                <div class="kpi-label">Opérations Actives</div>
+                <div class="kpi-detail">{operations_cloturees} clôturées</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -1491,9 +1518,9 @@ def page_dashboard():
         <div class="kpi-rem">
             <div class="kpi-content">
                 <div class="kpi-icon-rem"></div>
-                <div style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem;">{rem_realise/1000:.0f}k€</div>
-                <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">REM Réalisée 2024</div>
-                <div style="font-size: 1rem; opacity: 0.9;">{taux_real}% / {rem_prevu/1000:.0f}k€ prévue</div>
+                <div class="kpi-value">{rem_realise/1000:.0f}k€</div>
+                <div class="kpi-label">REM Réalisée 2024</div>
+                <div class="kpi-detail">{taux_real}% / {rem_prevu/1000:.0f}k€ prévue</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -1509,9 +1536,9 @@ def page_dashboard():
         <div class="kpi-freins">
             <div class="kpi-content">
                 <div class="kpi-icon-freins"></div>
-                <div style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem;">{freins_actifs}</div>
-                <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">Freins Actifs</div>
-                <div style="font-size: 1rem; opacity: 0.9;">{freins_critiques} critiques</div>
+                <div class="kpi-value">{freins_actifs}</div>
+                <div class="kpi-label">Freins Actifs</div>
+                <div class="kpi-detail">{freins_critiques} critiques</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -1528,9 +1555,9 @@ def page_dashboard():
         <div class="kpi-echeances">
             <div class="kpi-content">
                 <div class="kpi-icon-echeances"></div>
-                <div style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem;">{echeances}</div>
-                <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">Échéances Semaine</div>
-                <div style="font-size: 1rem; opacity: 0.9;">{validations} validations requises</div>
+                <div class="kpi-value">{echeances}</div>
+                <div class="kpi-label">Échéances Semaine</div>
+                <div class="kpi-detail">{validations} validations requises</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
