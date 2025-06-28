@@ -1569,41 +1569,47 @@ def page_dashboard():
     # Alertes et actions MODERNISÉES ET SIMPLIFIÉES
     st.markdown("### 🚨 Alertes et Actions Prioritaires")
     
-    # CSS simplifié pour actions réalisées uniquement
+    # CSS pour cards cliquables simples
     st.markdown("""
     <style>
-    /* ACTIONS RÉALISÉES - Style vert (inchangé) */
+    /* BOUTONS ALERTES - Style card moderne */
+    .stButton > button[data-testid="baseButton-secondary"] {
+        background: linear-gradient(145deg, #FEF3C7, #FDE68A) !important;
+        border: none !important;
+        border-left: 4px solid #F59E0B !important;
+        border-radius: 15px !important;
+        padding: 1.25rem !important;
+        text-align: left !important;
+        box-shadow: 0 6px 20px rgba(245, 158, 11, 0.15) !important;
+        transition: all 0.3s ease !important;
+        width: 100% !important;
+        white-space: pre-line !important;
+        color: #92400E !important;
+    }
+    
+    .stButton > button[data-testid="baseButton-secondary"]:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 8px 30px rgba(245, 158, 11, 0.25) !important;
+    }
+    
+    /* BOUTONS ACTIONS - Style succès */
     .stButton > button[data-testid="baseButton-primary"] {
         background: linear-gradient(145deg, #D1FAE5, #A7F3D0) !important;
         border: none !important;
         border-left: 4px solid #10B981 !important;
         border-radius: 15px !important;
         padding: 1rem !important;
+        text-align: left !important;
         box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15) !important;
         transition: all 0.3s ease !important;
         width: 100% !important;
-        color: #047857 !important;
-        font-weight: 600 !important;
-        display: flex !important;
-        align-items: flex-start !important;
-        text-align: left !important;
         white-space: pre-line !important;
+        color: #047857 !important;
     }
     
     .stButton > button[data-testid="baseButton-primary"]:hover {
         transform: translateY(-2px) !important;
         box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25) !important;
-    }
-    
-    /* BOUTONS NAVIGATION ALERTES */
-    .stButton > button:not([data-testid="baseButton-primary"]) {
-        background: linear-gradient(145deg, #8B5CF6, #3B82F6) !important;
-        color: white !important;
-        border: none !important;
-        border-radius: 10px !important;
-        padding: 0.5rem 1rem !important;
-        font-weight: 600 !important;
-        margin-top: 0.5rem !important;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -1613,26 +1619,14 @@ def page_dashboard():
     with col_alert1:
         st.markdown("#### Alertes Critiques")
         
-        # ALERTE 1 - CRITIQUE ROUGE (HTML direct avec styles)
-        st.markdown("""
-        <div style="background: linear-gradient(145deg, #FEE2E2, #FECACA); 
-                    border-left: 4px solid #EF4444; 
-                    border-radius: 15px; 
-                    padding: 1.25rem; 
-                    margin: 0.75rem 0; 
-                    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.15); 
-                    cursor: pointer; 
-                    transition: all 0.3s ease;"
-             onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 30px rgba(239, 68, 68, 0.25)'"
-             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 6px 20px rgba(239, 68, 68, 0.15)'">
-            <div style="font-weight: 700; font-size: 1.1rem; color: #DC2626; margin-bottom: 0.5rem;">🏗️ COUR CHARNEAU</div>
-            <div style="color: #DC2626; margin: 0.5rem 0; font-size: 0.95rem;">Retard MOE 5 jours sur phase LBU</div>
-            <div style="color: #DC2626; font-style: italic; font-size: 0.9rem; opacity: 0.9;">Action: Relance urgente MOE</div>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        if st.button("🔍 Ouvrir COUR CHARNEAU", key="nav_cour_charneau", use_container_width=True):
-            # Navigation vers détail opération
+        # ALERTE 1 - Card cliquable directe (sans bouton séparé)
+        if st.button("""🏗️ COUR CHARNEAU
+Retard MOE 5 jours sur phase LBU
+Action: Relance urgente MOE""", 
+                    key="alert_cour_charneau", 
+                    use_container_width=True, 
+                    type="secondary"):
+            # Navigation directe vers opération
             demo_data = load_demo_data()
             operations_data = demo_data.get('operations_demo', [])
             cour_charneau = next((op for op in operations_data if "CHARNEAU" in op['nom']), None)
@@ -1642,26 +1636,14 @@ def page_dashboard():
                 st.session_state.page = "operation_details"
                 st.rerun()
         
-        # ALERTE 2 - ATTENTION JAUNE (HTML direct avec styles)
-        st.markdown("""
-        <div style="background: linear-gradient(145deg, #FEF3C7, #FDE68A); 
-                    border-left: 4px solid #F59E0B; 
-                    border-radius: 15px; 
-                    padding: 1.25rem; 
-                    margin: 0.75rem 0; 
-                    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.15); 
-                    cursor: pointer; 
-                    transition: all 0.3s ease;"
-             onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 30px rgba(245, 158, 11, 0.25)'"
-             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 6px 20px rgba(245, 158, 11, 0.15)'">
-            <div style="font-weight: 700; font-size: 1.1rem; color: #D97706; margin-bottom: 0.5rem;">🏠 VEFA BELCOURT</div>
-            <div style="color: #D97706; margin: 0.5rem 0; font-size: 0.95rem;">Validation promoteur en attente</div>
-            <div style="color: #D97706; font-style: italic; font-size: 0.9rem; opacity: 0.9;">Action: RDV programmé cette semaine</div>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        if st.button("🔍 Ouvrir VEFA BELCOURT", key="nav_vefa_belcourt", use_container_width=True):
-            # Navigation vers détail opération
+        # ALERTE 2 - Card cliquable directe
+        if st.button("""🏠 VEFA BELCOURT
+Validation promoteur en attente
+Action: RDV programmé cette semaine""", 
+                    key="alert_vefa_belcourt", 
+                    use_container_width=True, 
+                    type="secondary"):
+            # Navigation directe vers opération
             demo_data = load_demo_data()
             operations_data = demo_data.get('operations_demo', [])
             vefa_belcourt = next((op for op in operations_data if "BELCOURT" in op['nom']), None)
@@ -1671,26 +1653,14 @@ def page_dashboard():
                 st.session_state.page = "operation_details"
                 st.rerun()
         
-        # ALERTE 3 - INFORMATION BLEU CLAIR (HTML direct avec styles)
-        st.markdown("""
-        <div style="background: linear-gradient(145deg, #DBEAFE, #BFDBFE); 
-                    border-left: 4px solid #3B82F6; 
-                    border-radius: 15px; 
-                    padding: 1.25rem; 
-                    margin: 0.75rem 0; 
-                    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.15); 
-                    cursor: pointer; 
-                    transition: all 0.3s ease;"
-             onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 30px rgba(59, 130, 246, 0.25)'"
-             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 6px 20px rgba(59, 130, 246, 0.15)'">
-            <div style="font-weight: 700; font-size: 1.1rem; color: #2563EB; margin-bottom: 0.5rem;">🏗️ RÉSIDENCE SOLEIL</div>
-            <div style="color: #2563EB; margin: 0.5rem 0; font-size: 0.95rem;">Phase Travaux en cours - bon avancement</div>
-            <div style="color: #2563EB; font-style: italic; font-size: 0.9rem; opacity: 0.9;">Action: Suivi hebdomadaire maintenu</div>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        if st.button("🔍 Ouvrir RÉSIDENCE SOLEIL", key="nav_residence_soleil", use_container_width=True):
-            # Navigation vers détail opération
+        # ALERTE 3 - Card cliquable directe
+        if st.button("""🏗️ RÉSIDENCE SOLEIL
+Phase Travaux en cours - bon avancement
+Action: Suivi hebdomadaire maintenu""", 
+                    key="alert_residence_soleil", 
+                    use_container_width=True, 
+                    type="secondary"):
+            # Navigation directe vers opération
             demo_data = load_demo_data()
             operations_data = demo_data.get('operations_demo', [])
             residence_soleil = next((op for op in operations_data if "SOLEIL" in op['nom']), None)
@@ -1703,8 +1673,9 @@ def page_dashboard():
     with col_alert2:
         st.markdown("#### Actions Réalisées Aujourd'hui")
         
-        # ACTION 1 - Card cliquable directe avec coche alignée
-        if st.button("✅   DGD validé - RÉSIDENCE SOLEIL\n      Décompte général définitif approuvé", 
+        # ACTION 1 - Card cliquable directe
+        if st.button("""✅ DGD validé - RÉSIDENCE SOLEIL
+Décompte général définitif approuvé""", 
                     key="action_dgd_soleil", 
                     use_container_width=True, 
                     type="primary"):
@@ -1718,8 +1689,9 @@ def page_dashboard():
                 st.session_state.page = "operation_details"
                 st.rerun()
         
-        # ACTION 2 - Card cliquable directe avec coche alignée
-        if st.button("✅   Phase ESQ terminée - COUR CHARNEAU\n      Études esquisse validées par SPIC", 
+        # ACTION 2 - Card cliquable directe
+        if st.button("""✅ Phase ESQ terminée - COUR CHARNEAU
+Études esquisse validées par SPIC""", 
                     key="action_esq_charneau", 
                     use_container_width=True, 
                     type="primary"):
@@ -1733,22 +1705,25 @@ def page_dashboard():
                 st.session_state.page = "operation_details"
                 st.rerun()
         
-        # ACTION 3 - Card cliquable directe avec coche alignée
-        if st.button("✅   MED envoyé - MANDAT ÉCOLE\n      Mise en demeure promoteur envoyée", 
+        # ACTION 3 - Card cliquable directe
+        if st.button("""✅ MED envoyé - MANDAT ÉCOLE
+Mise en demeure promoteur envoyée""", 
                     key="action_med_ecole", 
                     use_container_width=True, 
                     type="primary"):
             st.info("Navigation vers MANDAT ÉCOLE - Module en développement")
         
-        # ACTION 4 - Card cliquable directe avec coche alignée
-        if st.button("✅   REM T3 saisi - 3 opérations\n      Trimestre 3 validé et saisi", 
+        # ACTION 4 - Card cliquable directe
+        if st.button("""✅ REM T3 saisi - 3 opérations
+Trimestre 3 validé et saisi""", 
                     key="action_rem_t3", 
                     use_container_width=True, 
                     type="primary"):
             st.info("Navigation vers module REM - En développement")
         
-        # ACTION 5 - Card cliquable directe avec coche alignée
-        if st.button("✅   Timeline mise à jour - VEFA BELCOURT\n      Planning actualisé avec nouvelles échéances", 
+        # ACTION 5 - Card cliquable directe
+        if st.button("""✅ Timeline mise à jour - VEFA BELCOURT
+Planning actualisé avec nouvelles échéances""", 
                     key="action_timeline_belcourt", 
                     use_container_width=True, 
                     type="primary"):
