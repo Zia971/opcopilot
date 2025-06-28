@@ -1,60 +1,4 @@
-/* HEADER PRINCIPAL AVEC DÉGRADÉ MODERNE */
-    .main-header {
-        background: var(--gradient-primary);
-        color: white;
-        padding: 2rem;
-        border-radius: 20px;
-        margin-bottom: 2rem;
-        box-shadow: 0 20px 60px rgba(168, 85, 247, 0.2);
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .main-header::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(255,255,255,0.1) 100%);
-        pointer-events: none;
-    }
-    
-    .main-header h1 {
-        margin: 0;
-        font-size: 2.5rem;
-        font-weight: 700;
-        font-family: 'Inter', sans-serif !important;
-        text-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        letter-spacing: -0.02em;
-        position: relative;
-        z-index: 1;
-        color: white !important;
-    }
-    
-    .main-header h2 {
-        margin: 0.5rem 0 0 0;
-        font-size: 1.5rem;
-        font-weight: 500;
-        font-family: 'Inter', sans-serif !important;
-        opacity: 0.9;
-        position: relative;
-        z-index: 1;
-        color: white !important;
-    }
-    
-    .main-header p {
-        margin: 0.5rem 0 0 0;
-        font-size: 1.1rem;
-        font-weight: 400;
-        font-family: 'Inter', sans-serif !important;
-        opacity: 0.8;
-        position: relative;
-        z-index: 1;
-        color: white !important;
-    }"""
+"""
 OPCOPILOT v4.0 - Application Streamlit complète avec authentification CORRIGÉE
 Gestion d'opérations immobilières pour ACO SPIC Guadeloupe
 Architecture ACO-centrique avec Timeline horizontale obligatoire
@@ -82,20 +26,13 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# CSS personnalisé pour interface MODERNE CLAIRE - DESIGN PROFESSIONNEL CORRIGÉ
+# CSS personnalisé pour interface MODERNE CLAIRE - APPLIQUÉ DÈS LE DÉBUT
 st.markdown("""
 <style>
-    /* DÉGRADÉ MODERNE VIOLET-BLEU-TURQUOISE-VERT - GLOBAL */
-    :root {
-        --gradient-primary: linear-gradient(135deg, #a855f7 0%, #3b82f6 25%, #06b6d4 50%, #10b981 100%);
-        --gradient-hover: linear-gradient(135deg, #9333ea 0%, #2563eb 25%, #0891b2 50%, #059669 100%);
-        --gradient-soft: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(59, 130, 246, 0.1) 25%, rgba(6, 182, 212, 0.1) 50%, rgba(16, 185, 129, 0.1) 100%);
-    }
-    
     /* THÈME CLAIR MODERNE - GLOBAL */
     .stApp {
         background-color: #F9FAFB !important;
-        font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     
     /* SUPPRESSION DU THÈME SOMBRE */
@@ -103,200 +40,42 @@ st.markdown("""
         background-color: #F9FAFB !important;
     }
     
-    /* SIDEBAR MODE SOMBRE COHÉRENT - LISIBILITÉ GARANTIE */
-    .css-1d391kg, .css-1lcbmhc, .css-1outpf7, .css-18e3th9, .css-hbf57o {
-        background-color: #1F2937 !important;
-        border-right: 1px solid #374151 !important;
-    }
-    
-    /* SIDEBAR - TOUT LE TEXTE EN BLANC VISIBLE */
-    .sidebar * {
-        color: #FFFFFF !important;
-    }
-    
-    .sidebar .stMarkdown h1, 
-    .sidebar .stMarkdown h2, 
-    .sidebar .stMarkdown h3, 
-    .sidebar .stMarkdown h4, 
-    .sidebar .stMarkdown p,
-    .sidebar .stMarkdown div,
-    .sidebar .stMarkdown span,
-    .sidebar .stMarkdown strong,
-    .sidebar .stMarkdown em {
-        color: #FFFFFF !important;
-        font-family: 'Inter', sans-serif !important;
-    }
-    
-    /* SIDEBAR NAVIGATION BUTTONS - STYLE UNIFORME DÉGRADÉ */
-    .sidebar .stButton > button {
-        background: linear-gradient(135deg, #a855f7 0%, #3b82f6 25%, #06b6d4 50%, #10b981 100%) !important;
-        color: white !important;
-        border: none !important;
-        font-family: 'Inter', sans-serif !important;
-        font-weight: 500 !important;
-        font-size: 0.9rem !important;
-        min-height: auto !important;
-        text-align: center !important;
-        margin-bottom: 0.5rem !important;
-        border-radius: 12px !important;
-        transition: all 0.3s ease !important;
-        padding: 0.75rem 1rem !important;
-        box-shadow: 0 4px 16px rgba(168, 85, 247, 0.25) !important;
-    }
-    
-    .sidebar .stButton > button:hover {
-        background: linear-gradient(135deg, #9333ea 0%, #2563eb 25%, #0891b2 50%, #059669 100%) !important;
-        transform: translateY(-2px) !important;
-        box-shadow: 0 6px 20px rgba(168, 85, 247, 0.35) !important;
-        color: white !important;
-    }
-    
-    /* SIDEBAR BUTTONS - AUCUNE EXCEPTION */
-    .sidebar .stButton > button[kind="primary"],
-    .sidebar .stButton > button[kind="secondary"] {
-        background: linear-gradient(135deg, #a855f7 0%, #3b82f6 25%, #06b6d4 50%, #10b981 100%) !important;
-        color: white !important;
-        border: none !important;
-        font-weight: 600 !important;
-    }
-    
-    .sidebar .stButton > button[kind="primary"]:hover,
-    .sidebar .stButton > button[kind="secondary"]:hover {
-        background: linear-gradient(135deg, #9333ea 0%, #2563eb 25%, #0891b2 50%, #059669 100%) !important;
-        color: white !important;
-    }
-    
-    /* DASHBOARD MAIN CONTENT - TEXTE NOIR VISIBLE */
-    .main .block-container * {
-        color: #1F2937 !important;
-        font-family: 'Inter', sans-serif !important;
-    }
-    
-    .main .block-container h1,
-    .main .block-container h2,
-    .main .block-container h3,
-    .main .block-container h4,
-    .main .block-container p,
-    .main .block-container div,
-    .main .block-container span,
-    .main .block-container strong,
-    .main .block-container em {
-        color: #1F2937 !important;
-    }
-    
-    /* CARTES KPI PARFAITEMENT LISIBLES */
-    .kpi-card, .kpi-card.primary, .kpi-card.success, .kpi-card.warning, .kpi-card.danger {
-        background: #FFFFFF !important;
-        color: #1F2937 !important;
-        border: 2px solid transparent !important;
-        border-image: linear-gradient(135deg, #a855f7, #3b82f6, #06b6d4, #10b981) 1 !important;
-        border-radius: 16px !important;
-        padding: 1.5rem !important;
-        text-align: center !important;
-        margin: 0.5rem !important;
-        box-shadow: 0 4px 20px rgba(168, 85, 247, 0.1) !important;
-        transition: all 0.3s ease !important;
-        cursor: pointer !important;
-        min-height: 120px !important;
-        font-family: 'Inter', sans-serif !important;
-    }
-    
-    .kpi-card:hover {
-        box-shadow: 0 12px 40px rgba(168, 85, 247, 0.2) !important;
-        transform: translateY(-4px) !important;
-        background: rgba(168, 85, 247, 0.02) !important;
-        color: #1F2937 !important;
-    }
-    
-    /* MÉTRIQUES STREAMLIT COHÉRENTES */
-    .metric-container,
-    .metric-container [data-testid="metric-container"] {
-        background: #FFFFFF !important;
-        color: #1F2937 !important;
-        border: 2px solid transparent !important;
-        border-image: linear-gradient(135deg, #a855f7, #10b981) 1 !important;
-        border-radius: 16px !important;
-        padding: 1.5rem !important;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
-        transition: all 0.3s ease !important;
-    }
-    
-    .metric-container:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 8px 32px rgba(168, 85, 247, 0.15) !important;
-        background: rgba(168, 85, 247, 0.02) !important;
-        color: #1F2937 !important;
-    }
-    
-    /* DATAFRAMES ET TABLEAUX LISIBLES */
-    .stDataFrame {
-        font-family: 'Inter', sans-serif !important;
-        color: #1F2937 !important;
-    }
-    
-    .stDataFrame table {
-        border: 2px solid transparent !important;
-        border-image: linear-gradient(135deg, #a855f7, #10b981) 1 !important;
-        border-radius: 16px !important;
-        overflow: hidden !important;
-        background: white !important;
-    }
-    
-    .stDataFrame th,
-    .stDataFrame td {
-        color: #1F2937 !important;
-        background: white !important;
-        font-family: 'Inter', sans-serif !important;
-    }
-    
-    .main-header::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(255,255,255,0.1) 100%);
-        pointer-events: none;
+    .main-header {
+        background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 12px;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 25px rgba(59, 130, 246, 0.2);
+        text-align: center;
     }
     
     .main-header h1 {
         margin: 0;
         font-size: 2.5rem;
         font-weight: 700;
-        font-family: 'Inter', sans-serif !important;
-        text-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        letter-spacing: -0.02em;
-        position: relative;
-        z-index: 1;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     
     .main-header h2 {
         margin: 0.5rem 0 0 0;
         font-size: 1.5rem;
-        font-weight: 500;
-        font-family: 'Inter', sans-serif !important;
+        font-weight: 400;
         opacity: 0.9;
-        position: relative;
-        z-index: 1;
     }
     
     .main-header p {
         margin: 0.5rem 0 0 0;
         font-size: 1.1rem;
-        font-weight: 400;
-        font-family: 'Inter', sans-serif !important;
         opacity: 0.8;
-        position: relative;
-        z-index: 1;
     }
     
     /* PAGE DE CONNEXION - MODE CLAIR FORCÉ */
     .login-container {
         background: white !important;
-        border-radius: 20px;
+        border-radius: 16px;
         padding: 3rem;
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
         border: 1px solid #E5E7EB;
         max-width: 450px;
         margin: 2rem auto;
@@ -307,20 +86,17 @@ st.markdown("""
         color: #1F2937 !important;
         font-size: 2.2rem;
         font-weight: 700;
-        font-family: 'Inter', sans-serif !important;
         margin-bottom: 1rem;
         background: linear-gradient(135deg, #3B82F6, #1E40AF);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        letter-spacing: -0.02em;
     }
     
     .login-subtitle {
         text-align: center;
         color: #6B7280 !important;
         font-size: 1rem;
-        font-family: 'Inter', sans-serif !important;
         margin-bottom: 2rem;
         font-weight: 400;
     }
@@ -329,743 +105,237 @@ st.markdown("""
     .stTextInput > div > div > input {
         background-color: #F9FAFB !important;
         border: 2px solid #E5E7EB !important;
-        border-radius: 12px !important;
+        border-radius: 8px !important;
         color: #1F2937 !important;
-        padding: 0.875rem !important;
+        padding: 0.75rem !important;
         font-size: 1rem !important;
-        font-family: 'Inter', sans-serif !important;
-        transition: all 0.2s ease !important;
     }
     
     .stTextInput > div > div > input:focus {
         border-color: #3B82F6 !important;
-        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1) !important;
-        background-color: white !important;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
     }
     
-    /* BOUTONS DASHBOARD MODERNES AVEC DÉGRADÉ */
+    /* BOUTONS MODE CLAIR */
     .stButton > button {
-        background: white !important;
-        color: #1F2937 !important;
-        border: 1px solid #E5E7EB !important;
-        border-radius: 16px !important;
-        padding: 1rem 1.5rem !important;
-        font-weight: 500 !important;
-        font-size: 0.95rem !important;
-        font-family: 'Inter', sans-serif !important;
-        transition: all 0.3s ease !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
-        min-height: 120px !important;
-        text-align: left !important;
-        line-height: 1.4 !important;
-        position: relative !important;
-        overflow: hidden !important;
-    }
-    
-    .stButton > button::before {
-        content: '' !important;
-        position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        bottom: 0 !important;
-        background: var(--gradient-soft) !important;
-        opacity: 0 !important;
-        transition: opacity 0.3s ease !important;
-        border-radius: 16px !important;
-    }
-    
-    .stButton > button:hover::before {
-        opacity: 1 !important;
+        background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%) !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 8px !important;
+        padding: 0.75rem 1.5rem !important;
+        font-weight: 600 !important;
+        font-size: 1rem !important;
+        transition: all 0.2s ease !important;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2) !important;
     }
     
     .stButton > button:hover {
-        transform: translateY(-3px) !important;
-        box-shadow: 0 12px 32px rgba(168, 85, 247, 0.15) !important;
-        border: 1px solid transparent !important;
-        border-image: var(--gradient-primary) 1 !important;
-        background: white !important;
-        color: #1F2937 !important;
-    }
-    
-    /* BOUTONS PRIMAIRES AVEC DÉGRADÉ COMPLET */
-    .stButton > button[kind="primary"] {
-        background: var(--gradient-primary) !important;
-        color: white !important;
-        border: none !important;
-        font-weight: 600 !important;
-        min-height: auto !important;
-        box-shadow: 0 8px 32px rgba(168, 85, 247, 0.3) !important;
-        position: relative !important;
-        overflow: hidden !important;
-    }
-    
-    .stButton > button[kind="primary"]::before {
-        content: '' !important;
-        position: absolute !important;
-        top: 0 !important;
-        left: -100% !important;
-        width: 100% !important;
-        height: 100% !important;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent) !important;
-        transition: left 0.5s !important;
-    }
-    
-    .stButton > button[kind="primary"]:hover {
-        background: var(--gradient-hover) !important;
         transform: translateY(-2px) !important;
-        box-shadow: 0 12px 40px rgba(168, 85, 247, 0.4) !important;
-        border-image: none !important;
+        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3) !important;
     }
     
-    .stButton > button[kind="primary"]:hover::before {
-        left: 100% !important;
-    }
-    
-    /* BOUTONS SECONDAIRES AVEC ACCENT DÉGRADÉ */
+    /* BOUTONS SECONDAIRES */
     .stButton > button[kind="secondary"] {
         background: white !important;
-        color: #a855f7 !important;
-        border: 2px solid transparent !important;
-        border-image: var(--gradient-primary) 1 !important;
-        min-height: auto !important;
-        font-weight: 500 !important;
-        position: relative !important;
-    }
-    
-    .stButton > button[kind="secondary"]:hover {
-        background: var(--gradient-soft) !important;
-        color: #7c3aed !important;
-        transform: translateY(-1px) !important;
-        box-shadow: 0 8px 25px rgba(168, 85, 247, 0.2) !important;
-    }
-    
-    /* CARTES OPÉRATIONS */
-    .operation-card {
-        background: white !important;
-        border: 1px solid #E5E7EB !important;
-        border-radius: 16px !important;
-        padding: 1.5rem !important;
-        margin: 1rem 0 !important;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
-        transition: all 0.3s ease !important;
-        font-family: 'Inter', sans-serif !important;
-    }
-    
-    .operation-card:hover {
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
-        transform: translateY(-2px) !important;
-        border-color: #3B82F6 !important;
-    }
-    
-    .operation-card h4 {
-        color: #1F2937 !important;
-        font-family: 'Inter', sans-serif !important;
-        font-weight: 600 !important;
-        font-size: 1.2rem !important;
-        margin-bottom: 0.5rem !important;
-    }
-    
-    .operation-card p {
-        color: #6B7280 !important;
-        font-family: 'Inter', sans-serif !important;
-        font-size: 0.95rem !important;
-    }
-    
-    /* CARTES KPI LISIBLES - FOND BLANC OBLIGATOIRE */
-    .kpi-card, .kpi-card.primary, .kpi-card.success, .kpi-card.warning, .kpi-card.danger {
-        background: white !important;
-        color: #1F2937 !important;
-        border: 1px solid #E5E7EB !important;
-        border-radius: 16px !important;
-        padding: 1.5rem !important;
-        text-align: center !important;
-        margin: 0.5rem !important;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
-        transition: all 0.3s ease !important;
-        cursor: pointer !important;
-        min-height: 120px !important;
-        font-family: 'Inter', sans-serif !important;
-    }
-    
-    .kpi-card:hover {
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
-        transform: translateY(-3px) !important;
-        border-color: #3B82F6 !important;
-    }
-    
-    /* TYPOGRAPHY MODERNE HIÉRARCHISÉE */
-    .kpi-value {
-        font-size: 2rem !important;
-        font-weight: 700 !important;
-        color: #1F2937 !important;
-        font-family: 'Inter', sans-serif !important;
-        line-height: 1.2 !important;
-        margin-bottom: 0.25rem !important;
-    }
-    
-    .kpi-label {
-        font-size: 0.875rem !important;
-        font-weight: 500 !important;
-        color: #6B7280 !important;
-        font-family: 'Inter', sans-serif !important;
-        text-transform: uppercase !important;
-        letter-spacing: 0.05em !important;
-    }
-    
-    .kpi-subtitle {
-        font-size: 0.8rem !important;
-        font-weight: 400 !important;
-        color: #9CA3AF !important;
-        font-family: 'Inter', sans-serif !important;
-        margin-top: 0.25rem !important;
-    }
-    
-    .timeline-container {
-        background: white !important;
-        border-radius: 20px !important;
-        padding: 2rem !important;
-        margin: 1rem 0 !important;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
-        border: 1px solid #E5E7EB !important;
-        font-family: 'Inter', sans-serif !important;
-        position: relative !important;
-    }
-    
-    .timeline-container::before {
-        content: '' !important;
-        position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        height: 4px !important;
-        background: var(--gradient-primary) !important;
-        border-radius: 20px 20px 0 0 !important;
-    }
-    
-    .module-tab {
-        background: white !important;
-        border: 1px solid #E5E7EB !important;
-        border-radius: 16px !important;
-        padding: 1.5rem !important;
-        margin: 0.5rem !important;
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05) !important;
-        font-family: 'Inter', sans-serif !important;
-        position: relative !important;
-        overflow: hidden !important;
-    }
-    
-    .module-tab::before {
-        content: '' !important;
-        position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 4px !important;
-        height: 100% !important;
-        background: var(--gradient-primary) !important;
-    }
-    
-    .alert-critical { 
-        background: linear-gradient(135deg, #FEF2F2, #FEE2E2) !important; 
-        border-left: 4px solid #EF4444 !important; 
-        padding: 1rem !important;
-        margin: 0.5rem 0 !important;
-        border-radius: 16px !important;
-        border: 1px solid #FECACA !important;
-        font-family: 'Inter', sans-serif !important;
-        color: #B91C1C !important;
-        font-weight: 500 !important;
-        box-shadow: 0 4px 16px rgba(239, 68, 68, 0.1) !important;
-    }
-    
-    .alert-warning { 
-        background: linear-gradient(135deg, #FFFBEB, #FEF3C7) !important; 
-        border-left: 4px solid #F59E0B !important; 
-        padding: 1rem !important;
-        margin: 0.5rem 0 !important;
-        border-radius: 16px !important;
-        border: 1px solid #FED7AA !important;
-        font-family: 'Inter', sans-serif !important;
-        color: #D97706 !important;
-        font-weight: 500 !important;
-        box-shadow: 0 4px 16px rgba(245, 158, 11, 0.1) !important;
-    }
-    
-    .alert-info { 
-        background: var(--gradient-soft) !important; 
-        border-left: 4px solid #a855f7 !important; 
-        padding: 1rem !important;
-        margin: 0.5rem 0 !important;
-        border-radius: 16px !important;
-        border: 1px solid rgba(168, 85, 247, 0.2) !important;
-        font-family: 'Inter', sans-serif !important;
-        color: #7c3aed !important;
-        font-weight: 500 !important;
-        box-shadow: 0 4px 16px rgba(168, 85, 247, 0.1) !important;
-    }
-    
-    .metric-card {
-        background: white !important;
-        border: 1px solid #E5E7EB !important;
-        border-radius: 16px !important;
-        padding: 1.5rem !important;
-        text-align: center !important;
-        margin: 0.5rem !important;
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05) !important;
-        font-family: 'Inter', sans-serif !important;
-        transition: all 0.3s ease !important;
-        position: relative !important;
-    }
-    
-    .metric-card:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 8px 32px rgba(168, 85, 247, 0.1) !important;
-        border-color: rgba(168, 85, 247, 0.3) !important;
-    }
-    
-    /* SIDEBAR MODERNE COHÉRENTE AVEC DÉGRADÉ */
-    .sidebar-header {
-        background: var(--gradient-primary) !important;
-        color: white !important;
-        padding: 1.5rem !important;
-        border-radius: 16px !important;
-        margin-bottom: 1.5rem !important;
-        text-align: center !important;
-        font-family: 'Inter', sans-serif !important;
-        box-shadow: 0 8px 32px rgba(168, 85, 247, 0.25) !important;
-        position: relative !important;
-        overflow: hidden !important;
-    }
-    
-    .sidebar-header::before {
-        content: '' !important;
-        position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        bottom: 0 !important;
-        background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(255,255,255,0.1) 100%) !important;
-        pointer-events: none !important;
-    }
-    
-    .sidebar-header h3 {
-        font-size: 1.25rem !important;
-        font-weight: 600 !important;
-        margin: 0 !important;
-        position: relative !important;
-        z-index: 1 !important;
-    }
-    
-    .sidebar-header p {
-        font-size: 0.875rem !important;
-        margin: 0.25rem 0 0 0 !important;
-        opacity: 0.9 !important;
-        position: relative !important;
-        z-index: 1 !important;
-    }
-    
-    /* SIDEBAR NAVIGATION BUTTONS AVEC ACCENT DÉGRADÉ */
-    .sidebar .stButton > button {
-        background: white !important;
-        color: #374151 !important;
-        border: 1px solid #E5E7EB !important;
-        font-family: 'Inter', sans-serif !important;
-        font-weight: 500 !important;
-        min-height: auto !important;
-        text-align: center !important;
-        margin-bottom: 0.5rem !important;
-        border-radius: 12px !important;
-        transition: all 0.3s ease !important;
-        position: relative !important;
-        overflow: hidden !important;
-    }
-    
-    .sidebar .stButton > button::before {
-        content: '' !important;
-        position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 4px !important;
-        height: 100% !important;
-        background: var(--gradient-primary) !important;
-        opacity: 0 !important;
-        transition: opacity 0.3s ease !important;
-    }
-    
-    .sidebar .stButton > button:hover {
-        background: var(--gradient-soft) !important;
-        border-color: transparent !important;
-        color: #7c3aed !important;
-        transform: translateX(4px) !important;
-    }
-    
-    .sidebar .stButton > button:hover::before {
-        opacity: 1 !important;
-    }
-    
-    .sidebar .stButton > button[kind="primary"] {
-        background: var(--gradient-primary) !important;
-        color: white !important;
-        border-color: transparent !important;
-        font-weight: 600 !important;
-        box-shadow: 0 4px 16px rgba(168, 85, 247, 0.25) !important;
-    }
-    
-    .sidebar .stButton > button[kind="primary"]:hover {
-        background: var(--gradient-hover) !important;
-        transform: translateX(2px) translateY(-1px) !important;
-        box-shadow: 0 6px 20px rgba(168, 85, 247, 0.35) !important;
-    }
-    
-    /* MESSAGES SYSTÈME MODERNES */
-    .success-message {
-        background: #F0FDF4 !important;
-        border: 1px solid #BBF7D0 !important;
-        color: #166534 !important;
-        padding: 1rem !important;
-        border-radius: 12px !important;
-        margin: 1rem 0 !important;
-        font-weight: 500 !important;
-        font-family: 'Inter', sans-serif !important;
-    }
-    
-    .error-message {
-        background: #FEF2F2 !important;
-        border: 1px solid #FECACA !important;
-        color: #DC2626 !important;
-        padding: 1rem !important;
-        border-radius: 12px !important;
-        margin: 1rem 0 !important;
-        font-weight: 500 !important;
-        font-family: 'Inter', sans-serif !important;
-    }
-    
-    /* COMPTES DEMO MODERNES */
-    .demo-accounts {
-        background: #F8FAFC !important;
-        border: 1px solid #E2E8F0 !important;
-        border-radius: 16px !important;
-        padding: 2rem !important;
-        margin: 2rem 0 !important;
-        font-family: 'Inter', sans-serif !important;
-    }
-    
-    .demo-account-card {
-        background: white !important;
-        border: 1px solid #E5E7EB !important;
-        border-radius: 12px !important;
-        padding: 1.5rem !important;
-        margin: 0.5rem !important;
-        text-align: center !important;
-        font-size: 0.875rem !important;
-        font-family: 'Inter', sans-serif !important;
-        color: #374151 !important;
-        transition: all 0.2s ease !important;
-    }
-    
-    .demo-account-card:hover {
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
-        transform: translateY(-1px) !important;
-        border-color: #3B82F6 !important;
-    }
-    
-    /* LABELS ET TEXTES GLOBAUX */
-    .stMarkdown p, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, .stMarkdown h4 {
-        color: #1F2937 !important;
-        font-family: 'Inter', sans-serif !important;
-    }
-    
-    .stMarkdown h3 {
-        font-weight: 600 !important;
-        font-size: 1.25rem !important;
-        margin-bottom: 1rem !important;
-    }
-    
-    .stMarkdown h4 {
-        font-weight: 500 !important;
-        font-size: 1.125rem !important;
-        margin-bottom: 0.75rem !important;
-    }
-    
-    /* SIDEBAR NAVIGATION BUTTONS */
-    .sidebar .stButton > button {
-        background: white !important;
-        color: #374151 !important;
-        border: 1px solid #E5E7EB !important;
-        font-family: 'Inter', sans-serif !important;
-        font-weight: 500 !important;
-        min-height: auto !important;
-        text-align: center !important;
-        margin-bottom: 0.5rem !important;
-    }
-    
-    .sidebar .stButton > button:hover {
-        background: #F3F4F6 !important;
-        border-color: #3B82F6 !important;
         color: #3B82F6 !important;
-    }
-    
-    .sidebar .stButton > button[kind="primary"] {
-        background: #3B82F6 !important;
-        color: white !important;
-        border-color: #3B82F6 !important;
-    }
-    
-    /* DATAFRAMES ET TABLEAUX */
-    .stDataFrame {
-        font-family: 'Inter', sans-serif !important;
-    }
-    
-    .stDataFrame table {
-        border: 1px solid #E5E7EB !important;
-        border-radius: 12px !important;
-        overflow: hidden !important;
-    }
-    
-    /* MESSAGES SYSTÈME PARFAITEMENT LISIBLES */
-    .stSuccess {
-        background: linear-gradient(135deg, #F0FDF4, #DCFCE7) !important;
-        border: 2px solid #10b981 !important;
-        color: #065F46 !important;
-        border-radius: 16px !important;
-        font-family: 'Inter', sans-serif !important;
-        font-weight: 500 !important;
-        padding: 1rem !important;
-    }
-    
-    .stError {
-        background: linear-gradient(135deg, #FEF2F2, #FEE2E2) !important;
-        border: 2px solid #EF4444 !important;
-        color: #B91C1C !important;
-        border-radius: 16px !important;
-        font-family: 'Inter', sans-serif !important;
-        font-weight: 500 !important;
-        padding: 1rem !important;
-    }
-    
-    .stWarning {
-        background: linear-gradient(135deg, #FFFBEB, #FEF3C7) !important;
-        border: 2px solid #F59E0B !important;
-        color: #B45309 !important;
-        border-radius: 16px !important;
-        font-family: 'Inter', sans-serif !important;
-        font-weight: 500 !important;
-        padding: 1rem !important;
-    }
-    
-    .stInfo {
-        background: var(--gradient-soft) !important;
-        border: 2px solid #a855f7 !important;
-        color: #7c3aed !important;
-        border-radius: 16px !important;
-        font-family: 'Inter', sans-serif !important;
-        font-weight: 500 !important;
-        padding: 1rem !important;
-    }
-    
-    /* CORRECTION GLOBALE - AUCUN TEXTE INVISIBLE */
-    .stApp [data-testid="stSidebar"] * {
-        color: #FFFFFF !important;
-    }
-    
-    .stApp .main * {
-        color: #1F2937 !important;
-    }
-    
-    .stApp .main .main-header * {
-        color: white !important;
-    }
-    
-    /* BOUTONS UNIFORMES - STYLE DÉCONNEXION POUR TOUS */
-    .stButton > button:not(.sidebar .stButton > button) {
-        background: white !important;
-        color: #1F2937 !important;
-        border: 1px solid #E5E7EB !important;
-        border-radius: 16px !important;
-        font-family: 'Inter', sans-serif !important;
-        font-weight: 500 !important;
-        transition: all 0.3s ease !important;
+        border: 2px solid #3B82F6 !important;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
     }
     
-    .stButton > button:not(.sidebar .stButton > button):hover {
-        background: var(--gradient-soft) !important;
-        color: #1F2937 !important;
-        border-color: rgba(168, 85, 247, 0.3) !important;
-        transform: translateY(-2px) !important;
-        box-shadow: 0 8px 25px rgba(168, 85, 247, 0.15) !important;
+    .stButton > button[kind="secondary"]:hover {
+        background: #3B82F6 !important;
+        color: white !important;
     }
     
-    /* TABS STREAMLIT AVEC DÉGRADÉ COHÉRENT */
-    .stTabs [data-baseweb="tab-list"] {
+    .operation-card {
+        background: white;
+        border: 1px solid #E5E7EB;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin: 1rem 0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+    }
+    
+    .operation-card:hover {
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+    }
+    
+    .kpi-card {
+        background: white;
+        border: 1px solid #E5E7EB;
+        border-radius: 12px;
+        padding: 2rem;
+        text-align: center;
+        margin: 0.5rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .kpi-card:hover {
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+    }
+    
+    .kpi-card.primary {
+        background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);
+        color: white;
+    }
+    
+    .kpi-card.success {
+        background: linear-gradient(135deg, #10B981 0%, #047857 100%);
+        color: white;
+    }
+    
+    .kpi-card.warning {
+        background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+        color: white;
+    }
+    
+    .kpi-card.danger {
+        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+        color: white;
+    }
+    
+    .timeline-container {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        margin: 1rem 0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        border: 1px solid #E5E7EB;
+    }
+    
+    .module-tab {
+        background: white;
+        border: 1px solid #E5E7EB;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 0.5rem;
+        border-left: 4px solid #3B82F6;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    
+    .alert-critical { 
+        background: #FEF2F2; 
+        border-left: 4px solid #EF4444; 
+        padding: 1rem;
+        margin: 0.5rem 0;
+        border-radius: 8px;
+        border: 1px solid #FECACA;
+    }
+    
+    .alert-warning { 
+        background: #FFFBEB; 
+        border-left: 4px solid #F59E0B; 
+        padding: 1rem;
+        margin: 0.5rem 0;
+        border-radius: 8px;
+        border: 1px solid #FED7AA;
+    }
+    
+    .alert-info { 
+        background: #EFF6FF; 
+        border-left: 4px solid #3B82F6; 
+        padding: 1rem;
+        margin: 0.5rem 0;
+        border-radius: 8px;
+        border: 1px solid #BFDBFE;
+    }
+    
+    .metric-card {
+        background: white;
+        border: 1px solid #E5E7EB;
+        border-radius: 8px;
+        padding: 1.5rem;
+        text-align: center;
+        margin: 0.5rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    
+    .sidebar-header {
+        background: linear-gradient(135deg, #1F2937 0%, #111827 100%);
+        color: white;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+    
+    .success-message {
+        background: #F0FDF4;
+        border: 1px solid #BBF7D0;
+        color: #166534;
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+        font-weight: 500;
+    }
+    
+    .error-message {
+        background: #FEF2F2;
+        border: 1px solid #FECACA;
+        color: #DC2626;
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+        font-weight: 500;
+    }
+    
+    /* COMPTES DEMO */
+    .demo-accounts {
+        background: #F8FAFC;
+        border: 1px solid #E2E8F0;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+    }
+    
+    .demo-account-card {
+        background: white;
+        border: 1px solid #E5E7EB;
+        border-radius: 8px;
+        padding: 1rem;
+        margin: 0.5rem;
+        text-align: center;
+        font-size: 0.9rem;
+    }
+    
+    /* LABELS ET TEXTES */
+    .stMarkdown p, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
+        color: #1F2937 !important;
+    }
+    
+    /* SIDEBAR MODE CLAIR */
+    .css-1d391kg {
         background-color: #F8FAFC !important;
-        border-radius: 16px !important;
-        padding: 0.5rem !important;
-        border: 1px solid #E5E7EB !important;
     }
     
-    .stTabs [data-baseweb="tab"] {
-        color: #6B7280 !important;
-        font-family: 'Inter', sans-serif !important;
-        font-weight: 500 !important;
-        border-radius: 12px !important;
-        padding: 0.75rem 1.5rem !important;
-        transition: all 0.3s ease !important;
+    /* MESSAGES STREAMLIT */
+    .stSuccess {
+        background-color: #F0FDF4 !important;
+        border: 1px solid #BBF7D0 !important;
+        color: #166534 !important;
     }
     
-    .stTabs [aria-selected="true"] {
-        background: var(--gradient-primary) !important;
-        color: white !important;
-        box-shadow: 0 4px 16px rgba(168, 85, 247, 0.2) !important;
-        font-weight: 600 !important;
+    .stError {
+        background-color: #FEF2F2 !important;
+        border: 1px solid #FECACA !important;
+        color: #DC2626 !important;
     }
     
-    .stTabs [data-baseweb="tab"]:hover:not([aria-selected="true"]) {
-        background: var(--gradient-soft) !important;
-        color: #7c3aed !important;
+    .stWarning {
+        background-color: #FFFBEB !important;
+        border: 1px solid #FED7AA !important;
+        color: #D97706 !important;
     }
     
-    /* FORMULAIRES AVEC ACCENTS DÉGRADÉS */
-    .stSelectbox > div > div {
-        border-radius: 12px !important;
-        border: 1px solid #E5E7EB !important;
-        font-family: 'Inter', sans-serif !important;
-    }
-    
-    .stSelectbox > div > div:focus-within {
-        border: 2px solid transparent !important;
-        border-image: var(--gradient-primary) 1 !important;
-        box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.1) !important;
-    }
-    
-    /* PROGRESS BARS AVEC DÉGRADÉ */
-    .stProgress .stProgress-bar {
-        background: var(--gradient-primary) !important;
-        border-radius: 8px !important;
-    }
-    
-    /* EXPANDEURS AVEC ACCENTS */
-    .streamlit-expanderHeader {
-        background: var(--gradient-soft) !important;
-        border-radius: 12px !important;
-        border: 1px solid rgba(168, 85, 247, 0.2) !important;
-        font-family: 'Inter', sans-serif !important;
-        font-weight: 500 !important;
-    }
-    
-    /* MÉTRIQUES STREAMLIT MODERNES */
-    .metric-container [data-testid="metric-container"] {
-        background: white !important;
-        border: 1px solid #E5E7EB !important;
-        border-radius: 16px !important;
-        padding: 1.5rem !important;
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05) !important;
-        transition: all 0.3s ease !important;
-    }
-    
-    .metric-container [data-testid="metric-container"]:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 8px 32px rgba(168, 85, 247, 0.1) !important;
-        border-color: rgba(168, 85, 247, 0.3) !important;
-    }
-    
-    /* SCROLLBARS AVEC ACCENTS DÉGRADÉ */
-    ::-webkit-scrollbar {
-        width: 8px !important;
-        height: 8px !important;
-    }
-    
-    ::-webkit-scrollbar-track {
-        background: #F1F5F9 !important;
-        border-radius: 4px !important;
-    }
-    
-    ::-webkit-scrollbar-thumb {
-        background: var(--gradient-primary) !important;
-        border-radius: 4px !important;
-    }
-    
-    ::-webkit-scrollbar-thumb:hover {
-        background: var(--gradient-hover) !important;
-    }
-    
-    /* ANIMATIONS GLOBALES MODERNES */
-    @keyframes gradient-animation {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-    
-    .animated-gradient {
-        background: var(--gradient-primary) !important;
-        background-size: 200% 200% !important;
-        animation: gradient-animation 3s ease infinite !important;
-    }
-    
-    /* CORRECTION FINALE - LISIBILITÉ GARANTIE À 100% */
-    
-    /* Sidebar - Fond sombre, texte blanc TOUJOURS */
-    .css-1d391kg *, 
-    .css-1lcbmhc *, 
-    .css-1outpf7 *,
-    .css-18e3th9 *,
-    .css-hbf57o *,
-    [data-testid="stSidebar"] *,
-    .sidebar * {
-        color: #FFFFFF !important;
-        background-color: transparent !important;
-    }
-    
-    /* Dashboard main content - Fond clair, texte sombre TOUJOURS */
-    .main *:not(.main-header *):not(.sidebar *) {
-        color: #1F2937 !important;
-    }
-    
-    .main .block-container *:not(.main-header *) {
-        color: #1F2937 !important;
-    }
-    
-    /* Exception pour header qui reste blanc sur dégradé */
-    .main-header,
-    .main-header *,
-    .main-header h1,
-    .main-header h2,
-    .main-header p {
-        color: white !important;
-    }
-    
-    /* Labels et inputs - Lisibilité parfaite */
-    .stTextInput label,
-    .stSelectbox label,
-    .stNumberInput label,
-    .stTextArea label {
-        color: #1F2937 !important;
-        font-family: 'Inter', sans-serif !important;
-        font-weight: 500 !important;
-    }
-    
-    /* Checkbox et radio - Texte visible */
-    .stCheckbox label,
-    .stRadio label {
-        color: #1F2937 !important;
-        font-family: 'Inter', sans-serif !important;
-    }
-    
-    /* RESPONSIVE ADJUSTMENTS */
-    @media (max-width: 768px) {
-        .main-header h1 {
-            font-size: 2rem !important;
-        }
-        
-        .main-header {
-            padding: 1.5rem !important;
-            border-radius: 16px !important;
-        }
-        
-        .login-container {
-            padding: 2rem !important;
-            border-radius: 16px !important;
-        }
+    .stInfo {
+        background-color: #EFF6FF !important;
+        border: 1px solid #BFDBFE !important;
+        color: #1E40AF !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -1160,155 +430,67 @@ def logout():
 # ==============================================================================
 
 def page_login():
-    """Page de connexion moderne PREMIUM - Design professionnel"""
+    """Page de connexion moderne CORRIGÉE - Mode clair"""
     
-    # Header moderne avec dégradé subtil
+    # En-tête moderne
     st.markdown("""
-    <div style="
-        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #a8edea 100%);
-        color: white;
-        padding: 3rem 2rem;
-        border-radius: 20px;
-        margin-bottom: 3rem;
-        text-align: center;
-        box-shadow: 0 20px 60px rgba(79, 172, 254, 0.2);
-    ">
-        <h1 style="
-            margin: 0;
-            font-size: 3rem;
-            font-weight: 800;
-            font-family: 'Inter', sans-serif;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            letter-spacing: -0.02em;
-        ">OPCOPILOT</h1>
-        <p style="
-            margin: 1rem 0 0 0;
-            font-size: 1.25rem;
-            font-weight: 400;
-            font-family: 'Inter', sans-serif;
-            opacity: 0.9;
-            letter-spacing: 0.02em;
-        ">Tableau de Bord Opérationnel</p>
+    <div class="main-header">
+        <h1>🏗️ OPCOPILOT v4.0</h1>
+        <h2>Tableau de Bord Opérationnel</h2>
+        <p>SPIC Guadeloupe - Interface de Gestion d'Opérations Immobilières</p>
     </div>
     """, unsafe_allow_html=True)
     
-    # Container principal centré - Design premium
+    # Container principal centré
     col1, col2, col3 = st.columns([1, 2, 1])
     
     with col2:
+        st.markdown('<div class="login-container">', unsafe_allow_html=True)
+        
+        # Titre de connexion
         st.markdown("""
-        <div style="
-            background: white;
-            border-radius: 20px;
-            padding: 3rem;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            max-width: 480px;
-            margin: 0 auto;
-        ">
+        <div class="login-title">🔐 Connexion ACO</div>
+        <div class="login-subtitle">Accédez à votre espace de travail sécurisé</div>
         """, unsafe_allow_html=True)
         
-        # Titre de connexion épuré
-        st.markdown("""
-        <div style="
-            text-align: center;
-            margin-bottom: 2.5rem;
-        ">
-            <h2 style="
-                color: #1F2937;
-                font-size: 1.75rem;
-                font-weight: 600;
-                font-family: 'Inter', sans-serif;
-                margin: 0 0 0.5rem 0;
-                letter-spacing: -0.01em;
-            ">Connexion Sécurisée</h2>
-            <p style="
-                color: #6B7280;
-                font-size: 1rem;
-                font-family: 'Inter', sans-serif;
-                margin: 0;
-                font-weight: 400;
-            ">Accédez à votre espace de travail</p>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        # Formulaire de connexion PREMIUM
+        # Formulaire de connexion CORRIGÉ
         with st.form("login_form", clear_on_submit=False):
             
-            st.markdown("""
-            <style>
-                /* Inputs premium */
-                .stTextInput > div > div > input {
-                    background: #F8FAFC !important;
-                    border: 2px solid #E5E7EB !important;
-                    border-radius: 14px !important;
-                    color: #1F2937 !important;
-                    padding: 1rem !important;
-                    font-size: 1rem !important;
-                    font-family: 'Inter', sans-serif !important;
-                    transition: all 0.3s ease !important;
-                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
-                }
-                
-                .stTextInput > div > div > input:focus {
-                    border: 2px solid #4facfe !important;
-                    box-shadow: 0 0 0 4px rgba(79, 172, 254, 0.1) !important;
-                    background: white !important;
-                    transform: translateY(-1px) !important;
-                }
-                
-                /* Bouton connexion premium */
-                .stForm .stButton > button[type="submit"] {
-                    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%) !important;
-                    color: white !important;
-                    border: none !important;
-                    border-radius: 14px !important;
-                    padding: 1rem 2rem !important;
-                    font-weight: 600 !important;
-                    font-size: 1.1rem !important;
-                    font-family: 'Inter', sans-serif !important;
-                    width: 100% !important;
-                    transition: all 0.3s ease !important;
-                    box-shadow: 0 8px 25px rgba(79, 172, 254, 0.3) !important;
-                    margin-top: 1rem !important;
-                }
-                
-                .stForm .stButton > button[type="submit"]:hover {
-                    transform: translateY(-2px) !important;
-                    box-shadow: 0 15px 35px rgba(79, 172, 254, 0.4) !important;
-                    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%) !important;
-                }
-            </style>
-            """, unsafe_allow_html=True)
-            
             username = st.text_input(
-                "",
-                placeholder="Identifiant",
-                help="Saisissez votre identifiant professionnel",
-                key="login_username",
-                label_visibility="collapsed"
+                "👤 Identifiant",
+                placeholder="Saisissez votre identifiant ACO",
+                help="Utilisez votre identifiant personnel SPIC",
+                key="login_username"
             )
             
             password = st.text_input(
-                "",
+                "🔑 Mot de passe",
                 type="password",
-                placeholder="Mot de passe",
-                help="Saisissez votre mot de passe",
-                key="login_password",
-                label_visibility="collapsed"
+                placeholder="Saisissez votre mot de passe",
+                help="Mot de passe fourni par l'administration",
+                key="login_password"
             )
             
-            # Bouton de connexion
-            login_submitted = st.form_submit_button(
-                "Se connecter",
-                use_container_width=True,
-                type="primary"
-            )
+            col_btn1, col_btn2 = st.columns([2, 1])
+            
+            with col_btn1:
+                login_submitted = st.form_submit_button(
+                    "🚀 Se connecter",
+                    use_container_width=True,
+                    type="primary"
+                )
+            
+            with col_btn2:
+                if st.form_submit_button("🔄 Mot de passe oublié?", use_container_width=True):
+                    st.session_state.page = "reset_password"
+                    st.rerun()
         
-        # TRAITEMENT CONNEXION (identique au code existant)
+        # TRAITEMENT CONNEXION CORRIGÉ
         if login_submitted:
             if username and password:
+                # DEBUG: Afficher les tentatives de connexion
+                # st.write(f"DEBUG: Tentative de connexion avec {username} / {password}")
+                
                 if verify_password(username, password):
                     # Connexion réussie
                     st.session_state.authenticated = True
@@ -1316,20 +498,10 @@ def page_login():
                     st.session_state.user_data = DEMO_ACO_USERS[username]
                     st.session_state.page = "dashboard"
                     
-                    # Message de succès moderne
+                    # Message de succès
                     st.markdown("""
-                    <div style="
-                        background: linear-gradient(135deg, #F0FDF4, #DCFCE7);
-                        border: 1px solid #BBF7D0;
-                        color: #166534;
-                        padding: 1rem;
-                        border-radius: 12px;
-                        margin: 1rem 0;
-                        font-weight: 500;
-                        font-family: 'Inter', sans-serif;
-                        text-align: center;
-                    ">
-                        ✅ <strong>Connexion réussie</strong><br>
+                    <div class="success-message">
+                        ✅ <strong>Connexion réussie !</strong><br>
                         Redirection vers votre tableau de bord...
                     </div>
                     """, unsafe_allow_html=True)
@@ -1337,19 +509,9 @@ def page_login():
                     # Redirection automatique
                     st.rerun()
                 else:
-                    # Erreur d'authentification moderne
+                    # Erreur d'authentification
                     st.markdown("""
-                    <div style="
-                        background: linear-gradient(135deg, #FEF2F2, #FEE2E2);
-                        border: 1px solid #FECACA;
-                        color: #DC2626;
-                        padding: 1rem;
-                        border-radius: 12px;
-                        margin: 1rem 0;
-                        font-weight: 500;
-                        font-family: 'Inter', sans-serif;
-                        text-align: center;
-                    ">
+                    <div class="error-message">
                         ❌ <strong>Identifiants incorrects</strong><br>
                         Vérifiez votre nom d'utilisateur et mot de passe.
                     </div>
@@ -1357,68 +519,81 @@ def page_login():
             else:
                 # Champs manquants
                 st.markdown("""
-                <div style="
-                    background: linear-gradient(135deg, #FFFBEB, #FEF3C7);
-                    border: 1px solid #FED7AA;
-                    color: #D97706;
-                    padding: 1rem;
-                    border-radius: 12px;
-                    margin: 1rem 0;
-                    font-weight: 500;
-                    font-family: 'Inter', sans-serif;
-                    text-align: center;
-                ">
+                <div class="error-message">
                     ⚠️ <strong>Champs obligatoires</strong><br>
                     Veuillez remplir votre identifiant et mot de passe.
                 </div>
                 """, unsafe_allow_html=True)
         
-        # Liens d'aide discrets
-        st.markdown("""
-        <div style="
-            text-align: center;
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #F3F4F6;
-        ">
-            <p style="
-                color: #9CA3AF;
-                font-size: 0.875rem;
-                font-family: 'Inter', sans-serif;
-                margin: 0;
-            ">
-                <a href="#" style="
-                    color: #6B7280;
-                    text-decoration: none;
-                    font-weight: 500;
-                    transition: color 0.2s ease;
-                " onmouseover="this.style.color='#4facfe'" onmouseout="this.style.color='#6B7280'">
-                    Mot de passe oublié ?
-                </a>
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
-        
         st.markdown('</div>', unsafe_allow_html=True)
     
-    # Footer professionnel discret
-    st.markdown("""
-    <div style="
-        text-align: center;
-        margin-top: 3rem;
-        padding: 1rem;
-    ">
-        <p style="
-            color: #9CA3AF;
-            font-size: 0.875rem;
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            font-weight: 400;
-        ">
-            SPIC Guadeloupe • Interface Sécurisée • © 2024
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
+    # Comptes de démonstration - MISE À JOUR
+    st.markdown("---")
+    st.markdown("### 🎯 Comptes de Test Disponibles")
+    
+    st.markdown('<div class="demo-accounts">', unsafe_allow_html=True)
+    
+    col_demo1, col_demo2, col_demo3 = st.columns(3)
+    
+    with col_demo1:
+        st.markdown("""
+        <div class="demo-account-card">
+            <strong>👨‍💼 ACO Standard</strong><br>
+            <strong>Login:</strong> aco1<br>
+            <strong>Password:</strong> password1<br>
+            <em>Pierre DUPONT - 18 opérations</em>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col_demo2:
+        st.markdown("""
+        <div class="demo-account-card">
+            <strong>👩‍💼 ACO Senior</strong><br>
+            <strong>Login:</strong> aco2<br>
+            <strong>Password:</strong> password2<br>
+            <em>Sophie MARTIN - 25 opérations</em>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col_demo3:
+        st.markdown("""
+        <div class="demo-account-card">
+            <strong>👨‍💼 ACO Junior</strong><br>
+            <strong>Login:</strong> aco3<br>
+            <strong>Password:</strong> password3<br>
+            <em>Alexandre BERNARD - 12 opérations</em>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    # Accès rapide pour les tests
+    st.markdown("#### ⚡ Connexion Rapide (Test)")
+    col_quick1, col_quick2, col_quick3 = st.columns(3)
+    
+    with col_quick1:
+        if st.button("🚀 Connexion aco1", use_container_width=True):
+            st.session_state.authenticated = True
+            st.session_state.aco_user = "aco1"
+            st.session_state.user_data = DEMO_ACO_USERS["aco1"]
+            st.session_state.page = "dashboard"
+            st.rerun()
+    
+    with col_quick2:
+        if st.button("🚀 Connexion aco2", use_container_width=True):
+            st.session_state.authenticated = True
+            st.session_state.aco_user = "aco2"
+            st.session_state.user_data = DEMO_ACO_USERS["aco2"]
+            st.session_state.page = "dashboard"
+            st.rerun()
+    
+    with col_quick3:
+        if st.button("🚀 Connexion aco3", use_container_width=True):
+            st.session_state.authenticated = True
+            st.session_state.aco_user = "aco3"
+            st.session_state.user_data = DEMO_ACO_USERS["aco3"]
+            st.session_state.page = "dashboard"
+            st.rerun()
 
 def page_reset_password():
     """Page de réinitialisation mot de passe"""
@@ -2385,7 +1560,7 @@ def page_portefeuille_aco():
         filtre_commune = st.selectbox("Commune", ["Toutes", "Les Abymes", "Pointe-à-Pitre", "Basse-Terre", "Sainte-Anne"])
     
     with col_filter4:
-        if st.button("✨ Nouvelle Opération", type="primary"):
+        if st.button("➕ Nouvelle Opération", type="primary"):
             st.session_state.page = "creation_operation"
             st.rerun()
     
@@ -2423,14 +1598,14 @@ def page_portefeuille_aco():
             col_btn1, col_btn2, col_btn3 = st.columns([1, 1, 2])
             
             with col_btn1:
-                if st.button(f"💼 Ouvrir", key=f"open_{op['id']}"):
+                if st.button(f"📂 Ouvrir", key=f"open_{op['id']}"):
                     st.session_state.selected_operation_id = op['id']
                     st.session_state.selected_operation = op
                     st.session_state.page = "operation_details"
                     st.rerun()
             
             with col_btn2:
-                if st.button(f"📈 Timeline", key=f"timeline_{op['id']}"):
+                if st.button(f"📊 Timeline", key=f"timeline_{op['id']}"):
                     st.session_state.selected_operation_id = op['id']
                     st.session_state.selected_operation = op
                     st.session_state.page = "operation_details"
@@ -2571,7 +1746,7 @@ def page_creation_operation():
     user_data = st.session_state.user_data
     nom_aco = user_data.get('nom', 'ACO')
     
-    st.markdown("### ✨ Nouvelle Opération")
+    st.markdown("### ➕ Nouvelle Opération")
     
     # Chargement des templates
     templates = load_templates_phases()
@@ -2713,9 +1888,9 @@ def main():
         st.markdown("### 🎯 Navigation Principale")
         
         nav_buttons = [
-            ("📈 Dashboard", "dashboard"),
-            ("💼 Mon Portefeuille", "portefeuille"),
-            ("✨ Nouvelle Opération", "creation_operation"),
+            ("🏠 Dashboard", "dashboard"),
+            ("📂 Mon Portefeuille", "portefeuille"),
+            ("➕ Nouvelle Opération", "creation_operation"),
         ]
         
         for label, page_key in nav_buttons:
@@ -2744,7 +1919,7 @@ def main():
         st.markdown("---")
         
         # Opérations courantes (raccourcis)
-        st.markdown("### 🔄 Accès Rapide Opérations")
+        st.markdown("### 📋 Accès Rapide Opérations")
         
         demo_data = load_demo_data()
         operations_demo = demo_data.get('operations_demo', [])
@@ -2783,7 +1958,7 @@ def main():
         st.markdown("*Architecture ACO-centrique*")
         
         # Bouton déconnexion
-        if st.button("👋 Déconnexion", use_container_width=True, type="primary", key="logout_btn"):
+        if st.button("🚪 Déconnexion", use_container_width=True, type="primary", key="logout_btn"):
             logout()
             st.rerun()
     
