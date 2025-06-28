@@ -119,7 +119,7 @@ def login_form():
         if login in DEMO_ACO_USERS and DEMO_ACO_USERS[login] == pwd:
             st.session_state["authenticated"] = True
             st.session_state["aco_user"] = login
-            st.experimental_rerun()
+            st.rerun()
         else:
             st.error("Identifiant ou mot de passe incorrect.")
 
@@ -127,7 +127,7 @@ def logout():
     if st.button("Se déconnecter", key="logout_btn"):
         st.session_state["authenticated"] = False
         st.session_state["aco_user"] = None
-        st.experimental_rerun()
+        st.rerun()
 
 # Initialisation de l'état de session
 if "authenticated" not in st.session_state:
