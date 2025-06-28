@@ -620,67 +620,155 @@ def logout():
 # ==============================================================================
 
 def page_login():
-    """Page de connexion moderne CORRIGÉE - Mode clair"""
+    """Page de connexion moderne PREMIUM - Design professionnel"""
     
-    # En-tête moderne
+    # Header moderne avec dégradé subtil
     st.markdown("""
-    <div class="main-header">
-        <h1>🏗️ OPCOPILOT v4.0</h1>
-        <h2>Tableau de Bord Opérationnel</h2>
-        <p>SPIC Guadeloupe - Interface de Gestion d'Opérations Immobilières</p>
+    <div style="
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #a8edea 100%);
+        color: white;
+        padding: 3rem 2rem;
+        border-radius: 20px;
+        margin-bottom: 3rem;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(79, 172, 254, 0.2);
+    ">
+        <h1 style="
+            margin: 0;
+            font-size: 3rem;
+            font-weight: 800;
+            font-family: 'Inter', sans-serif;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            letter-spacing: -0.02em;
+        ">OPCOPILOT</h1>
+        <p style="
+            margin: 1rem 0 0 0;
+            font-size: 1.25rem;
+            font-weight: 400;
+            font-family: 'Inter', sans-serif;
+            opacity: 0.9;
+            letter-spacing: 0.02em;
+        ">Tableau de Bord Opérationnel</p>
     </div>
     """, unsafe_allow_html=True)
     
-    # Container principal centré
+    # Container principal centré - Design premium
     col1, col2, col3 = st.columns([1, 2, 1])
     
     with col2:
-        st.markdown('<div class="login-container">', unsafe_allow_html=True)
-        
-        # Titre de connexion
         st.markdown("""
-        <div class="login-title">🔐 Connexion ACO</div>
-        <div class="login-subtitle">Accédez à votre espace de travail sécurisé</div>
+        <div style="
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            max-width: 480px;
+            margin: 0 auto;
+        ">
         """, unsafe_allow_html=True)
         
-        # Formulaire de connexion CORRIGÉ
+        # Titre de connexion épuré
+        st.markdown("""
+        <div style="
+            text-align: center;
+            margin-bottom: 2.5rem;
+        ">
+            <h2 style="
+                color: #1F2937;
+                font-size: 1.75rem;
+                font-weight: 600;
+                font-family: 'Inter', sans-serif;
+                margin: 0 0 0.5rem 0;
+                letter-spacing: -0.01em;
+            ">Connexion Sécurisée</h2>
+            <p style="
+                color: #6B7280;
+                font-size: 1rem;
+                font-family: 'Inter', sans-serif;
+                margin: 0;
+                font-weight: 400;
+            ">Accédez à votre espace de travail</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Formulaire de connexion PREMIUM
         with st.form("login_form", clear_on_submit=False):
             
+            st.markdown("""
+            <style>
+                /* Inputs premium */
+                .stTextInput > div > div > input {
+                    background: #F8FAFC !important;
+                    border: 2px solid #E5E7EB !important;
+                    border-radius: 14px !important;
+                    color: #1F2937 !important;
+                    padding: 1rem !important;
+                    font-size: 1rem !important;
+                    font-family: 'Inter', sans-serif !important;
+                    transition: all 0.3s ease !important;
+                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+                }
+                
+                .stTextInput > div > div > input:focus {
+                    border: 2px solid #4facfe !important;
+                    box-shadow: 0 0 0 4px rgba(79, 172, 254, 0.1) !important;
+                    background: white !important;
+                    transform: translateY(-1px) !important;
+                }
+                
+                /* Bouton connexion premium */
+                .stForm .stButton > button[type="submit"] {
+                    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%) !important;
+                    color: white !important;
+                    border: none !important;
+                    border-radius: 14px !important;
+                    padding: 1rem 2rem !important;
+                    font-weight: 600 !important;
+                    font-size: 1.1rem !important;
+                    font-family: 'Inter', sans-serif !important;
+                    width: 100% !important;
+                    transition: all 0.3s ease !important;
+                    box-shadow: 0 8px 25px rgba(79, 172, 254, 0.3) !important;
+                    margin-top: 1rem !important;
+                }
+                
+                .stForm .stButton > button[type="submit"]:hover {
+                    transform: translateY(-2px) !important;
+                    box-shadow: 0 15px 35px rgba(79, 172, 254, 0.4) !important;
+                    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%) !important;
+                }
+            </style>
+            """, unsafe_allow_html=True)
+            
             username = st.text_input(
-                "👤 Identifiant",
-                placeholder="Saisissez votre identifiant ACO",
-                help="Utilisez votre identifiant personnel SPIC",
-                key="login_username"
+                "",
+                placeholder="Identifiant",
+                help="Saisissez votre identifiant professionnel",
+                key="login_username",
+                label_visibility="collapsed"
             )
             
             password = st.text_input(
-                "🔑 Mot de passe",
+                "",
                 type="password",
-                placeholder="Saisissez votre mot de passe",
-                help="Mot de passe fourni par l'administration",
-                key="login_password"
+                placeholder="Mot de passe",
+                help="Saisissez votre mot de passe",
+                key="login_password",
+                label_visibility="collapsed"
             )
             
-            col_btn1, col_btn2 = st.columns([2, 1])
-            
-            with col_btn1:
-                login_submitted = st.form_submit_button(
-                    "🚀 Se connecter",
-                    use_container_width=True,
-                    type="primary"
-                )
-            
-            with col_btn2:
-                if st.form_submit_button("🔄 Mot de passe oublié?", use_container_width=True):
-                    st.session_state.page = "reset_password"
-                    st.rerun()
+            # Bouton de connexion
+            login_submitted = st.form_submit_button(
+                "Se connecter",
+                use_container_width=True,
+                type="primary"
+            )
         
-        # TRAITEMENT CONNEXION CORRIGÉ
+        # TRAITEMENT CONNEXION (identique au code existant)
         if login_submitted:
             if username and password:
-                # DEBUG: Afficher les tentatives de connexion
-                # st.write(f"DEBUG: Tentative de connexion avec {username} / {password}")
-                
                 if verify_password(username, password):
                     # Connexion réussie
                     st.session_state.authenticated = True
@@ -688,10 +776,20 @@ def page_login():
                     st.session_state.user_data = DEMO_ACO_USERS[username]
                     st.session_state.page = "dashboard"
                     
-                    # Message de succès
+                    # Message de succès moderne
                     st.markdown("""
-                    <div class="success-message">
-                        ✅ <strong>Connexion réussie !</strong><br>
+                    <div style="
+                        background: linear-gradient(135deg, #F0FDF4, #DCFCE7);
+                        border: 1px solid #BBF7D0;
+                        color: #166534;
+                        padding: 1rem;
+                        border-radius: 12px;
+                        margin: 1rem 0;
+                        font-weight: 500;
+                        font-family: 'Inter', sans-serif;
+                        text-align: center;
+                    ">
+                        ✅ <strong>Connexion réussie</strong><br>
                         Redirection vers votre tableau de bord...
                     </div>
                     """, unsafe_allow_html=True)
@@ -699,9 +797,19 @@ def page_login():
                     # Redirection automatique
                     st.rerun()
                 else:
-                    # Erreur d'authentification
+                    # Erreur d'authentification moderne
                     st.markdown("""
-                    <div class="error-message">
+                    <div style="
+                        background: linear-gradient(135deg, #FEF2F2, #FEE2E2);
+                        border: 1px solid #FECACA;
+                        color: #DC2626;
+                        padding: 1rem;
+                        border-radius: 12px;
+                        margin: 1rem 0;
+                        font-weight: 500;
+                        font-family: 'Inter', sans-serif;
+                        text-align: center;
+                    ">
                         ❌ <strong>Identifiants incorrects</strong><br>
                         Vérifiez votre nom d'utilisateur et mot de passe.
                     </div>
@@ -709,81 +817,68 @@ def page_login():
             else:
                 # Champs manquants
                 st.markdown("""
-                <div class="error-message">
+                <div style="
+                    background: linear-gradient(135deg, #FFFBEB, #FEF3C7);
+                    border: 1px solid #FED7AA;
+                    color: #D97706;
+                    padding: 1rem;
+                    border-radius: 12px;
+                    margin: 1rem 0;
+                    font-weight: 500;
+                    font-family: 'Inter', sans-serif;
+                    text-align: center;
+                ">
                     ⚠️ <strong>Champs obligatoires</strong><br>
                     Veuillez remplir votre identifiant et mot de passe.
                 </div>
                 """, unsafe_allow_html=True)
         
+        # Liens d'aide discrets
+        st.markdown("""
+        <div style="
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #F3F4F6;
+        ">
+            <p style="
+                color: #9CA3AF;
+                font-size: 0.875rem;
+                font-family: 'Inter', sans-serif;
+                margin: 0;
+            ">
+                <a href="#" style="
+                    color: #6B7280;
+                    text-decoration: none;
+                    font-weight: 500;
+                    transition: color 0.2s ease;
+                " onmouseover="this.style.color='#4facfe'" onmouseout="this.style.color='#6B7280'">
+                    Mot de passe oublié ?
+                </a>
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+        
         st.markdown('</div>', unsafe_allow_html=True)
     
-    # Comptes de démonstration - MISE À JOUR
-    st.markdown("---")
-    st.markdown("### 🎯 Comptes de Test Disponibles")
-    
-    st.markdown('<div class="demo-accounts">', unsafe_allow_html=True)
-    
-    col_demo1, col_demo2, col_demo3 = st.columns(3)
-    
-    with col_demo1:
-        st.markdown("""
-        <div class="demo-account-card">
-            <strong>👨‍💼 ACO Standard</strong><br>
-            <strong>Login:</strong> aco1<br>
-            <strong>Password:</strong> password1<br>
-            <em>Pierre DUPONT - 18 opérations</em>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col_demo2:
-        st.markdown("""
-        <div class="demo-account-card">
-            <strong>👩‍💼 ACO Senior</strong><br>
-            <strong>Login:</strong> aco2<br>
-            <strong>Password:</strong> password2<br>
-            <em>Sophie MARTIN - 25 opérations</em>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col_demo3:
-        st.markdown("""
-        <div class="demo-account-card">
-            <strong>👨‍💼 ACO Junior</strong><br>
-            <strong>Login:</strong> aco3<br>
-            <strong>Password:</strong> password3<br>
-            <em>Alexandre BERNARD - 12 opérations</em>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    st.markdown('</div>', unsafe_allow_html=True)
-    
-    # Accès rapide pour les tests
-    st.markdown("#### ⚡ Connexion Rapide (Test)")
-    col_quick1, col_quick2, col_quick3 = st.columns(3)
-    
-    with col_quick1:
-        if st.button("🚀 Connexion aco1", use_container_width=True):
-            st.session_state.authenticated = True
-            st.session_state.aco_user = "aco1"
-            st.session_state.user_data = DEMO_ACO_USERS["aco1"]
-            st.session_state.page = "dashboard"
-            st.rerun()
-    
-    with col_quick2:
-        if st.button("🚀 Connexion aco2", use_container_width=True):
-            st.session_state.authenticated = True
-            st.session_state.aco_user = "aco2"
-            st.session_state.user_data = DEMO_ACO_USERS["aco2"]
-            st.session_state.page = "dashboard"
-            st.rerun()
-    
-    with col_quick3:
-        if st.button("🚀 Connexion aco3", use_container_width=True):
-            st.session_state.authenticated = True
-            st.session_state.aco_user = "aco3"
-            st.session_state.user_data = DEMO_ACO_USERS["aco3"]
-            st.session_state.page = "dashboard"
-            st.rerun()
+    # Footer professionnel discret
+    st.markdown("""
+    <div style="
+        text-align: center;
+        margin-top: 3rem;
+        padding: 1rem;
+    ">
+        <p style="
+            color: #9CA3AF;
+            font-size: 0.875rem;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            font-weight: 400;
+        ">
+            SPIC Guadeloupe • Interface Sécurisée • © 2024
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
 def page_reset_password():
     """Page de réinitialisation mot de passe"""
