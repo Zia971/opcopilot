@@ -340,9 +340,13 @@ st.markdown("""
         color: #1F2937 !important;
     }
     
-    /* SIDEBAR MODERNE DÉGRADÉ */
+    /* SIDEBAR RESTAURÉE à l'état original */
     .css-1d391kg {
-        background: linear-gradient(180deg, #8B5CF6 0%, #3B82F6 50%, #10B981 100%) !important;
+        background-color: #F8FAFC !important;
+    }
+    
+    .stSidebar {
+        background-color: #F8FAFC !important;
     }
     
     /* MESSAGES STREAMLIT MODERNISÉS */
@@ -1572,6 +1576,15 @@ def page_dashboard():
     # CSS simplifié pour actions réalisées uniquement
     st.markdown("""
     <style>
+    /* SIDEBAR RESTAURÉE à l'état original */
+    .css-1d391kg {
+        background-color: #F8FAFC !important;
+    }
+    
+    .stSidebar {
+        background-color: #F8FAFC !important;
+    }
+    
     /* ACTIONS RÉALISÉES - Style vert (inchangé) */
     .stButton > button[data-testid="baseButton-primary"] {
         background: linear-gradient(145deg, #D1FAE5, #A7F3D0) !important;
@@ -1594,17 +1607,6 @@ def page_dashboard():
         transform: translateY(-2px) !important;
         box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25) !important;
     }
-    
-    /* BOUTONS NAVIGATION ALERTES */
-    .stButton > button:not([data-testid="baseButton-primary"]) {
-        background: linear-gradient(145deg, #8B5CF6, #3B82F6) !important;
-        color: white !important;
-        border: none !important;
-        border-radius: 10px !important;
-        padding: 0.5rem 1rem !important;
-        font-weight: 600 !important;
-        margin-top: 0.5rem !important;
-    }
     </style>
     """, unsafe_allow_html=True)
     
@@ -1613,7 +1615,7 @@ def page_dashboard():
     with col_alert1:
         st.markdown("#### Alertes Critiques")
         
-        # ALERTE 1 - CRITIQUE ROUGE (HTML direct avec styles)
+        # ALERTE 1 - CRITIQUE ROUGE (Card seule, sans bouton)
         st.markdown("""
         <div style="background: linear-gradient(145deg, #FEE2E2, #FECACA); 
                     border-left: 4px solid #EF4444; 
@@ -1631,18 +1633,7 @@ def page_dashboard():
         </div>
         """, unsafe_allow_html=True)
         
-        if st.button("🔍 Ouvrir COUR CHARNEAU", key="nav_cour_charneau", use_container_width=True):
-            # Navigation vers détail opération
-            demo_data = load_demo_data()
-            operations_data = demo_data.get('operations_demo', [])
-            cour_charneau = next((op for op in operations_data if "CHARNEAU" in op['nom']), None)
-            if cour_charneau:
-                st.session_state.selected_operation = cour_charneau
-                st.session_state.selected_operation_id = cour_charneau['id']
-                st.session_state.page = "operation_details"
-                st.rerun()
-        
-        # ALERTE 2 - ATTENTION JAUNE (HTML direct avec styles)
+        # ALERTE 2 - ATTENTION JAUNE (Card seule, sans bouton)
         st.markdown("""
         <div style="background: linear-gradient(145deg, #FEF3C7, #FDE68A); 
                     border-left: 4px solid #F59E0B; 
@@ -1660,18 +1651,7 @@ def page_dashboard():
         </div>
         """, unsafe_allow_html=True)
         
-        if st.button("🔍 Ouvrir VEFA BELCOURT", key="nav_vefa_belcourt", use_container_width=True):
-            # Navigation vers détail opération
-            demo_data = load_demo_data()
-            operations_data = demo_data.get('operations_demo', [])
-            vefa_belcourt = next((op for op in operations_data if "BELCOURT" in op['nom']), None)
-            if vefa_belcourt:
-                st.session_state.selected_operation = vefa_belcourt
-                st.session_state.selected_operation_id = vefa_belcourt['id']
-                st.session_state.page = "operation_details"
-                st.rerun()
-        
-        # ALERTE 3 - INFORMATION BLEU CLAIR (HTML direct avec styles)
+        # ALERTE 3 - INFORMATION BLEU CLAIR (Card seule, sans bouton)
         st.markdown("""
         <div style="background: linear-gradient(145deg, #DBEAFE, #BFDBFE); 
                     border-left: 4px solid #3B82F6; 
@@ -1688,17 +1668,6 @@ def page_dashboard():
             <div style="color: #2563EB; font-style: italic; font-size: 0.9rem; opacity: 0.9;">Action: Suivi hebdomadaire maintenu</div>
         </div>
         """, unsafe_allow_html=True)
-        
-        if st.button("🔍 Ouvrir RÉSIDENCE SOLEIL", key="nav_residence_soleil", use_container_width=True):
-            # Navigation vers détail opération
-            demo_data = load_demo_data()
-            operations_data = demo_data.get('operations_demo', [])
-            residence_soleil = next((op for op in operations_data if "SOLEIL" in op['nom']), None)
-            if residence_soleil:
-                st.session_state.selected_operation = residence_soleil
-                st.session_state.selected_operation_id = residence_soleil['id']
-                st.session_state.page = "operation_details"
-                st.rerun()
     
     with col_alert2:
         st.markdown("#### Actions Réalisées Aujourd'hui")
