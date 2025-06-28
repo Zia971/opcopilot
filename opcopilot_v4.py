@@ -2,6 +2,7 @@
 OPCOPILOT v4.0 - Application Streamlit complète avec authentification CORRIGÉE
 Gestion d'opérations immobilières pour ACO SPIC Guadeloupe
 Architecture ACO-centrique avec Timeline horizontale obligatoire
+VERSION MODERNISÉE - Dégradé violet-bleu-vert
 """
 
 import streamlit as st
@@ -26,10 +27,10 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# CSS personnalisé pour interface MODERNE CLAIRE - APPLIQUÉ DÈS LE DÉBUT
+# CSS personnalisé MODERNISÉ avec dégradé violet-bleu-vert
 st.markdown("""
 <style>
-    /* THÈME CLAIR MODERNE - GLOBAL */
+    /* THÈME MODERNE VIOLET-BLEU-VERT - GLOBAL */
     .stApp {
         background-color: #F9FAFB !important;
         font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -41,12 +42,12 @@ st.markdown("""
     }
     
     .main-header {
-        background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);
+        background: linear-gradient(135deg, #8B5CF6 0%, #3B82F6 50%, #10B981 100%);
         color: white;
         padding: 2rem;
-        border-radius: 12px;
+        border-radius: 15px;
         margin-bottom: 2rem;
-        box-shadow: 0 10px 25px rgba(59, 130, 246, 0.2);
+        box-shadow: 0 10px 25px rgba(139, 92, 246, 0.2);
         text-align: center;
     }
     
@@ -70,12 +71,12 @@ st.markdown("""
         opacity: 0.8;
     }
     
-    /* PAGE DE CONNEXION - MODE CLAIR FORCÉ */
+    /* PAGE DE CONNEXION - MODE CLAIR MODERNE */
     .login-container {
         background: white !important;
         border-radius: 16px;
         padding: 3rem;
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 20px 50px rgba(139, 92, 246, 0.15);
         border: 1px solid #E5E7EB;
         max-width: 450px;
         margin: 2rem auto;
@@ -87,7 +88,7 @@ st.markdown("""
         font-size: 2.2rem;
         font-weight: 700;
         margin-bottom: 1rem;
-        background: linear-gradient(135deg, #3B82F6, #1E40AF);
+        background: linear-gradient(135deg, #8B5CF6, #3B82F6, #10B981);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -105,87 +106,92 @@ st.markdown("""
     .stTextInput > div > div > input {
         background-color: #F9FAFB !important;
         border: 2px solid #E5E7EB !important;
-        border-radius: 8px !important;
+        border-radius: 10px !important;
         color: #1F2937 !important;
         padding: 0.75rem !important;
         font-size: 1rem !important;
+        transition: all 0.3s ease !important;
     }
     
     .stTextInput > div > div > input:focus {
-        border-color: #3B82F6 !important;
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+        border-color: #8B5CF6 !important;
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1) !important;
     }
     
-    /* BOUTONS MODE CLAIR */
+    /* BOUTONS MODERNES DÉGRADÉ */
     .stButton > button {
-        background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%) !important;
+        background: linear-gradient(135deg, #8B5CF6 0%, #3B82F6 50%, #10B981 100%) !important;
         color: white !important;
         border: none !important;
-        border-radius: 8px !important;
+        border-radius: 10px !important;
         padding: 0.75rem 1.5rem !important;
         font-weight: 600 !important;
         font-size: 1rem !important;
-        transition: all 0.2s ease !important;
-        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2) !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 8px 32px rgba(139, 92, 246, 0.25) !important;
     }
     
     .stButton > button:hover {
         transform: translateY(-2px) !important;
-        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3) !important;
+        box-shadow: 0 12px 40px rgba(139, 92, 246, 0.35) !important;
     }
     
     /* BOUTONS SECONDAIRES */
     .stButton > button[kind="secondary"] {
         background: white !important;
-        color: #3B82F6 !important;
-        border: 2px solid #3B82F6 !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+        color: #8B5CF6 !important;
+        border: 2px solid #8B5CF6 !important;
+        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15) !important;
     }
     
     .stButton > button[kind="secondary"]:hover {
-        background: #3B82F6 !important;
+        background: linear-gradient(135deg, #8B5CF6 0%, #3B82F6 50%, #10B981 100%) !important;
         color: white !important;
     }
     
     .operation-card {
         background: white;
         border: 1px solid #E5E7EB;
-        border-radius: 12px;
+        border-radius: 15px;
         padding: 1.5rem;
         margin: 1rem 0;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 8px 32px rgba(139, 92, 246, 0.1);
+        border-left: 4px solid;
+        border-image: linear-gradient(135deg, #8B5CF6, #3B82F6, #10B981) 1;
         transition: all 0.3s ease;
     }
     
     .operation-card:hover {
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 12px 40px rgba(139, 92, 246, 0.2);
         transform: translateY(-2px);
     }
     
     .kpi-card {
         background: white;
         border: 1px solid #E5E7EB;
-        border-radius: 12px;
+        border-radius: 15px;
         padding: 2rem;
         text-align: center;
         margin: 0.5rem;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 8px 32px rgba(139, 92, 246, 0.15);
+        border-left: 4px solid;
+        border-image: linear-gradient(135deg, #8B5CF6, #3B82F6, #10B981) 1;
         transition: all 0.3s ease;
         cursor: pointer;
     }
     
     .kpi-card:hover {
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-        transform: translateY(-2px);
+        box-shadow: 0 12px 40px rgba(139, 92, 246, 0.25);
+        transform: translateY(-3px);
     }
     
     .kpi-card.primary {
-        background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);
+        background: linear-gradient(135deg, #8B5CF6 0%, #3B82F6 50%, #10B981 100%);
         color: white;
     }
     
     .kpi-card.success {
-        background: linear-gradient(135deg, #10B981 0%, #047857 100%);
+        background: linear-gradient(135deg, #10B981 0%, #059669 100%);
         color: white;
     }
     
@@ -201,21 +207,23 @@ st.markdown("""
     
     .timeline-container {
         background: white;
-        border-radius: 12px;
+        border-radius: 15px;
         padding: 2rem;
         margin: 1rem 0;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        border: 1px solid #E5E7EB;
+        box-shadow: 0 8px 32px rgba(139, 92, 246, 0.15);
+        border-left: 4px solid;
+        border-image: linear-gradient(135deg, #8B5CF6, #3B82F6, #10B981) 1;
     }
     
     .module-tab {
         background: white;
         border: 1px solid #E5E7EB;
-        border-radius: 8px;
+        border-radius: 10px;
         padding: 1.5rem;
         margin: 0.5rem;
-        border-left: 4px solid #3B82F6;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        border-left: 4px solid;
+        border-image: linear-gradient(135deg, #8B5CF6, #3B82F6, #10B981) 1;
+        box-shadow: 0 4px 16px rgba(139, 92, 246, 0.1);
     }
     
     .alert-critical { 
@@ -223,7 +231,7 @@ st.markdown("""
         border-left: 4px solid #EF4444; 
         padding: 1rem;
         margin: 0.5rem 0;
-        border-radius: 8px;
+        border-radius: 10px;
         border: 1px solid #FECACA;
     }
     
@@ -232,36 +240,39 @@ st.markdown("""
         border-left: 4px solid #F59E0B; 
         padding: 1rem;
         margin: 0.5rem 0;
-        border-radius: 8px;
+        border-radius: 10px;
         border: 1px solid #FED7AA;
     }
     
     .alert-info { 
         background: #EFF6FF; 
-        border-left: 4px solid #3B82F6; 
+        border-left: 4px solid #8B5CF6; 
         padding: 1rem;
         margin: 0.5rem 0;
-        border-radius: 8px;
+        border-radius: 10px;
         border: 1px solid #BFDBFE;
     }
     
     .metric-card {
         background: white;
         border: 1px solid #E5E7EB;
-        border-radius: 8px;
+        border-radius: 10px;
         padding: 1.5rem;
         text-align: center;
         margin: 0.5rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 4px 16px rgba(139, 92, 246, 0.1);
+        border-left: 4px solid;
+        border-image: linear-gradient(135deg, #8B5CF6, #3B82F6, #10B981) 1;
     }
     
     .sidebar-header {
-        background: linear-gradient(135deg, #1F2937 0%, #111827 100%);
+        background: linear-gradient(135deg, #8B5CF6 0%, #3B82F6 50%, #10B981 100%);
         color: white;
         padding: 1rem;
-        border-radius: 8px;
+        border-radius: 10px;
         margin-bottom: 1rem;
         text-align: center;
+        box-shadow: 0 4px 16px rgba(139, 92, 246, 0.2);
     }
     
     .success-message {
@@ -269,9 +280,10 @@ st.markdown("""
         border: 1px solid #BBF7D0;
         color: #166534;
         padding: 1rem;
-        border-radius: 8px;
+        border-radius: 10px;
         margin: 1rem 0;
         font-weight: 500;
+        border-left: 4px solid #10B981;
     }
     
     .error-message {
@@ -279,28 +291,10 @@ st.markdown("""
         border: 1px solid #FECACA;
         color: #DC2626;
         padding: 1rem;
-        border-radius: 8px;
+        border-radius: 10px;
         margin: 1rem 0;
         font-weight: 500;
-    }
-    
-    /* COMPTES DEMO */
-    .demo-accounts {
-        background: #F8FAFC;
-        border: 1px solid #E2E8F0;
-        border-radius: 12px;
-        padding: 1.5rem;
-        margin: 2rem 0;
-    }
-    
-    .demo-account-card {
-        background: white;
-        border: 1px solid #E5E7EB;
-        border-radius: 8px;
-        padding: 1rem;
-        margin: 0.5rem;
-        text-align: center;
-        font-size: 0.9rem;
+        border-left: 4px solid #EF4444;
     }
     
     /* LABELS ET TEXTES */
@@ -308,34 +302,42 @@ st.markdown("""
         color: #1F2937 !important;
     }
     
-    /* SIDEBAR MODE CLAIR */
+    /* SIDEBAR MODERNE DÉGRADÉ */
     .css-1d391kg {
-        background-color: #F8FAFC !important;
+        background: linear-gradient(180deg, #8B5CF6 0%, #3B82F6 50%, #10B981 100%) !important;
     }
     
-    /* MESSAGES STREAMLIT */
+    /* MESSAGES STREAMLIT MODERNISÉS */
     .stSuccess {
-        background-color: #F0FDF4 !important;
+        background: linear-gradient(135deg, #F0FDF4 0%, #ECFDF5 100%) !important;
         border: 1px solid #BBF7D0 !important;
         color: #166534 !important;
+        border-radius: 10px !important;
+        border-left: 4px solid #10B981 !important;
     }
     
     .stError {
-        background-color: #FEF2F2 !important;
+        background: linear-gradient(135deg, #FEF2F2 0%, #FEF2F2 100%) !important;
         border: 1px solid #FECACA !important;
         color: #DC2626 !important;
+        border-radius: 10px !important;
+        border-left: 4px solid #EF4444 !important;
     }
     
     .stWarning {
-        background-color: #FFFBEB !important;
+        background: linear-gradient(135deg, #FFFBEB 0%, #FFFBEB 100%) !important;
         border: 1px solid #FED7AA !important;
         color: #D97706 !important;
+        border-radius: 10px !important;
+        border-left: 4px solid #F59E0B !important;
     }
     
     .stInfo {
-        background-color: #EFF6FF !important;
+        background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%) !important;
         border: 1px solid #BFDBFE !important;
         color: #1E40AF !important;
+        border-radius: 10px !important;
+        border-left: 4px solid #8B5CF6 !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -426,13 +428,13 @@ def logout():
     st.session_state.page = "login"
 
 # ==============================================================================
-# PAGES D'AUTHENTIFICATION CORRIGÉES
+# PAGES D'AUTHENTIFICATION CORRIGÉES ET MODERNISÉES
 # ==============================================================================
 
 def page_login():
-    """Page de connexion moderne CORRIGÉE - Mode clair"""
+    """Page de connexion moderne CORRIGÉE - ÉLÉMENTS TEST SUPPRIMÉS"""
     
-    # En-tête moderne
+    # En-tête moderne avec dégradé violet-bleu-vert
     st.markdown("""
     <div class="main-header">
         <h1>🏗️ OPCOPILOT v4.0</h1>
@@ -488,9 +490,6 @@ def page_login():
         # TRAITEMENT CONNEXION CORRIGÉ
         if login_submitted:
             if username and password:
-                # DEBUG: Afficher les tentatives de connexion
-                # st.write(f"DEBUG: Tentative de connexion avec {username} / {password}")
-                
                 if verify_password(username, password):
                     # Connexion réussie
                     st.session_state.authenticated = True
@@ -527,73 +526,8 @@ def page_login():
         
         st.markdown('</div>', unsafe_allow_html=True)
     
-    # Comptes de démonstration - MISE À JOUR
-    st.markdown("---")
-    st.markdown("### 🎯 Comptes de Test Disponibles")
-    
-    st.markdown('<div class="demo-accounts">', unsafe_allow_html=True)
-    
-    col_demo1, col_demo2, col_demo3 = st.columns(3)
-    
-    with col_demo1:
-        st.markdown("""
-        <div class="demo-account-card">
-            <strong>👨‍💼 ACO Standard</strong><br>
-            <strong>Login:</strong> aco1<br>
-            <strong>Password:</strong> password1<br>
-            <em>Pierre DUPONT - 18 opérations</em>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col_demo2:
-        st.markdown("""
-        <div class="demo-account-card">
-            <strong>👩‍💼 ACO Senior</strong><br>
-            <strong>Login:</strong> aco2<br>
-            <strong>Password:</strong> password2<br>
-            <em>Sophie MARTIN - 25 opérations</em>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col_demo3:
-        st.markdown("""
-        <div class="demo-account-card">
-            <strong>👨‍💼 ACO Junior</strong><br>
-            <strong>Login:</strong> aco3<br>
-            <strong>Password:</strong> password3<br>
-            <em>Alexandre BERNARD - 12 opérations</em>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    st.markdown('</div>', unsafe_allow_html=True)
-    
-    # Accès rapide pour les tests
-    st.markdown("#### ⚡ Connexion Rapide (Test)")
-    col_quick1, col_quick2, col_quick3 = st.columns(3)
-    
-    with col_quick1:
-        if st.button("🚀 Connexion aco1", use_container_width=True):
-            st.session_state.authenticated = True
-            st.session_state.aco_user = "aco1"
-            st.session_state.user_data = DEMO_ACO_USERS["aco1"]
-            st.session_state.page = "dashboard"
-            st.rerun()
-    
-    with col_quick2:
-        if st.button("🚀 Connexion aco2", use_container_width=True):
-            st.session_state.authenticated = True
-            st.session_state.aco_user = "aco2"
-            st.session_state.user_data = DEMO_ACO_USERS["aco2"]
-            st.session_state.page = "dashboard"
-            st.rerun()
-    
-    with col_quick3:
-        if st.button("🚀 Connexion aco3", use_container_width=True):
-            st.session_state.authenticated = True
-            st.session_state.aco_user = "aco3"
-            st.session_state.user_data = DEMO_ACO_USERS["aco3"]
-            st.session_state.page = "dashboard"
-            st.rerun()
+    # ÉLÉMENTS TEST SUPPRIMÉS - Plus de comptes de démonstration ni de boutons rapides
+    # Interface épurée et professionnelle
 
 def page_reset_password():
     """Page de réinitialisation mot de passe"""
@@ -899,25 +833,26 @@ def load_templates_phases():
 def get_couleur_statut(statut):
     """Retourne la couleur selon le statut de phase"""
     couleurs = {
-        "VALIDEE": "#4CAF50",         # Vert
-        "EN_COURS": "#2196F3",        # Bleu
-        "EN_ATTENTE": "#FFC107",      # Jaune
+        "VALIDEE": "#10B981",         # Vert du dégradé
+        "EN_COURS": "#3B82F6",        # Bleu du dégradé
+        "EN_ATTENTE": "#8B5CF6",      # Violet du dégradé
         "RETARD": "#F44336",          # Rouge
         "CRITIQUE": "#E91E63",        # Rose
         "NON_DEMARREE": "#9E9E9E",    # Gris
         "VALIDATION_REQUISE": "#FF9800",  # Orange
-        "EN_REVISION": "#673AB7"      # Violet
+        "EN_REVISION": "#8B5CF6"      # Violet du dégradé
     }
-    return couleurs.get(statut, "#0066cc")
+    return couleurs.get(statut, "#8B5CF6")
 
 # ==============================================================================
-# 2. TIMELINE HORIZONTALE OBLIGATOIRE (IDENTIQUE)
+# 2. TIMELINE HORIZONTALE OBLIGATOIRE (IDENTIQUE MAIS COULEURS MODERNISÉES)
 # ==============================================================================
 
 def create_timeline_horizontal(operation_data, phases_data):
     """
     Timeline Plotly style INFOGRAPHIQUE MODERNE avec gestion d'erreur robuste
     Reproduit le style roadmap professionnel avec validation complète des données
+    MODERNISÉE avec dégradé violet-bleu-vert
     """
     
     def create_empty_timeline():
@@ -1026,19 +961,19 @@ def create_timeline_horizontal(operation_data, phases_data):
         date_min = min(dates_debut)
         date_max = max(dates_fin)
         
-        # BARRE HORIZONTALE AVEC ESPACEMENT ÉGAL - Timeline chronologique
+        # BARRE HORIZONTALE AVEC ESPACEMENT ÉGAL - Timeline chronologique MODERNISÉE
         if len(phases_valides) > 1:
             # Positions équidistantes (chronologie simple, pas durées)
             x_positions = list(range(len(phases_valides)))
             
-            # Couleurs du dégradé (jaune → orange → rouge → violet → bleu)
+            # Couleurs du dégradé MODERNISÉ (violet → bleu → vert)
             couleurs_degrade = [
-                "#FFD54F",  # Jaune
-                "#FF9800",  # Orange  
-                "#F44336",  # Rouge
-                "#E91E63",  # Rose/Violet
-                "#673AB7",  # Violet
-                "#2E7D32"   # Bleu-vert foncé
+                "#8B5CF6",  # Violet
+                "#7C3AED",  # Violet foncé
+                "#6366F1",  # Indigo
+                "#3B82F6",  # Bleu
+                "#06B6D4",  # Cyan
+                "#10B981"   # Vert
             ]
             
             # Segments de la barre avec espacement égal
@@ -1075,7 +1010,7 @@ def create_timeline_horizontal(operation_data, phases_data):
                     hoverinfo='skip'
                 ))
         
-        # CERCLES AVEC DATES MM/YY - Espacement chronologique égal
+        # CERCLES AVEC DATES MM/YY - Espacement chronologique égal MODERNISÉ
         for i, phase in enumerate(phases_valides):
             try:
                 debut_date = dates_debut[i]  # Date réelle pour format MM/YY
@@ -1083,10 +1018,10 @@ def create_timeline_horizontal(operation_data, phases_data):
                 statut = phase.get('statut', 'NON_DEMARREE')
                 nom_phase = phase.get('nom', f'Phase {i+1}')
                 
-                # Couleur assortie au dégradé
+                # Couleur assortie au dégradé MODERNISÉ
                 couleurs_cercles = [
-                    "#FFD54F", "#FF9800", "#F44336", 
-                    "#E91E63", "#673AB7", "#2E7D32"
+                    "#8B5CF6", "#7C3AED", "#6366F1", 
+                    "#3B82F6", "#06B6D4", "#10B981"
                 ]
                 couleur = couleurs_cercles[i % len(couleurs_cercles)]
                 
@@ -1160,7 +1095,7 @@ def create_timeline_horizontal(operation_data, phases_data):
                 st.warning(f"⚠️ Erreur phase {i+1}: {str(e)}")
                 continue
         
-        # LAYOUT TIMELINE CHRONOLOGIQUE (espacement égal, pas durées)
+        # LAYOUT TIMELINE CHRONOLOGIQUE MODERNISÉ
         operation_nom = operation_data.get('nom', 'Opération') if isinstance(operation_data, dict) else 'Opération'
         
         fig.update_layout(
@@ -1170,9 +1105,9 @@ def create_timeline_horizontal(operation_data, phases_data):
                 'xanchor': 'center',
                 'font': {'size': 22, 'color': '#333333', 'family': 'Arial Black'}
             },
-            # Fond gris clair comme modèle
-            plot_bgcolor='rgba(240, 240, 240, 0.3)',
-            paper_bgcolor='#f5f5f5',
+            # Fond moderne avec dégradé léger
+            plot_bgcolor='rgba(139, 92, 246, 0.02)',
+            paper_bgcolor='#f9fafb',
             
             # SUPPRESSION COMPLÈTE AXE X (chronologie dans cercles)
             xaxis=dict(
@@ -1267,7 +1202,7 @@ def module_cloture(operation_id):
 # ==============================================================================
 
 def page_dashboard():
-    """Dashboard principal avec KPIs ACO INTERACTIFS"""
+    """Dashboard principal avec KPIs ACO INTERACTIFS MODERNISÉS"""
     
     # Chargement données
     demo_data = load_demo_data()
@@ -1286,7 +1221,7 @@ def page_dashboard():
     </div>
     """, unsafe_allow_html=True)
     
-    # KPIs personnels ACO INTERACTIFS
+    # KPIs personnels ACO INTERACTIFS MODERNISÉS
     st.markdown("### 📊 Mes Indicateurs Clés de Performance")
     
     col1, col2, col3, col4 = st.columns(4)
@@ -1381,21 +1316,21 @@ def page_dashboard():
         for action in actions_jour:
             st.write(action)
     
-    # Graphique d'activité
+    # Graphique d'activité MODERNISÉ
     st.markdown("### 📈 Activité Mensuelle")
     
     if activite_data and activite_data.get('mois'):
         fig_dashboard = go.Figure()
         
-        # REM mensuelle
+        # REM mensuelle avec dégradé modernisé
         fig_dashboard.add_trace(go.Scatter(
             x=activite_data['mois'],
             y=activite_data['rem_mensuelle'],
             mode='lines+markers',
             name='REM Mensuelle (€)',
             yaxis='y',
-            line=dict(color='#3B82F6', width=3),
-            marker=dict(size=8)
+            line=dict(color='#8B5CF6', width=3),
+            marker=dict(size=8, color='#8B5CF6')
         ))
         
         # Opérations actives
@@ -1406,7 +1341,7 @@ def page_dashboard():
             name='Opérations Actives',
             yaxis='y2',
             line=dict(color='#10B981', width=3),
-            marker=dict(size=8)
+            marker=dict(size=8, color='#10B981')
         ))
         
         fig_dashboard.update_layout(
@@ -1416,8 +1351,8 @@ def page_dashboard():
             yaxis2=dict(title="Nb Opérations", side="right", overlaying="y"),
             height=450,
             hovermode='x unified',
-            plot_bgcolor='white',
-            paper_bgcolor='white'
+            plot_bgcolor='rgba(139, 92, 246, 0.02)',
+            paper_bgcolor='#f9fafb'
         )
         
         st.plotly_chart(fig_dashboard, use_container_width=True)
