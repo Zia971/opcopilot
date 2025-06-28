@@ -1569,12 +1569,18 @@ def page_dashboard():
     # Alertes et actions MODERNISÉES ET SIMPLIFIÉES
     st.markdown("### 🚨 Alertes et Actions Prioritaires")
     
-    # CSS pour alignement parfait des coches et logique couleurs intelligente
+    # CSS pour couleurs alertes selon criticité métier UNIQUEMENT
     st.markdown("""
     <style>
-    /* ALERTES - Logique couleurs selon criticité métier */
-    .stButton > button[data-testid="baseButton-secondary"] {
-        border: none !important;
+    /* ALERTES CRITIQUES - Couleurs selon criticité métier */
+    
+    /* ALERTE 1 - COUR CHARNEAU = ROUGE/ROSE (CRITIQUE - Retard MOE urgent !) */
+    .stButton > button[data-testid="baseButton-secondary"]:has-text("COUR CHARNEAU"),
+    .stButton > button[key="alert_cour_charneau"] {
+        background: linear-gradient(145deg, #FEE2E2, #FECACA) !important;
+        border-left: 4px solid #EF4444 !important;
+        color: #DC2626 !important;
+        box-shadow: 0 6px 20px rgba(239, 68, 68, 0.15) !important;
         border-radius: 15px !important;
         padding: 1.25rem !important;
         text-align: left !important;
@@ -1582,48 +1588,59 @@ def page_dashboard():
         width: 100% !important;
         white-space: pre-line !important;
         font-weight: 600 !important;
+        border: none !important;
     }
     
-    /* ALERTE CRITIQUE - Rouge (retard MOE = urgent !) */
-    .stButton > button[data-testid="baseButton-secondary"][key*="cour_charneau"] {
-        background: linear-gradient(145deg, #FEE2E2, #FECACA) !important;
-        border-left: 4px solid #EF4444 !important;
-        color: #DC2626 !important;
-        box-shadow: 0 6px 20px rgba(239, 68, 68, 0.15) !important;
-    }
-    
-    .stButton > button[data-testid="baseButton-secondary"][key*="cour_charneau"]:hover {
+    .stButton > button[data-testid="baseButton-secondary"]:has-text("COUR CHARNEAU"):hover {
         transform: translateY(-3px) !important;
         box-shadow: 0 8px 30px rgba(239, 68, 68, 0.25) !important;
     }
     
-    /* ALERTE ATTENTION - Jaune (validation requise) */
-    .stButton > button[data-testid="baseButton-secondary"][key*="vefa_belcourt"] {
+    /* ALERTE 2 - VEFA BELCOURT = JAUNE (ATTENTION - Validation requise) */
+    .stButton > button[data-testid="baseButton-secondary"]:has-text("VEFA BELCOURT"),
+    .stButton > button[key="alert_vefa_belcourt"] {
         background: linear-gradient(145deg, #FEF3C7, #FDE68A) !important;
         border-left: 4px solid #F59E0B !important;
         color: #D97706 !important;
         box-shadow: 0 6px 20px rgba(245, 158, 11, 0.15) !important;
+        border-radius: 15px !important;
+        padding: 1.25rem !important;
+        text-align: left !important;
+        transition: all 0.3s ease !important;
+        width: 100% !important;
+        white-space: pre-line !important;
+        font-weight: 600 !important;
+        border: none !important;
     }
     
-    .stButton > button[data-testid="baseButton-secondary"][key*="vefa_belcourt"]:hover {
+    .stButton > button[data-testid="baseButton-secondary"]:has-text("VEFA BELCOURT"):hover {
         transform: translateY(-3px) !important;
         box-shadow: 0 8px 30px rgba(245, 158, 11, 0.25) !important;
     }
     
-    /* ALERTE INFO - Bleu clair (suivi normal) */
-    .stButton > button[data-testid="baseButton-secondary"][key*="residence_soleil"] {
+    /* ALERTE 3 - RÉSIDENCE SOLEIL = BLEU CLAIR (INFORMATION - Suivi normal) */
+    .stButton > button[data-testid="baseButton-secondary"]:has-text("RÉSIDENCE SOLEIL"),
+    .stButton > button[key="alert_residence_soleil"] {
         background: linear-gradient(145deg, #DBEAFE, #BFDBFE) !important;
         border-left: 4px solid #3B82F6 !important;
         color: #2563EB !important;
         box-shadow: 0 6px 20px rgba(59, 130, 246, 0.15) !important;
+        border-radius: 15px !important;
+        padding: 1.25rem !important;
+        text-align: left !important;
+        transition: all 0.3s ease !important;
+        width: 100% !important;
+        white-space: pre-line !important;
+        font-weight: 600 !important;
+        border: none !important;
     }
     
-    .stButton > button[data-testid="baseButton-secondary"][key*="residence_soleil"]:hover {
+    .stButton > button[data-testid="baseButton-secondary"]:has-text("RÉSIDENCE SOLEIL"):hover {
         transform: translateY(-3px) !important;
         box-shadow: 0 8px 30px rgba(59, 130, 246, 0.25) !important;
     }
     
-    /* ACTIONS - Alignement parfait des coches */
+    /* ACTIONS RÉALISÉES - Garder style vert existant (non modifié) */
     .stButton > button[data-testid="baseButton-primary"] {
         background: linear-gradient(145deg, #D1FAE5, #A7F3D0) !important;
         border: none !important;
@@ -1635,8 +1652,6 @@ def page_dashboard():
         width: 100% !important;
         color: #047857 !important;
         font-weight: 600 !important;
-        
-        /* ALIGNEMENT PARFAIT DES COCHES */
         display: flex !important;
         align-items: flex-start !important;
         text-align: left !important;
@@ -1646,25 +1661,6 @@ def page_dashboard():
     .stButton > button[data-testid="baseButton-primary"]:hover {
         transform: translateY(-2px) !important;
         box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25) !important;
-    }
-    
-    /* STRUCTURE FLEX POUR COCHES ALIGNÉES */
-    .action-button-content {
-        display: flex;
-        align-items: flex-start;
-        width: 100%;
-    }
-    
-    .check-icon {
-        margin-right: 0.75rem;
-        flex-shrink: 0;
-        font-size: 1.2rem;
-        line-height: 1.5;
-    }
-    
-    .action-content {
-        flex-grow: 1;
-        text-align: left;
     }
     </style>
     """, unsafe_allow_html=True)
