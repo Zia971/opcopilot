@@ -1255,18 +1255,9 @@ def page_dashboard():
     user_data = st.session_state.user_data
     nom_aco = user_data.get('nom', 'ACO')
     
-    # ICÔNES MODERNES
-    MODERN_ICONS = {
-        "operations": "🏗️",
-        "alertes": "⚠️", 
-        "calendar": "📅",
-        "dossiers": "📁",
-        "finance": "💶"
-    }
-    
     st.markdown(f"""
     <div class="main-header">
-        <h1>{MODERN_ICONS['operations']} OPCOPILOT v4.0 - Tableau de Bord Opérationnel</h1>
+        <h1>🏗️ OPCOPILOT v4.0 - Tableau de Bord Opérationnel</h1>
         <h2>Mon Tableau de Bord - {nom_aco}</h2>
         <p>Interface de Gestion d'Opérations • SPIC Guadeloupe</p>
     </div>
@@ -1275,24 +1266,10 @@ def page_dashboard():
     # KPIs personnels ACO INTERACTIFS MODERNISÉS
     st.markdown("### 📊 Mes Indicateurs Clés de Performance")
     
-    # CSS spécifique pour KPIs UNIQUEMENT avec CSS MODERNE
+    # CSS spécifique pour KPIs UNIQUEMENT
     st.markdown("""
     <style>
     /* STYLES KPIs UNIQUEMENT - COULEURS STRATÉGIQUES MÉTIER */
-    
-    /* CSS MODERNE AJOUTÉ */
-    .modern-card {
-        background: rgba(255,255,255,0.95);
-        border-radius: 16px;
-        padding: 20px;
-        box-shadow: 0 8px 32px rgba(102,126,234,0.12);
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-    .modern-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 40px rgba(102,126,234,0.2);
-    }
     
     /* KPI OPÉRATIONS - Bleu professionnel (confiance, stabilité) */
     .kpi-operations {
@@ -1379,7 +1356,7 @@ def page_dashboard():
     }
     
     .kpi-icon-operations::before {
-        content: "🏗️";
+        content: "📁";
         font-size: 32px;
         filter: drop-shadow(4px 4px 8px rgba(59, 130, 246, 0.6));
     }
@@ -1400,7 +1377,7 @@ def page_dashboard():
     }
     
     .kpi-icon-rem::before {
-        content: "💶";
+        content: "€";
         font-size: 32px;
         color: #FFD700;
         text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
@@ -1512,24 +1489,27 @@ def page_dashboard():
         margin-bottom: 1rem !important;
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     }
-    
-    /* CORRECTION DÉGRADÉ - Inverser le dégradé des cards actions */
-    .actions-card {
-        background: linear-gradient(90deg, #4CAF50 0%, #81C784 50%, #ffffff 100%) !important;
-        color: #1B5E20 !important;
-        font-weight: 600 !important;
-    }
     </style>
     """, unsafe_allow_html=True)
     
     col1, col2, col3, col4 = st.columns(4, gap="medium")
     
-    # CARDS CLIQUABLES - Transformer les métriques statiques en boutons
     with col1:
         operations_actives = kpis_data.get('operations_actives', 23)
         operations_cloturees = kpis_data.get('operations_cloturees', 5)
         
-        if st.button(f"{MODERN_ICONS['dossiers']} **Opérations Actives**\n{operations_actives} actives\n{operations_cloturees} clôturées", key="operations_btn", use_container_width=True, type="primary"):
+        st.markdown(f"""
+        <div style="background: linear-gradient(145deg, #3B82F6, #2563EB); color: white; min-height: 180px; border-radius: 20px; padding: 1.5rem; box-shadow: 0 10px 40px rgba(59, 130, 246, 0.3); display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 1rem;">
+            <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+                <div class="kpi-icon-operations"></div>
+                <div style="font-size: 2.5rem; font-weight: bold; color: white; margin: 0.5rem 0; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">{operations_actives}</div>
+                <div style="font-size: 1rem; font-weight: 600; color: white; margin-bottom: 0.25rem;">Opérations Actives</div>
+                <div style="font-size: 0.875rem; color: rgba(255, 255, 255, 0.9);">{operations_cloturees} clôturées</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("📂 Voir Portfolio", key="btn_operations", use_container_width=True, type="primary"):
             st.session_state.page = "portefeuille"
             st.rerun()
     
@@ -1538,14 +1518,36 @@ def page_dashboard():
         rem_prevu = kpis_data.get('rem_prevue_2024', 620000)
         taux_real = kpis_data.get('taux_realisation_rem', 78)
         
-        if st.button(f"{MODERN_ICONS['finance']} **REM Réalisée 2024**\n{rem_realise/1000:.0f}k€ / {taux_real}%\n{rem_prevu/1000:.0f}k€ prévue", key="rem_btn", use_container_width=True, type="primary"):
+        st.markdown(f"""
+        <div style="background: linear-gradient(145deg, #10B981, #059669); color: white; min-height: 180px; border-radius: 20px; padding: 1.5rem; box-shadow: 0 10px 40px rgba(16, 185, 129, 0.3); display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 1rem;">
+            <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+                <div class="kpi-icon-rem"></div>
+                <div style="font-size: 2.5rem; font-weight: bold; color: white; margin: 0.5rem 0; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">{rem_realise/1000:.0f}k€</div>
+                <div style="font-size: 1rem; font-weight: 600; color: white; margin-bottom: 0.25rem;">REM Réalisée 2024</div>
+                <div style="font-size: 0.875rem; color: rgba(255, 255, 255, 0.9);">{taux_real}% / {rem_prevu/1000:.0f}k€ prévue</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("💰 Analyse REM", key="btn_rem", use_container_width=True, type="primary"):
             st.info("📊 Analyse REM détaillée - En développement")
     
     with col3:
         freins_actifs = kpis_data.get('freins_actifs', 3)
         freins_critiques = kpis_data.get('freins_critiques', 2)
         
-        if st.button(f"{MODERN_ICONS['alertes']} **Freins Actifs**\n{freins_actifs} freins\n{freins_critiques} critiques", key="freins_btn", use_container_width=True, type="primary"):
+        st.markdown(f"""
+        <div style="background: linear-gradient(145deg, #F59E0B, #D97706); color: white; min-height: 180px; border-radius: 20px; padding: 1.5rem; box-shadow: 0 10px 40px rgba(245, 158, 11, 0.3); display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 1rem;">
+            <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+                <div class="kpi-icon-freins"></div>
+                <div style="font-size: 2.5rem; font-weight: bold; color: white; margin: 0.5rem 0; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">{freins_actifs}</div>
+                <div style="font-size: 1rem; font-weight: 600; color: white; margin-bottom: 0.25rem;">Freins Actifs</div>
+                <div style="font-size: 0.875rem; color: rgba(255, 255, 255, 0.9);">{freins_critiques} critiques</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("🚨 Gérer Freins", key="btn_freins", use_container_width=True, type="primary"):
             st.session_state.page = "gestion_freins"
             st.rerun()
     
@@ -1553,7 +1555,18 @@ def page_dashboard():
         echeances = kpis_data.get('echeances_semaine', 5)
         validations = kpis_data.get('validations_requises', 12)
         
-        if st.button(f"{MODERN_ICONS['calendar']} **Échéances Semaine**\n{echeances} échéances\n{validations} validations requises", key="echeances_btn", use_container_width=True, type="primary"):
+        st.markdown(f"""
+        <div style="background: linear-gradient(145deg, #EF4444, #DC2626); color: white; min-height: 180px; border-radius: 20px; padding: 1.5rem; box-shadow: 0 10px 40px rgba(239, 68, 68, 0.3); display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 1rem;">
+            <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+                <div class="kpi-icon-echeances"></div>
+                <div style="font-size: 2.5rem; font-weight: bold; color: white; margin: 0.5rem 0; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">{echeances}</div>
+                <div style="font-size: 1rem; font-weight: 600; color: white; margin-bottom: 0.25rem;">Échéances Semaine</div>
+                <div style="font-size: 0.875rem; color: rgba(255, 255, 255, 0.9);">{validations} validations requises</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("📅 Planning", key="btn_echeances", use_container_width=True, type="primary"):
             st.session_state.page = "planning_echeances"
             st.rerun()
     
@@ -1600,66 +1613,27 @@ def page_dashboard():
     with col_alert1:
         st.markdown("#### Alertes Critiques")
         
-        # ALERTE 1 - CRITIQUE ROUGE (Card seule, sans bouton)
-        st.markdown("""
-        <div style="background: linear-gradient(145deg, #FEE2E2, #FECACA); 
-                    border-left: 4px solid #EF4444; 
-                    border-radius: 15px; 
-                    padding: 1.25rem; 
-                    margin: 0.75rem 0; 
-                    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.15); 
-                    cursor: pointer; 
-                    transition: all 0.3s ease;"
-             onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 30px rgba(239, 68, 68, 0.25)'"
-             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 6px 20px rgba(239, 68, 68, 0.15)'">
-            <div style="font-weight: 700; font-size: 1.1rem; color: #DC2626; margin-bottom: 0.5rem;">🏗️ COUR CHARNEAU</div>
-            <div style="color: #DC2626; margin: 0.5rem 0; font-size: 0.95rem;">Retard MOE 5 jours sur phase LBU</div>
-            <div style="color: #DC2626; font-style: italic; font-size: 0.9rem; opacity: 0.9;">Action: Relance urgente MOE</div>
-        </div>
-        """, unsafe_allow_html=True)
+        # ALERTE 1 - CRITIQUE ROUGE (Card cliquable)
+        if st.button("🏗️ COUR CHARNEAU\nRetard MOE 5 jours sur phase LBU\nAction: Relance urgente MOE", key="alerte_1", use_container_width=True, type="primary"):
+            st.session_state.page = "alertes_detail"
+            st.rerun()
         
-        # ALERTE 2 - ATTENTION JAUNE (Card seule, sans bouton)
-        st.markdown("""
-        <div style="background: linear-gradient(145deg, #FEF3C7, #FDE68A); 
-                    border-left: 4px solid #F59E0B; 
-                    border-radius: 15px; 
-                    padding: 1.25rem; 
-                    margin: 0.75rem 0; 
-                    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.15); 
-                    cursor: pointer; 
-                    transition: all 0.3s ease;"
-             onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 30px rgba(245, 158, 11, 0.25)'"
-             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 6px 20px rgba(245, 158, 11, 0.15)'">
-            <div style="font-weight: 700; font-size: 1.1rem; color: #D97706; margin-bottom: 0.5rem;">🏠 VEFA BELCOURT</div>
-            <div style="color: #D97706; margin: 0.5rem 0; font-size: 0.95rem;">Validation promoteur en attente</div>
-            <div style="color: #D97706; font-style: italic; font-size: 0.9rem; opacity: 0.9;">Action: RDV programmé cette semaine</div>
-        </div>
-        """, unsafe_allow_html=True)
+        # ALERTE 2 - ATTENTION JAUNE (Card cliquable)
+        if st.button("🏠 VEFA BELCOURT\nValidation promoteur en attente\nAction: RDV programmé cette semaine", key="alerte_2", use_container_width=True, type="primary"):
+            st.session_state.page = "alertes_detail"
+            st.rerun()
         
-        # ALERTE 3 - INFORMATION BLEU CLAIR (Card seule, sans bouton)
-        st.markdown("""
-        <div style="background: linear-gradient(145deg, #DBEAFE, #BFDBFE); 
-                    border-left: 4px solid #3B82F6; 
-                    border-radius: 15px; 
-                    padding: 1.25rem; 
-                    margin: 0.75rem 0; 
-                    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.15); 
-                    cursor: pointer; 
-                    transition: all 0.3s ease;"
-             onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 30px rgba(59, 130, 246, 0.25)'"
-             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 6px 20px rgba(59, 130, 246, 0.15)'">
-            <div style="font-weight: 700; font-size: 1.1rem; color: #2563EB; margin-bottom: 0.5rem;">🏗️ RÉSIDENCE SOLEIL</div>
-            <div style="color: #2563EB; margin: 0.5rem 0; font-size: 0.95rem;">Phase Travaux en cours - bon avancement</div>
-            <div style="color: #2563EB; font-style: italic; font-size: 0.9rem; opacity: 0.9;">Action: Suivi hebdomadaire maintenu</div>
-        </div>
-        """, unsafe_allow_html=True)
+        # ALERTE 3 - INFORMATION BLEU CLAIR (Card cliquable)
+        if st.button("🏗️ RÉSIDENCE SOLEIL\nPhase Travaux en cours - bon avancement\nAction: Suivi hebdomadaire maintenu", key="alerte_3", use_container_width=True, type="primary"):
+            st.session_state.page = "alertes_detail"
+            st.rerun()
     
     with col_alert2:
         st.markdown("#### Actions Réalisées Aujourd'hui")
         
-        # ACTION 1 - VERTE avec coche alignée à gauche (HTML direct)
+        # ACTION 1 - VERTE avec dégradé inversé (vert foncé à gauche → blanc à droite)
         st.markdown("""
-        <div style="background: linear-gradient(145deg, #D1FAE5, #10B981); 
+        <div style="background: linear-gradient(90deg, #4CAF50 0%, #81C784 50%, #ffffff 100%); 
                     border-left: 4px solid #10B981; 
                     border-radius: 15px; 
                     padding: 1rem; 
@@ -1671,17 +1645,17 @@ def page_dashboard():
                     align-items: flex-start;"
              onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.25)'"
              onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'">
-            <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: white;">✅</div>
-            <div style="flex-grow: 1; color: white;">
+            <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: #1B5E20;">✅</div>
+            <div style="flex-grow: 1; color: #1B5E20;">
                 <div style="font-weight: 600; font-size: 1rem;">DGD validé - RÉSIDENCE SOLEIL</div>
                 <div style="font-size: 0.9rem; margin-top: 0.25rem; opacity: 0.9;">Décompte général définitif approuvé</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
         
-        # ACTION 2 - VERTE avec coche alignée à gauche (HTML direct)
+        # ACTION 2 - VERTE avec dégradé inversé
         st.markdown("""
-        <div style="background: linear-gradient(145deg, #D1FAE5, #10B981); 
+        <div style="background: linear-gradient(90deg, #4CAF50 0%, #81C784 50%, #ffffff 100%); 
                     border-left: 4px solid #10B981; 
                     border-radius: 15px; 
                     padding: 1rem; 
@@ -1693,17 +1667,17 @@ def page_dashboard():
                     align-items: flex-start;"
              onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.25)'"
              onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'">
-            <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: white;">✅</div>
-            <div style="flex-grow: 1; color: white;">
+            <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: #1B5E20;">✅</div>
+            <div style="flex-grow: 1; color: #1B5E20;">
                 <div style="font-weight: 600; font-size: 1rem;">Phase ESQ terminée - COUR CHARNEAU</div>
                 <div style="font-size: 0.9rem; margin-top: 0.25rem; opacity: 0.9;">Études esquisse validées par SPIC</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
         
-        # ACTION 3 - VERTE avec coche alignée à gauche (HTML direct)
+        # ACTION 3 - VERTE avec dégradé inversé
         st.markdown("""
-        <div style="background: linear-gradient(145deg, #D1FAE5, #10B981); 
+        <div style="background: linear-gradient(90deg, #4CAF50 0%, #81C784 50%, #ffffff 100%); 
                     border-left: 4px solid #10B981; 
                     border-radius: 15px; 
                     padding: 1rem; 
@@ -1715,17 +1689,17 @@ def page_dashboard():
                     align-items: flex-start;"
              onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.25)'"
              onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'">
-            <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: white;">✅</div>
-            <div style="flex-grow: 1; color: white;">
+            <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: #1B5E20;">✅</div>
+            <div style="flex-grow: 1; color: #1B5E20;">
                 <div style="font-weight: 600; font-size: 1rem;">MED envoyé - MANDAT ÉCOLE</div>
                 <div style="font-size: 0.9rem; margin-top: 0.25rem; opacity: 0.9;">Mise en demeure promoteur envoyée</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
         
-        # ACTION 4 - VERTE avec coche alignée à gauche (HTML direct)
+        # ACTION 4 - VERTE avec dégradé inversé
         st.markdown("""
-        <div style="background: linear-gradient(145deg, #D1FAE5, #10B981); 
+        <div style="background: linear-gradient(90deg, #4CAF50 0%, #81C784 50%, #ffffff 100%); 
                     border-left: 4px solid #10B981; 
                     border-radius: 15px; 
                     padding: 1rem; 
@@ -1737,17 +1711,17 @@ def page_dashboard():
                     align-items: flex-start;"
              onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.25)'"
              onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'">
-            <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: white;">✅</div>
-            <div style="flex-grow: 1; color: white;">
+            <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: #1B5E20;">✅</div>
+            <div style="flex-grow: 1; color: #1B5E20;">
                 <div style="font-weight: 600; font-size: 1rem;">REM T3 saisi - 3 opérations</div>
                 <div style="font-size: 0.9rem; margin-top: 0.25rem; opacity: 0.9;">Trimestre 3 validé et saisi</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
         
-        # ACTION 5 - VERTE avec coche alignée à gauche (HTML direct)
+        # ACTION 5 - VERTE avec dégradé inversé
         st.markdown("""
-        <div style="background: linear-gradient(145deg, #D1FAE5, #10B981); 
+        <div style="background: linear-gradient(90deg, #4CAF50 0%, #81C784 50%, #ffffff 100%); 
                     border-left: 4px solid #10B981; 
                     border-radius: 15px; 
                     padding: 1rem; 
@@ -1759,8 +1733,8 @@ def page_dashboard():
                     align-items: flex-start;"
              onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.25)'"
              onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'">
-            <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: white;">✅</div>
-            <div style="flex-grow: 1; color: white;">
+            <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: #1B5E20;">✅</div>
+            <div style="flex-grow: 1; color: #1B5E20;">
                 <div style="font-weight: 600; font-size: 1rem;">Timeline mise à jour - VEFA BELCOURT</div>
                 <div style="font-size: 0.9rem; margin-top: 0.25rem; opacity: 0.9;">Planning actualisé avec nouvelles échéances</div>
             </div>
