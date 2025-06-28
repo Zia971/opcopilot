@@ -1335,7 +1335,7 @@ def page_dashboard():
         margin-bottom: 1rem;
     }
     
-    /* ICÔNES 3D PROFESSIONNELLES */
+    /* ICÔNES 3D MODERNES AVEC EFFETS */
     .kpi-icon-operations {
         background: linear-gradient(145deg, #60A5FA, #3B82F6);
         width: 60px;
@@ -1348,7 +1348,13 @@ def page_dashboard():
             0 8px 16px rgba(0, 0, 0, 0.1),
             inset 0 1px 2px rgba(255, 255, 255, 0.2);
         margin: 0 auto 1rem auto;
-        font-size: 24px;
+        position: relative;
+    }
+    
+    .kpi-icon-operations::before {
+        content: "📁";
+        font-size: 32px;
+        filter: drop-shadow(4px 4px 8px rgba(59, 130, 246, 0.6));
     }
     
     .kpi-icon-rem {
@@ -1363,7 +1369,16 @@ def page_dashboard():
             0 8px 16px rgba(0, 0, 0, 0.1),
             inset 0 1px 2px rgba(255, 255, 255, 0.2);
         margin: 0 auto 1rem auto;
-        font-size: 24px;
+        position: relative;
+    }
+    
+    .kpi-icon-rem::before {
+        content: "€";
+        font-size: 32px;
+        color: #FFD700;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        filter: drop-shadow(3px 3px 6px rgba(255, 215, 0, 0.8));
+        font-weight: bold;
     }
     
     .kpi-icon-freins {
@@ -1378,7 +1393,13 @@ def page_dashboard():
             0 8px 16px rgba(0, 0, 0, 0.1),
             inset 0 1px 2px rgba(255, 255, 255, 0.2);
         margin: 0 auto 1rem auto;
-        font-size: 24px;
+        position: relative;
+    }
+    
+    .kpi-icon-freins::before {
+        content: "⚠️";
+        font-size: 32px;
+        filter: drop-shadow(3px 3px 6px rgba(245, 158, 11, 0.8));
     }
     
     .kpi-icon-echeances {
@@ -1393,7 +1414,13 @@ def page_dashboard():
             0 8px 16px rgba(0, 0, 0, 0.1),
             inset 0 1px 2px rgba(255, 255, 255, 0.2);
         margin: 0 auto 1rem auto;
-        font-size: 24px;
+        position: relative;
+    }
+    
+    .kpi-icon-echeances::before {
+        content: "📅";
+        font-size: 32px;
+        filter: drop-shadow(3px 3px 6px rgba(239, 68, 68, 0.8));
     }
     
     /* BOUTONS UNIFORMES 45px */
@@ -1443,7 +1470,7 @@ def page_dashboard():
         st.markdown(f"""
         <div class="kpi-operations">
             <div class="kpi-content">
-                <div class="kpi-icon-operations">📁</div>
+                <div class="kpi-icon-operations"></div>
                 <div style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem;">{operations_actives}</div>
                 <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">Opérations Actives</div>
                 <div style="font-size: 1rem; opacity: 0.9;">{operations_cloturees} clôturées</div>
@@ -1463,7 +1490,7 @@ def page_dashboard():
         st.markdown(f"""
         <div class="kpi-rem">
             <div class="kpi-content">
-                <div class="kpi-icon-rem">📊</div>
+                <div class="kpi-icon-rem"></div>
                 <div style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem;">{rem_realise/1000:.0f}k€</div>
                 <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">REM Réalisée 2024</div>
                 <div style="font-size: 1rem; opacity: 0.9;">{taux_real}% / {rem_prevu/1000:.0f}k€ prévue</div>
@@ -1481,7 +1508,7 @@ def page_dashboard():
         st.markdown(f"""
         <div class="kpi-freins">
             <div class="kpi-content">
-                <div class="kpi-icon-freins">⚠️</div>
+                <div class="kpi-icon-freins"></div>
                 <div style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem;">{freins_actifs}</div>
                 <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">Freins Actifs</div>
                 <div style="font-size: 1rem; opacity: 0.9;">{freins_critiques} critiques</div>
@@ -1500,7 +1527,7 @@ def page_dashboard():
         st.markdown(f"""
         <div class="kpi-echeances">
             <div class="kpi-content">
-                <div class="kpi-icon-echeances">📅</div>
+                <div class="kpi-icon-echeances"></div>
                 <div style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem;">{echeances}</div>
                 <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">Échéances Semaine</div>
                 <div style="font-size: 1rem; opacity: 0.9;">{validations} validations requises</div>
