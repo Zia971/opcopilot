@@ -1569,47 +1569,102 @@ def page_dashboard():
     # Alertes et actions MODERNISÉES ET SIMPLIFIÉES
     st.markdown("### 🚨 Alertes et Actions Prioritaires")
     
-    # CSS pour cards cliquables simples
+    # CSS pour alignement parfait des coches et logique couleurs intelligente
     st.markdown("""
     <style>
-    /* BOUTONS ALERTES - Style card moderne */
+    /* ALERTES - Logique couleurs selon criticité métier */
     .stButton > button[data-testid="baseButton-secondary"] {
-        background: linear-gradient(145deg, #FEF3C7, #FDE68A) !important;
         border: none !important;
-        border-left: 4px solid #F59E0B !important;
         border-radius: 15px !important;
         padding: 1.25rem !important;
         text-align: left !important;
-        box-shadow: 0 6px 20px rgba(245, 158, 11, 0.15) !important;
         transition: all 0.3s ease !important;
         width: 100% !important;
         white-space: pre-line !important;
-        color: #92400E !important;
+        font-weight: 600 !important;
     }
     
-    .stButton > button[data-testid="baseButton-secondary"]:hover {
+    /* ALERTE CRITIQUE - Rouge (retard MOE = urgent !) */
+    .stButton > button[data-testid="baseButton-secondary"][key*="cour_charneau"] {
+        background: linear-gradient(145deg, #FEE2E2, #FECACA) !important;
+        border-left: 4px solid #EF4444 !important;
+        color: #DC2626 !important;
+        box-shadow: 0 6px 20px rgba(239, 68, 68, 0.15) !important;
+    }
+    
+    .stButton > button[data-testid="baseButton-secondary"][key*="cour_charneau"]:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 8px 30px rgba(239, 68, 68, 0.25) !important;
+    }
+    
+    /* ALERTE ATTENTION - Jaune (validation requise) */
+    .stButton > button[data-testid="baseButton-secondary"][key*="vefa_belcourt"] {
+        background: linear-gradient(145deg, #FEF3C7, #FDE68A) !important;
+        border-left: 4px solid #F59E0B !important;
+        color: #D97706 !important;
+        box-shadow: 0 6px 20px rgba(245, 158, 11, 0.15) !important;
+    }
+    
+    .stButton > button[data-testid="baseButton-secondary"][key*="vefa_belcourt"]:hover {
         transform: translateY(-3px) !important;
         box-shadow: 0 8px 30px rgba(245, 158, 11, 0.25) !important;
     }
     
-    /* BOUTONS ACTIONS - Style succès */
+    /* ALERTE INFO - Bleu clair (suivi normal) */
+    .stButton > button[data-testid="baseButton-secondary"][key*="residence_soleil"] {
+        background: linear-gradient(145deg, #DBEAFE, #BFDBFE) !important;
+        border-left: 4px solid #3B82F6 !important;
+        color: #2563EB !important;
+        box-shadow: 0 6px 20px rgba(59, 130, 246, 0.15) !important;
+    }
+    
+    .stButton > button[data-testid="baseButton-secondary"][key*="residence_soleil"]:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 8px 30px rgba(59, 130, 246, 0.25) !important;
+    }
+    
+    /* ACTIONS - Alignement parfait des coches */
     .stButton > button[data-testid="baseButton-primary"] {
         background: linear-gradient(145deg, #D1FAE5, #A7F3D0) !important;
         border: none !important;
         border-left: 4px solid #10B981 !important;
         border-radius: 15px !important;
         padding: 1rem !important;
-        text-align: left !important;
         box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15) !important;
         transition: all 0.3s ease !important;
         width: 100% !important;
-        white-space: pre-line !important;
         color: #047857 !important;
+        font-weight: 600 !important;
+        
+        /* ALIGNEMENT PARFAIT DES COCHES */
+        display: flex !important;
+        align-items: flex-start !important;
+        text-align: left !important;
+        white-space: pre-line !important;
     }
     
     .stButton > button[data-testid="baseButton-primary"]:hover {
         transform: translateY(-2px) !important;
         box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25) !important;
+    }
+    
+    /* STRUCTURE FLEX POUR COCHES ALIGNÉES */
+    .action-button-content {
+        display: flex;
+        align-items: flex-start;
+        width: 100%;
+    }
+    
+    .check-icon {
+        margin-right: 0.75rem;
+        flex-shrink: 0;
+        font-size: 1.2rem;
+        line-height: 1.5;
+    }
+    
+    .action-content {
+        flex-grow: 1;
+        text-align: left;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -1673,9 +1728,8 @@ Action: Suivi hebdomadaire maintenu""",
     with col_alert2:
         st.markdown("#### Actions Réalisées Aujourd'hui")
         
-        # ACTION 1 - Card cliquable directe
-        if st.button("""✅ DGD validé - RÉSIDENCE SOLEIL
-Décompte général définitif approuvé""", 
+        # ACTION 1 - Card cliquable directe avec coche alignée
+        if st.button("✅   DGD validé - RÉSIDENCE SOLEIL\n      Décompte général définitif approuvé", 
                     key="action_dgd_soleil", 
                     use_container_width=True, 
                     type="primary"):
@@ -1689,9 +1743,8 @@ Décompte général définitif approuvé""",
                 st.session_state.page = "operation_details"
                 st.rerun()
         
-        # ACTION 2 - Card cliquable directe
-        if st.button("""✅ Phase ESQ terminée - COUR CHARNEAU
-Études esquisse validées par SPIC""", 
+        # ACTION 2 - Card cliquable directe avec coche alignée
+        if st.button("✅   Phase ESQ terminée - COUR CHARNEAU\n      Études esquisse validées par SPIC", 
                     key="action_esq_charneau", 
                     use_container_width=True, 
                     type="primary"):
@@ -1705,25 +1758,22 @@ Décompte général définitif approuvé""",
                 st.session_state.page = "operation_details"
                 st.rerun()
         
-        # ACTION 3 - Card cliquable directe
-        if st.button("""✅ MED envoyé - MANDAT ÉCOLE
-Mise en demeure promoteur envoyée""", 
+        # ACTION 3 - Card cliquable directe avec coche alignée
+        if st.button("✅   MED envoyé - MANDAT ÉCOLE\n      Mise en demeure promoteur envoyée", 
                     key="action_med_ecole", 
                     use_container_width=True, 
                     type="primary"):
             st.info("Navigation vers MANDAT ÉCOLE - Module en développement")
         
-        # ACTION 4 - Card cliquable directe
-        if st.button("""✅ REM T3 saisi - 3 opérations
-Trimestre 3 validé et saisi""", 
+        # ACTION 4 - Card cliquable directe avec coche alignée
+        if st.button("✅   REM T3 saisi - 3 opérations\n      Trimestre 3 validé et saisi", 
                     key="action_rem_t3", 
                     use_container_width=True, 
                     type="primary"):
             st.info("Navigation vers module REM - En développement")
         
-        # ACTION 5 - Card cliquable directe
-        if st.button("""✅ Timeline mise à jour - VEFA BELCOURT
-Planning actualisé avec nouvelles échéances""", 
+        # ACTION 5 - Card cliquable directe avec coche alignée
+        if st.button("✅   Timeline mise à jour - VEFA BELCOURT\n      Planning actualisé avec nouvelles échéances", 
                     key="action_timeline_belcourt", 
                     use_container_width=True, 
                     type="primary"):
