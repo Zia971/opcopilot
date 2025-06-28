@@ -381,6 +381,243 @@ st.markdown("""
         border-radius: 10px !important;
         border-left: 4px solid #8B5CF6 !important;
     }
+    
+    /* STYLES KPIs UNIQUEMENT - COULEURS STRATÉGIQUES MÉTIER */
+    
+    /* KPI OPÉRATIONS - Bleu professionnel (confiance, stabilité) */
+    .kpi-operations {
+        background: linear-gradient(145deg, #3B82F6, #2563EB);
+        color: white;
+        min-height: 180px !important;
+        max-height: 180px !important;
+        border-radius: 20px;
+        padding: 1.5rem;
+        box-shadow: 0 10px 40px rgba(59, 130, 246, 0.3);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        margin-bottom: 1rem;
+    }
+    
+    /* KPI REM - Vert performance (succès, croissance) */
+    .kpi-rem {
+        background: linear-gradient(145deg, #10B981, #059669);
+        color: white;
+        min-height: 180px !important;
+        max-height: 180px !important;
+        border-radius: 20px;
+        padding: 1.5rem;
+        box-shadow: 0 10px 40px rgba(16, 185, 129, 0.3);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        margin-bottom: 1rem;
+    }
+    
+    /* KPI FREINS - Orange vigilance (attention, action requise) */
+    .kpi-freins {
+        background: linear-gradient(145deg, #F59E0B, #D97706);
+        color: white;
+        min-height: 180px !important;
+        max-height: 180px !important;
+        border-radius: 20px;
+        padding: 1.5rem;
+        box-shadow: 0 10px 40px rgba(245, 158, 11, 0.3);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        margin-bottom: 1rem;
+    }
+    
+    /* KPI ÉCHÉANCES - Rouge urgence (priorité absolue) */
+    .kpi-echeances {
+        background: linear-gradient(145deg, #EF4444, #DC2626);
+        color: white;
+        min-height: 180px !important;
+        max-height: 180px !important;
+        border-radius: 20px;
+        padding: 1.5rem;
+        box-shadow: 0 10px 40px rgba(239, 68, 68, 0.3);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        margin-bottom: 1rem;
+    }
+    
+    /* ICÔNES 3D MODERNES AVEC EFFETS */
+    .kpi-icon-operations {
+        background: linear-gradient(145deg, #60A5FA, #3B82F6);
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 
+            0 8px 16px rgba(0, 0, 0, 0.1),
+            inset 0 1px 2px rgba(255, 255, 255, 0.2);
+        margin: 0 auto 1rem auto;
+        position: relative;
+    }
+    
+    .kpi-icon-operations::before {
+        content: "📁";
+        font-size: 32px;
+        filter: drop-shadow(4px 4px 8px rgba(59, 130, 246, 0.6));
+    }
+    
+    .kpi-icon-rem {
+        background: linear-gradient(145deg, #34D399, #10B981);
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 
+            0 8px 16px rgba(0, 0, 0, 0.1),
+            inset 0 1px 2px rgba(255, 255, 255, 0.2);
+        margin: 0 auto 1rem auto;
+        position: relative;
+    }
+    
+    .kpi-icon-rem::before {
+        content: "€";
+        font-size: 32px;
+        color: #FFD700;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        filter: drop-shadow(3px 3px 6px rgba(255, 215, 0, 0.8));
+        font-weight: bold;
+    }
+    
+    .kpi-icon-freins {
+        background: linear-gradient(145deg, #FBBF24, #F59E0B);
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 
+            0 8px 16px rgba(0, 0, 0, 0.1),
+            inset 0 1px 2px rgba(255, 255, 255, 0.2);
+        margin: 0 auto 1rem auto;
+        position: relative;
+    }
+    
+    .kpi-icon-freins::before {
+        content: "⚠️";
+        font-size: 32px;
+        filter: drop-shadow(3px 3px 6px rgba(245, 158, 11, 0.8));
+    }
+    
+    .kpi-icon-echeances {
+        background: linear-gradient(145deg, #F87171, #EF4444);
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 
+            0 8px 16px rgba(0, 0, 0, 0.1),
+            inset 0 1px 2px rgba(255, 255, 255, 0.2);
+        margin: 0 auto 1rem auto;
+        position: relative;
+    }
+    
+    .kpi-icon-echeances::before {
+        content: "📅";
+        font-size: 32px;
+        filter: drop-shadow(3px 3px 6px rgba(239, 68, 68, 0.8));
+    }
+    
+    /* BOUTONS UNIFORMES 45px */
+    .kpi-button {
+        background: rgba(255, 255, 255, 0.2) !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        min-height: 45px !important;
+        max-height: 45px !important;
+        border-radius: 12px !important;
+        color: white !important;
+        font-weight: 600 !important;
+        margin-top: auto;
+        transition: all 0.3s ease;
+        padding: 0.5rem 1rem;
+    }
+    
+    .kpi-button:hover {
+        background: rgba(255, 255, 255, 0.3) !important;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* EFFETS HOVER CARDS */
+    .kpi-operations:hover, .kpi-rem:hover, .kpi-freins:hover, .kpi-echeances:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* CONTENU CENTRÉ DANS LES CARDS */
+    .kpi-content {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: white !important;
+    }
+    
+    /* GROS CHIFFRE BLANC */
+    .kpi-value {
+        font-size: 2.5rem !important;
+        font-weight: bold !important;
+        color: white !important;
+        margin: 0.5rem 0 !important;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* LABEL PRINCIPAL BLANC */
+    .kpi-label {
+        font-size: 1rem !important;
+        font-weight: 600 !important;
+        color: white !important;
+        margin-bottom: 0.25rem !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* DÉTAIL BLANC */
+    .kpi-detail {
+        font-size: 0.875rem !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+        margin-bottom: 1rem !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* ACTIONS RÉALISÉES - VERT FORCÉ (pas violet) */
+    .stButton > button[data-testid="baseButton-primary"] {
+        background: linear-gradient(90deg, #4CAF50 0%, #ffffff 100%) !important;
+        border: none !important;
+        border-left: 4px solid #10B981 !important;
+        border-radius: 15px !important;
+        padding: 1rem !important;
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15) !important;
+        transition: all 0.3s ease !important;
+        width: 100% !important;
+        color: white !important;
+        font-weight: 600 !important;
+        text-align: left !important;
+        white-space: pre-line !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -1587,7 +1824,7 @@ def page_dashboard():
     
     /* ACTIONS RÉALISÉES - VERT FORCÉ (pas violet) */
     .stButton > button[data-testid="baseButton-primary"] {
-        background: linear-gradient(145deg, #D1FAE5, #10B981) !important;
+        background: linear-gradient(90deg, #4CAF50 0%, #ffffff 100%) !important;
         border: none !important;
         border-left: 4px solid #10B981 !important;
         border-radius: 15px !important;
@@ -1614,132 +1851,47 @@ def page_dashboard():
         st.markdown("#### Alertes Critiques")
         
         # ALERTE 1 - CRITIQUE ROUGE (Card cliquable)
-        if st.button("🏗️ COUR CHARNEAU\nRetard MOE 5 jours sur phase LBU\nAction: Relance urgente MOE", key="alerte_1", use_container_width=True, type="primary"):
-            st.session_state.page = "alertes_detail"
+        if st.button("🏗️ COUR CHARNEAU\nRetard MOE 5 jours sur phase LBU\nAction: Relance urgente MOE", key="alert_1", use_container_width=True, type="primary"):
+            st.session_state.page = "alertes"
             st.rerun()
         
         # ALERTE 2 - ATTENTION JAUNE (Card cliquable)
-        if st.button("🏠 VEFA BELCOURT\nValidation promoteur en attente\nAction: RDV programmé cette semaine", key="alerte_2", use_container_width=True, type="primary"):
-            st.session_state.page = "alertes_detail"
+        if st.button("🏠 VEFA BELCOURT\nValidation promoteur en attente\nAction: RDV programmé cette semaine", key="alert_2", use_container_width=True, type="primary"):
+            st.session_state.page = "alertes"
             st.rerun()
         
         # ALERTE 3 - INFORMATION BLEU CLAIR (Card cliquable)
-        if st.button("🏗️ RÉSIDENCE SOLEIL\nPhase Travaux en cours - bon avancement\nAction: Suivi hebdomadaire maintenu", key="alerte_3", use_container_width=True, type="primary"):
-            st.session_state.page = "alertes_detail"
+        if st.button("🏗️ RÉSIDENCE SOLEIL\nPhase Travaux en cours - bon avancement\nAction: Suivi hebdomadaire maintenu", key="alert_3", use_container_width=True, type="primary"):
+            st.session_state.page = "alertes"
             st.rerun()
     
     with col_alert2:
         st.markdown("#### Actions Réalisées Aujourd'hui")
         
         # ACTION 1 - VERTE avec dégradé inversé (vert foncé à gauche → blanc à droite)
-        st.markdown("""
-        <div style="background: linear-gradient(90deg, #4CAF50 0%, #81C784 50%, #ffffff 100%); 
-                    border-left: 4px solid #10B981; 
-                    border-radius: 15px; 
-                    padding: 1rem; 
-                    margin: 0.5rem 0; 
-                    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15); 
-                    cursor: pointer; 
-                    transition: all 0.3s ease;
-                    display: flex;
-                    align-items: flex-start;"
-             onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.25)'"
-             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'">
-            <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: #1B5E20;">✅</div>
-            <div style="flex-grow: 1; color: #1B5E20;">
-                <div style="font-weight: 600; font-size: 1rem;">DGD validé - RÉSIDENCE SOLEIL</div>
-                <div style="font-size: 0.9rem; margin-top: 0.25rem; opacity: 0.9;">Décompte général définitif approuvé</div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        if st.button("✅ DGD validé - RÉSIDENCE SOLEIL\nDécompte général définitif approuvé", key="action_1", use_container_width=True, type="primary"):
+            st.session_state.page = "actions"
+            st.rerun()
         
         # ACTION 2 - VERTE avec dégradé inversé
-        st.markdown("""
-        <div style="background: linear-gradient(90deg, #4CAF50 0%, #81C784 50%, #ffffff 100%); 
-                    border-left: 4px solid #10B981; 
-                    border-radius: 15px; 
-                    padding: 1rem; 
-                    margin: 0.5rem 0; 
-                    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15); 
-                    cursor: pointer; 
-                    transition: all 0.3s ease;
-                    display: flex;
-                    align-items: flex-start;"
-             onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.25)'"
-             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'">
-            <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: #1B5E20;">✅</div>
-            <div style="flex-grow: 1; color: #1B5E20;">
-                <div style="font-weight: 600; font-size: 1rem;">Phase ESQ terminée - COUR CHARNEAU</div>
-                <div style="font-size: 0.9rem; margin-top: 0.25rem; opacity: 0.9;">Études esquisse validées par SPIC</div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        if st.button("✅ Phase ESQ terminée - COUR CHARNEAU\nÉtudes esquisse validées par SPIC", key="action_2", use_container_width=True, type="primary"):
+            st.session_state.page = "actions"
+            st.rerun()
         
         # ACTION 3 - VERTE avec dégradé inversé
-        st.markdown("""
-        <div style="background: linear-gradient(90deg, #4CAF50 0%, #81C784 50%, #ffffff 100%); 
-                    border-left: 4px solid #10B981; 
-                    border-radius: 15px; 
-                    padding: 1rem; 
-                    margin: 0.5rem 0; 
-                    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15); 
-                    cursor: pointer; 
-                    transition: all 0.3s ease;
-                    display: flex;
-                    align-items: flex-start;"
-             onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.25)'"
-             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'">
-            <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: #1B5E20;">✅</div>
-            <div style="flex-grow: 1; color: #1B5E20;">
-                <div style="font-weight: 600; font-size: 1rem;">MED envoyé - MANDAT ÉCOLE</div>
-                <div style="font-size: 0.9rem; margin-top: 0.25rem; opacity: 0.9;">Mise en demeure promoteur envoyée</div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        if st.button("✅ MED envoyé - MANDAT ÉCOLE\nMise en demeure promoteur envoyée", key="action_3", use_container_width=True, type="primary"):
+            st.session_state.page = "actions"
+            st.rerun()
         
         # ACTION 4 - VERTE avec dégradé inversé
-        st.markdown("""
-        <div style="background: linear-gradient(90deg, #4CAF50 0%, #81C784 50%, #ffffff 100%); 
-                    border-left: 4px solid #10B981; 
-                    border-radius: 15px; 
-                    padding: 1rem; 
-                    margin: 0.5rem 0; 
-                    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15); 
-                    cursor: pointer; 
-                    transition: all 0.3s ease;
-                    display: flex;
-                    align-items: flex-start;"
-             onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.25)'"
-             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'">
-            <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: #1B5E20;">✅</div>
-            <div style="flex-grow: 1; color: #1B5E20;">
-                <div style="font-weight: 600; font-size: 1rem;">REM T3 saisi - 3 opérations</div>
-                <div style="font-size: 0.9rem; margin-top: 0.25rem; opacity: 0.9;">Trimestre 3 validé et saisi</div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        if st.button("✅ REM T3 saisi - 3 opérations\nTrimestre 3 validé et saisi", key="action_4", use_container_width=True, type="primary"):
+            st.session_state.page = "actions"
+            st.rerun()
         
         # ACTION 5 - VERTE avec dégradé inversé
-        st.markdown("""
-        <div style="background: linear-gradient(90deg, #4CAF50 0%, #81C784 50%, #ffffff 100%); 
-                    border-left: 4px solid #10B981; 
-                    border-radius: 15px; 
-                    padding: 1rem; 
-                    margin: 0.5rem 0; 
-                    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15); 
-                    cursor: pointer; 
-                    transition: all 0.3s ease;
-                    display: flex;
-                    align-items: flex-start;"
-             onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.25)'"
-             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'">
-            <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: #1B5E20;">✅</div>
-            <div style="flex-grow: 1; color: #1B5E20;">
-                <div style="font-weight: 600; font-size: 1rem;">Timeline mise à jour - VEFA BELCOURT</div>
-                <div style="font-size: 0.9rem; margin-top: 0.25rem; opacity: 0.9;">Planning actualisé avec nouvelles échéances</div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        if st.button("✅ Timeline mise à jour - VEFA BELCOURT\nPlanning actualisé avec nouvelles échéances", key="action_5", use_container_width=True, type="primary"):
+            st.session_state.page = "actions"
+            st.rerun()
     
     # Graphique d'activité MODERNISÉ
     st.markdown("### 📈 Activité Mensuelle")
