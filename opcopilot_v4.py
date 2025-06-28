@@ -1852,17 +1852,17 @@ def page_dashboard():
         
         # ALERTE 1 - CRITIQUE ROUGE (Card cliquable)
         if st.button("🏗️ COUR CHARNEAU\nRetard MOE 5 jours sur phase LBU\nAction: Relance urgente MOE", key="alert_1", use_container_width=True, type="primary"):
-            st.session_state.page = "alertes"
+            st.session_state.page = "alertes_detail"
             st.rerun()
         
         # ALERTE 2 - ATTENTION JAUNE (Card cliquable)
         if st.button("🏠 VEFA BELCOURT\nValidation promoteur en attente\nAction: RDV programmé cette semaine", key="alert_2", use_container_width=True, type="primary"):
-            st.session_state.page = "alertes"
+            st.session_state.page = "alertes_detail"
             st.rerun()
         
         # ALERTE 3 - INFORMATION BLEU CLAIR (Card cliquable)
         if st.button("🏗️ RÉSIDENCE SOLEIL\nPhase Travaux en cours - bon avancement\nAction: Suivi hebdomadaire maintenu", key="alert_3", use_container_width=True, type="primary"):
-            st.session_state.page = "alertes"
+            st.session_state.page = "alertes_detail"
             st.rerun()
     
     with col_alert2:
@@ -1870,27 +1870,27 @@ def page_dashboard():
         
         # ACTION 1 - VERTE avec dégradé inversé (vert foncé à gauche → blanc à droite)
         if st.button("✅ DGD validé - RÉSIDENCE SOLEIL\nDécompte général définitif approuvé", key="action_1", use_container_width=True, type="primary"):
-            st.session_state.page = "actions"
+            st.session_state.page = "actions_detail"
             st.rerun()
         
         # ACTION 2 - VERTE avec dégradé inversé
         if st.button("✅ Phase ESQ terminée - COUR CHARNEAU\nÉtudes esquisse validées par SPIC", key="action_2", use_container_width=True, type="primary"):
-            st.session_state.page = "actions"
+            st.session_state.page = "actions_detail"
             st.rerun()
         
         # ACTION 3 - VERTE avec dégradé inversé
         if st.button("✅ MED envoyé - MANDAT ÉCOLE\nMise en demeure promoteur envoyée", key="action_3", use_container_width=True, type="primary"):
-            st.session_state.page = "actions"
+            st.session_state.page = "actions_detail"
             st.rerun()
         
         # ACTION 4 - VERTE avec dégradé inversé
         if st.button("✅ REM T3 saisi - 3 opérations\nTrimestre 3 validé et saisi", key="action_4", use_container_width=True, type="primary"):
-            st.session_state.page = "actions"
+            st.session_state.page = "actions_detail"
             st.rerun()
         
         # ACTION 5 - VERTE avec dégradé inversé
         if st.button("✅ Timeline mise à jour - VEFA BELCOURT\nPlanning actualisé avec nouvelles échéances", key="action_5", use_container_width=True, type="primary"):
-            st.session_state.page = "actions"
+            st.session_state.page = "actions_detail"
             st.rerun()
     
     # Graphique d'activité MODERNISÉ
