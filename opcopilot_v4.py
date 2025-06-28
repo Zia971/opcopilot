@@ -1262,22 +1262,196 @@ def page_dashboard():
     # KPIs personnels ACO INTERACTIFS MODERNISÉS
     st.markdown("### 📊 Mes Indicateurs Clés de Performance")
     
-    col1, col2, col3, col4 = st.columns(4)
+    # CSS spécifique pour KPIs UNIQUEMENT
+    st.markdown("""
+    <style>
+    /* STYLES KPIs UNIQUEMENT - COULEURS STRATÉGIQUES MÉTIER */
+    
+    /* KPI OPÉRATIONS - Bleu professionnel (confiance, stabilité) */
+    .kpi-operations {
+        background: linear-gradient(145deg, #3B82F6, #2563EB);
+        color: white;
+        min-height: 180px !important;
+        max-height: 180px !important;
+        border-radius: 20px;
+        padding: 1.5rem;
+        box-shadow: 0 10px 40px rgba(59, 130, 246, 0.3);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        margin-bottom: 1rem;
+    }
+    
+    /* KPI REM - Vert performance (succès, croissance) */
+    .kpi-rem {
+        background: linear-gradient(145deg, #10B981, #059669);
+        color: white;
+        min-height: 180px !important;
+        max-height: 180px !important;
+        border-radius: 20px;
+        padding: 1.5rem;
+        box-shadow: 0 10px 40px rgba(16, 185, 129, 0.3);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        margin-bottom: 1rem;
+    }
+    
+    /* KPI FREINS - Orange vigilance (attention, action requise) */
+    .kpi-freins {
+        background: linear-gradient(145deg, #F59E0B, #D97706);
+        color: white;
+        min-height: 180px !important;
+        max-height: 180px !important;
+        border-radius: 20px;
+        padding: 1.5rem;
+        box-shadow: 0 10px 40px rgba(245, 158, 11, 0.3);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        margin-bottom: 1rem;
+    }
+    
+    /* KPI ÉCHÉANCES - Rouge urgence (priorité absolue) */
+    .kpi-echeances {
+        background: linear-gradient(145deg, #EF4444, #DC2626);
+        color: white;
+        min-height: 180px !important;
+        max-height: 180px !important;
+        border-radius: 20px;
+        padding: 1.5rem;
+        box-shadow: 0 10px 40px rgba(239, 68, 68, 0.3);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        margin-bottom: 1rem;
+    }
+    
+    /* ICÔNES 3D PROFESSIONNELLES */
+    .kpi-icon-operations {
+        background: linear-gradient(145deg, #60A5FA, #3B82F6);
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 
+            0 8px 16px rgba(0, 0, 0, 0.1),
+            inset 0 1px 2px rgba(255, 255, 255, 0.2);
+        margin: 0 auto 1rem auto;
+        font-size: 24px;
+    }
+    
+    .kpi-icon-rem {
+        background: linear-gradient(145deg, #34D399, #10B981);
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 
+            0 8px 16px rgba(0, 0, 0, 0.1),
+            inset 0 1px 2px rgba(255, 255, 255, 0.2);
+        margin: 0 auto 1rem auto;
+        font-size: 24px;
+    }
+    
+    .kpi-icon-freins {
+        background: linear-gradient(145deg, #FBBF24, #F59E0B);
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 
+            0 8px 16px rgba(0, 0, 0, 0.1),
+            inset 0 1px 2px rgba(255, 255, 255, 0.2);
+        margin: 0 auto 1rem auto;
+        font-size: 24px;
+    }
+    
+    .kpi-icon-echeances {
+        background: linear-gradient(145deg, #F87171, #EF4444);
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 
+            0 8px 16px rgba(0, 0, 0, 0.1),
+            inset 0 1px 2px rgba(255, 255, 255, 0.2);
+        margin: 0 auto 1rem auto;
+        font-size: 24px;
+    }
+    
+    /* BOUTONS UNIFORMES 45px */
+    .kpi-button {
+        background: rgba(255, 255, 255, 0.2) !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        min-height: 45px !important;
+        max-height: 45px !important;
+        border-radius: 12px !important;
+        color: white !important;
+        font-weight: 600 !important;
+        margin-top: auto;
+        transition: all 0.3s ease;
+        padding: 0.5rem 1rem;
+    }
+    
+    .kpi-button:hover {
+        background: rgba(255, 255, 255, 0.3) !important;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* EFFETS HOVER CARDS */
+    .kpi-operations:hover, .kpi-rem:hover, .kpi-freins:hover, .kpi-echeances:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* CONTENU CENTRÉ */
+    .kpi-content {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    
+    col1, col2, col3, col4 = st.columns(4, gap="medium")
     
     with col1:
         operations_actives = kpis_data.get('operations_actives', 23)
         operations_cloturees = kpis_data.get('operations_cloturees', 5)
         
         st.markdown(f"""
-        <div class="kpi-card primary" onclick="location.href='#';" style="cursor: pointer;">
-            <div style="font-size: 3rem; margin-bottom: 0.5rem;">📂</div>
-            <div style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem;">{operations_actives}</div>
-            <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">Opérations Actives</div>
-            <div style="font-size: 1rem; opacity: 0.9;">{operations_cloturees} clôturées</div>
+        <div class="kpi-operations">
+            <div class="kpi-content">
+                <div class="kpi-icon-operations">📁</div>
+                <div style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem;">{operations_actives}</div>
+                <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">Opérations Actives</div>
+                <div style="font-size: 1rem; opacity: 0.9;">{operations_cloturees} clôturées</div>
+            </div>
         </div>
         """, unsafe_allow_html=True)
         
-        if st.button("📂 Voir Portfolio", key="btn_operations", use_container_width=True):
+        if st.button("📂 Voir Portfolio", key="btn_operations", use_container_width=True, type="primary"):
             st.session_state.page = "portefeuille"
             st.rerun()
     
@@ -1287,15 +1461,17 @@ def page_dashboard():
         taux_real = kpis_data.get('taux_realisation_rem', 78)
         
         st.markdown(f"""
-        <div class="kpi-card success" onclick="location.href='#';" style="cursor: pointer;">
-            <div style="font-size: 3rem; margin-bottom: 0.5rem;">💰</div>
-            <div style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem;">{rem_realise/1000:.0f}k€</div>
-            <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">REM Réalisée 2024</div>
-            <div style="font-size: 1rem; opacity: 0.9;">{taux_real}% / {rem_prevu/1000:.0f}k€ prévue</div>
+        <div class="kpi-rem">
+            <div class="kpi-content">
+                <div class="kpi-icon-rem">📊</div>
+                <div style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem;">{rem_realise/1000:.0f}k€</div>
+                <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">REM Réalisée 2024</div>
+                <div style="font-size: 1rem; opacity: 0.9;">{taux_real}% / {rem_prevu/1000:.0f}k€ prévue</div>
+            </div>
         </div>
         """, unsafe_allow_html=True)
         
-        if st.button("💰 Analyse REM", key="btn_rem", use_container_width=True):
+        if st.button("💰 Analyse REM", key="btn_rem", use_container_width=True, type="primary"):
             st.info("📊 Analyse REM détaillée - En développement")
     
     with col3:
@@ -1303,15 +1479,17 @@ def page_dashboard():
         freins_critiques = kpis_data.get('freins_critiques', 2)
         
         st.markdown(f"""
-        <div class="kpi-card warning" onclick="location.href='#';" style="cursor: pointer;">
-            <div style="font-size: 3rem; margin-bottom: 0.5rem;">🚨</div>
-            <div style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem;">{freins_actifs}</div>
-            <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">Freins Actifs</div>
-            <div style="font-size: 1rem; opacity: 0.9;">{freins_critiques} critiques</div>
+        <div class="kpi-freins">
+            <div class="kpi-content">
+                <div class="kpi-icon-freins">⚠️</div>
+                <div style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem;">{freins_actifs}</div>
+                <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">Freins Actifs</div>
+                <div style="font-size: 1rem; opacity: 0.9;">{freins_critiques} critiques</div>
+            </div>
         </div>
         """, unsafe_allow_html=True)
         
-        if st.button("🚨 Gérer Freins", key="btn_freins", use_container_width=True):
+        if st.button("🚨 Gérer Freins", key="btn_freins", use_container_width=True, type="primary"):
             st.session_state.page = "gestion_freins"
             st.rerun()
     
@@ -1320,15 +1498,17 @@ def page_dashboard():
         validations = kpis_data.get('validations_requises', 12)
         
         st.markdown(f"""
-        <div class="kpi-card danger" onclick="location.href='#';" style="cursor: pointer;">
-            <div style="font-size: 3rem; margin-bottom: 0.5rem;">📅</div>
-            <div style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem;">{echeances}</div>
-            <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">Échéances Semaine</div>
-            <div style="font-size: 1rem; opacity: 0.9;">{validations} validations requises</div>
+        <div class="kpi-echeances">
+            <div class="kpi-content">
+                <div class="kpi-icon-echeances">📅</div>
+                <div style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem;">{echeances}</div>
+                <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">Échéances Semaine</div>
+                <div style="font-size: 1rem; opacity: 0.9;">{validations} validations requises</div>
+            </div>
         </div>
         """, unsafe_allow_html=True)
         
-        if st.button("📅 Planning", key="btn_echeances", use_container_width=True):
+        if st.button("📅 Planning", key="btn_echeances", use_container_width=True, type="primary"):
             st.session_state.page = "planning_echeances"
             st.rerun()
     
