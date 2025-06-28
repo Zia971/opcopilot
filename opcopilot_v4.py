@@ -1573,7 +1573,7 @@ def page_dashboard():
     # Alertes et actions MODERNISÉES ET SIMPLIFIÉES
     st.markdown("### 🚨 Alertes et Actions Prioritaires")
     
-    # CSS simplifié pour actions réalisées uniquement
+    # CSS simplifié pour actions réalisées + boutons cachés
     st.markdown("""
     <style>
     /* SIDEBAR RESTAURÉE à l'état original */
@@ -1585,25 +1585,18 @@ def page_dashboard():
         background-color: #F8FAFC !important;
     }
     
-    /* ACTIONS RÉALISÉES - VERT FORCÉ (pas violet) */
-    .stButton > button[data-testid="baseButton-primary"] {
-        background: linear-gradient(145deg, #D1FAE5, #10B981) !important;
-        border: none !important;
-        border-left: 4px solid #10B981 !important;
-        border-radius: 15px !important;
-        padding: 1rem !important;
-        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15) !important;
-        transition: all 0.3s ease !important;
-        width: 100% !important;
-        color: white !important;
-        font-weight: 600 !important;
-        text-align: left !important;
-        white-space: pre-line !important;
+    /* BOUTONS CACHÉS - Invisibles */
+    button[data-testid="baseButton"]:has([help*="Navigation"]) {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
     
-    .stButton > button[data-testid="baseButton-primary"]:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25) !important;
+    /* Style alternatif pour masquer les boutons */
+    .stButton:has(button[help*="Navigation"]) {
+        display: none !important;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -1613,7 +1606,7 @@ def page_dashboard():
     with col_alert1:
         st.markdown("#### Alertes Critiques")
         
-        # ALERTE 1 - CRITIQUE ROUGE (Card seule, sans bouton)
+        # ALERTE 1 - CRITIQUE ROUGE avec cliquabilité
         st.markdown("""
         <div style="background: linear-gradient(145deg, #FEE2E2, #FECACA); 
                     border-left: 4px solid #EF4444; 
@@ -1623,6 +1616,7 @@ def page_dashboard():
                     box-shadow: 0 6px 20px rgba(239, 68, 68, 0.15); 
                     cursor: pointer; 
                     transition: all 0.3s ease;"
+             onclick="document.getElementById('alert_btn_1').click()"
              onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 30px rgba(239, 68, 68, 0.25)'"
              onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 6px 20px rgba(239, 68, 68, 0.15)'">
             <div style="font-weight: 700; font-size: 1.1rem; color: #DC2626; margin-bottom: 0.5rem;">🏗️ COUR CHARNEAU</div>
@@ -1631,7 +1625,18 @@ def page_dashboard():
         </div>
         """, unsafe_allow_html=True)
         
-        # ALERTE 2 - ATTENTION JAUNE (Card seule, sans bouton)
+        # Bouton caché pour navigation alerte 1
+        if st.button("", key="alert_btn_1", help="Navigation COUR CHARNEAU"):
+            demo_data = load_demo_data()
+            operations_data = demo_data.get('operations_demo', [])
+            cour_charneau = next((op for op in operations_data if "CHARNEAU" in op['nom']), None)
+            if cour_charneau:
+                st.session_state.selected_operation = cour_charneau
+                st.session_state.selected_operation_id = cour_charneau['id']
+                st.session_state.page = "operation_details"
+                st.rerun()
+        
+        # ALERTE 2 - ATTENTION JAUNE avec cliquabilité
         st.markdown("""
         <div style="background: linear-gradient(145deg, #FEF3C7, #FDE68A); 
                     border-left: 4px solid #F59E0B; 
@@ -1641,6 +1646,7 @@ def page_dashboard():
                     box-shadow: 0 6px 20px rgba(245, 158, 11, 0.15); 
                     cursor: pointer; 
                     transition: all 0.3s ease;"
+             onclick="document.getElementById('alert_btn_2').click()"
              onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 30px rgba(245, 158, 11, 0.25)'"
              onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 6px 20px rgba(245, 158, 11, 0.15)'">
             <div style="font-weight: 700; font-size: 1.1rem; color: #D97706; margin-bottom: 0.5rem;">🏠 VEFA BELCOURT</div>
@@ -1649,7 +1655,18 @@ def page_dashboard():
         </div>
         """, unsafe_allow_html=True)
         
-        # ALERTE 3 - INFORMATION BLEU CLAIR (Card seule, sans bouton)
+        # Bouton caché pour navigation alerte 2
+        if st.button("", key="alert_btn_2", help="Navigation VEFA BELCOURT"):
+            demo_data = load_demo_data()
+            operations_data = demo_data.get('operations_demo', [])
+            vefa_belcourt = next((op for op in operations_data if "BELCOURT" in op['nom']), None)
+            if vefa_belcourt:
+                st.session_state.selected_operation = vefa_belcourt
+                st.session_state.selected_operation_id = vefa_belcourt['id']
+                st.session_state.page = "operation_details"
+                st.rerun()
+        
+        # ALERTE 3 - INFORMATION BLEU CLAIR avec cliquabilité
         st.markdown("""
         <div style="background: linear-gradient(145deg, #DBEAFE, #BFDBFE); 
                     border-left: 4px solid #3B82F6; 
@@ -1659,6 +1676,7 @@ def page_dashboard():
                     box-shadow: 0 6px 20px rgba(59, 130, 246, 0.15); 
                     cursor: pointer; 
                     transition: all 0.3s ease;"
+             onclick="document.getElementById('alert_btn_3').click()"
              onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 30px rgba(59, 130, 246, 0.25)'"
              onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 6px 20px rgba(59, 130, 246, 0.15)'">
             <div style="font-weight: 700; font-size: 1.1rem; color: #2563EB; margin-bottom: 0.5rem;">🏗️ RÉSIDENCE SOLEIL</div>
@@ -1666,13 +1684,24 @@ def page_dashboard():
             <div style="color: #2563EB; font-style: italic; font-size: 0.9rem; opacity: 0.9;">Action: Suivi hebdomadaire maintenu</div>
         </div>
         """, unsafe_allow_html=True)
+        
+        # Bouton caché pour navigation alerte 3
+        if st.button("", key="alert_btn_3", help="Navigation RÉSIDENCE SOLEIL"):
+            demo_data = load_demo_data()
+            operations_data = demo_data.get('operations_demo', [])
+            residence_soleil = next((op for op in operations_data if "SOLEIL" in op['nom']), None)
+            if residence_soleil:
+                st.session_state.selected_operation = residence_soleil
+                st.session_state.selected_operation_id = residence_soleil['id']
+                st.session_state.page = "operation_details"
+                st.rerun()
     
     with col_alert2:
         st.markdown("#### Actions Réalisées Aujourd'hui")
         
-        # ACTION 1 - VERTE avec coche alignée à gauche (HTML direct)
+        # ACTION 1 - VERTE avec dégradé inversé et cliquable
         st.markdown("""
-        <div style="background: linear-gradient(145deg, #D1FAE5, #10B981); 
+        <div style="background: linear-gradient(145deg, #10B981, #D1FAE5); 
                     border-left: 4px solid #10B981; 
                     border-radius: 15px; 
                     padding: 1rem; 
@@ -1682,6 +1711,7 @@ def page_dashboard():
                     transition: all 0.3s ease;
                     display: flex;
                     align-items: flex-start;"
+             onclick="document.getElementById('action_btn_1').click()"
              onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.25)'"
              onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'">
             <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: white;">✅</div>
@@ -1692,9 +1722,22 @@ def page_dashboard():
         </div>
         """, unsafe_allow_html=True)
         
-        # ACTION 2 - VERTE avec coche alignée à gauche (HTML direct)
+        # Bouton caché pour navigation (invisible)
+        st.markdown('<div style="display: none;">', unsafe_allow_html=True)
+        if st.button("Navigation RÉSIDENCE SOLEIL", key="action_btn_1"):
+            demo_data = load_demo_data()
+            operations_data = demo_data.get('operations_demo', [])
+            residence_soleil = next((op for op in operations_data if "SOLEIL" in op['nom']), None)
+            if residence_soleil:
+                st.session_state.selected_operation = residence_soleil
+                st.session_state.selected_operation_id = residence_soleil['id']
+                st.session_state.page = "operation_details"
+                st.rerun()
+        st.markdown('</div>', unsafe_allow_html=True)
+        
+        # ACTION 2 - VERTE avec dégradé inversé et cliquable
         st.markdown("""
-        <div style="background: linear-gradient(145deg, #D1FAE5, #10B981); 
+        <div style="background: linear-gradient(145deg, #10B981, #D1FAE5); 
                     border-left: 4px solid #10B981; 
                     border-radius: 15px; 
                     padding: 1rem; 
@@ -1704,6 +1747,7 @@ def page_dashboard():
                     transition: all 0.3s ease;
                     display: flex;
                     align-items: flex-start;"
+             onclick="document.getElementById('action_btn_2').click()"
              onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.25)'"
              onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'">
             <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: white;">✅</div>
@@ -1714,9 +1758,22 @@ def page_dashboard():
         </div>
         """, unsafe_allow_html=True)
         
-        # ACTION 3 - VERTE avec coche alignée à gauche (HTML direct)
+        # Bouton caché pour navigation (invisible)
+        st.markdown('<div style="display: none;">', unsafe_allow_html=True)
+        if st.button("Navigation COUR CHARNEAU", key="action_btn_2"):
+            demo_data = load_demo_data()
+            operations_data = demo_data.get('operations_demo', [])
+            cour_charneau = next((op for op in operations_data if "CHARNEAU" in op['nom']), None)
+            if cour_charneau:
+                st.session_state.selected_operation = cour_charneau
+                st.session_state.selected_operation_id = cour_charneau['id']
+                st.session_state.page = "operation_details"
+                st.rerun()
+        st.markdown('</div>', unsafe_allow_html=True)
+        
+        # ACTION 3 - VERTE avec dégradé inversé et cliquable
         st.markdown("""
-        <div style="background: linear-gradient(145deg, #D1FAE5, #10B981); 
+        <div style="background: linear-gradient(145deg, #10B981, #D1FAE5); 
                     border-left: 4px solid #10B981; 
                     border-radius: 15px; 
                     padding: 1rem; 
@@ -1726,6 +1783,7 @@ def page_dashboard():
                     transition: all 0.3s ease;
                     display: flex;
                     align-items: flex-start;"
+             onclick="document.getElementById('action_btn_3').click()"
              onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.25)'"
              onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'">
             <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: white;">✅</div>
@@ -1736,49 +1794,57 @@ def page_dashboard():
         </div>
         """, unsafe_allow_html=True)
         
-        # ACTION 4 - VERTE avec coche alignée à gauche (HTML direct)
-        st.markdown("""
-        <div style="background: linear-gradient(145deg, #D1FAE5, #10B981); 
-                    border-left: 4px solid #10B981; 
-                    border-radius: 15px; 
-                    padding: 1rem; 
-                    margin: 0.5rem 0; 
-                    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15); 
-                    cursor: pointer; 
-                    transition: all 0.3s ease;
-                    display: flex;
-                    align-items: flex-start;"
-             onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.25)'"
-             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'">
-            <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: white;">✅</div>
-            <div style="flex-grow: 1; color: white;">
-                <div style="font-weight: 600; font-size: 1rem;">REM T3 saisi - 3 opérations</div>
-                <div style="font-size: 0.9rem; margin-top: 0.25rem; opacity: 0.9;">Trimestre 3 validé et saisi</div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        # Boutons cachés pour navigation (tous invisibles)
+        st.markdown('<div style="display: none;">', unsafe_allow_html=True)
         
-        # ACTION 5 - VERTE avec coche alignée à gauche (HTML direct)
-        st.markdown("""
-        <div style="background: linear-gradient(145deg, #D1FAE5, #10B981); 
-                    border-left: 4px solid #10B981; 
-                    border-radius: 15px; 
-                    padding: 1rem; 
-                    margin: 0.5rem 0; 
-                    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15); 
-                    cursor: pointer; 
-                    transition: all 0.3s ease;
-                    display: flex;
-                    align-items: flex-start;"
-             onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.25)'"
-             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'">
-            <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: white;">✅</div>
-            <div style="flex-grow: 1; color: white;">
-                <div style="font-weight: 600; font-size: 1rem;">Timeline mise à jour - VEFA BELCOURT</div>
-                <div style="font-size: 0.9rem; margin-top: 0.25rem; opacity: 0.9;">Planning actualisé avec nouvelles échéances</div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        if st.button("Navigation MANDAT ÉCOLE", key="action_btn_3"):
+            st.info("Navigation vers MANDAT ÉCOLE - Module en développement")
+        
+        if st.button("Navigation REM", key="action_btn_4"):
+            st.info("Navigation vers module REM - En développement")
+        
+        if st.button("Navigation VEFA BELCOURT", key="action_btn_5"):
+            demo_data = load_demo_data()
+            operations_data = demo_data.get('operations_demo', [])
+            vefa_belcourt = next((op for op in operations_data if "BELCOURT" in op['nom']), None)
+            if vefa_belcourt:
+                st.session_state.selected_operation = vefa_belcourt
+                st.session_state.selected_operation_id = vefa_belcourt['id']
+                st.session_state.page = "operation_details"
+                st.rerun()
+        
+        # Boutons alertes cachés
+        if st.button("Navigation COUR CHARNEAU alerte", key="alert_btn_1"):
+            demo_data = load_demo_data()
+            operations_data = demo_data.get('operations_demo', [])
+            cour_charneau = next((op for op in operations_data if "CHARNEAU" in op['nom']), None)
+            if cour_charneau:
+                st.session_state.selected_operation = cour_charneau
+                st.session_state.selected_operation_id = cour_charneau['id']
+                st.session_state.page = "operation_details"
+                st.rerun()
+        
+        if st.button("Navigation VEFA BELCOURT alerte", key="alert_btn_2"):
+            demo_data = load_demo_data()
+            operations_data = demo_data.get('operations_demo', [])
+            vefa_belcourt = next((op for op in operations_data if "BELCOURT" in op['nom']), None)
+            if vefa_belcourt:
+                st.session_state.selected_operation = vefa_belcourt
+                st.session_state.selected_operation_id = vefa_belcourt['id']
+                st.session_state.page = "operation_details"
+                st.rerun()
+        
+        if st.button("Navigation RÉSIDENCE SOLEIL alerte", key="alert_btn_3"):
+            demo_data = load_demo_data()
+            operations_data = demo_data.get('operations_demo', [])
+            residence_soleil = next((op for op in operations_data if "SOLEIL" in op['nom']), None)
+            if residence_soleil:
+                st.session_state.selected_operation = residence_soleil
+                st.session_state.selected_operation_id = residence_soleil['id']
+                st.session_state.page = "operation_details"
+                st.rerun()
+        
+        st.markdown('</div>', unsafe_allow_html=True)
     
     # Graphique d'activité MODERNISÉ
     st.markdown("### 📈 Activité Mensuelle")
