@@ -1495,12 +1495,12 @@ def page_dashboard():
         operations_cloturees = kpis_data.get('operations_cloturees', 5)
         
         st.markdown(f"""
-        <div class="kpi-operations">
-            <div class="kpi-content">
+        <div style="background: linear-gradient(145deg, #3B82F6, #2563EB); color: white; min-height: 180px; border-radius: 20px; padding: 1.5rem; box-shadow: 0 10px 40px rgba(59, 130, 246, 0.3); display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 1rem;">
+            <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
                 <div class="kpi-icon-operations"></div>
-                <div class="kpi-value">{operations_actives}</div>
-                <div class="kpi-label">Opérations Actives</div>
-                <div class="kpi-detail">{operations_cloturees} clôturées</div>
+                <div style="font-size: 2.5rem; font-weight: bold; color: white; margin: 0.5rem 0; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">{operations_actives}</div>
+                <div style="font-size: 1rem; font-weight: 600; color: white; margin-bottom: 0.25rem;">Opérations Actives</div>
+                <div style="font-size: 0.875rem; color: rgba(255, 255, 255, 0.9);">{operations_cloturees} clôturées</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -1515,12 +1515,12 @@ def page_dashboard():
         taux_real = kpis_data.get('taux_realisation_rem', 78)
         
         st.markdown(f"""
-        <div class="kpi-rem">
-            <div class="kpi-content">
+        <div style="background: linear-gradient(145deg, #10B981, #059669); color: white; min-height: 180px; border-radius: 20px; padding: 1.5rem; box-shadow: 0 10px 40px rgba(16, 185, 129, 0.3); display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 1rem;">
+            <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
                 <div class="kpi-icon-rem"></div>
-                <div class="kpi-value">{rem_realise/1000:.0f}k€</div>
-                <div class="kpi-label">REM Réalisée 2024</div>
-                <div class="kpi-detail">{taux_real}% / {rem_prevu/1000:.0f}k€ prévue</div>
+                <div style="font-size: 2.5rem; font-weight: bold; color: white; margin: 0.5rem 0; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">{rem_realise/1000:.0f}k€</div>
+                <div style="font-size: 1rem; font-weight: 600; color: white; margin-bottom: 0.25rem;">REM Réalisée 2024</div>
+                <div style="font-size: 0.875rem; color: rgba(255, 255, 255, 0.9);">{taux_real}% / {rem_prevu/1000:.0f}k€ prévue</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -1533,12 +1533,12 @@ def page_dashboard():
         freins_critiques = kpis_data.get('freins_critiques', 2)
         
         st.markdown(f"""
-        <div class="kpi-freins">
-            <div class="kpi-content">
+        <div style="background: linear-gradient(145deg, #F59E0B, #D97706); color: white; min-height: 180px; border-radius: 20px; padding: 1.5rem; box-shadow: 0 10px 40px rgba(245, 158, 11, 0.3); display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 1rem;">
+            <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
                 <div class="kpi-icon-freins"></div>
-                <div class="kpi-value">{freins_actifs}</div>
-                <div class="kpi-label">Freins Actifs</div>
-                <div class="kpi-detail">{freins_critiques} critiques</div>
+                <div style="font-size: 2.5rem; font-weight: bold; color: white; margin: 0.5rem 0; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">{freins_actifs}</div>
+                <div style="font-size: 1rem; font-weight: 600; color: white; margin-bottom: 0.25rem;">Freins Actifs</div>
+                <div style="font-size: 0.875rem; color: rgba(255, 255, 255, 0.9);">{freins_critiques} critiques</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -1552,12 +1552,12 @@ def page_dashboard():
         validations = kpis_data.get('validations_requises', 12)
         
         st.markdown(f"""
-        <div class="kpi-echeances">
-            <div class="kpi-content">
+        <div style="background: linear-gradient(145deg, #EF4444, #DC2626); color: white; min-height: 180px; border-radius: 20px; padding: 1.5rem; box-shadow: 0 10px 40px rgba(239, 68, 68, 0.3); display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 1rem;">
+            <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
                 <div class="kpi-icon-echeances"></div>
-                <div class="kpi-value">{echeances}</div>
-                <div class="kpi-label">Échéances Semaine</div>
-                <div class="kpi-detail">{validations} validations requises</div>
+                <div style="font-size: 2.5rem; font-weight: bold; color: white; margin: 0.5rem 0; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">{echeances}</div>
+                <div style="font-size: 1rem; font-weight: 600; color: white; margin-bottom: 0.25rem;">Échéances Semaine</div>
+                <div style="font-size: 0.875rem; color: rgba(255, 255, 255, 0.9);">{validations} validations requises</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
