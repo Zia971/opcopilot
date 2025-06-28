@@ -26,72 +26,86 @@ st.set_page_config(
 
 # CSS personnalisé pour interface moderne
 st.markdown("""
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
+    html, body, .main, .block-container {
+        background: #F9FAFB !important;
+        font-family: 'Inter', sans-serif !important;
+        color: #222;
+    }
     .main-header {
-        background: linear-gradient(90deg, #0066cc, #004499);
-        color: white;
-        padding: 1rem;
-        border-radius: 10px;
+        background: none;
+        color: #1e293b;
+        padding: 0.5rem 0 2rem 0;
+        border-radius: 0;
         margin-bottom: 2rem;
-        text-align: center;
+        text-align: left;
+        font-size: 2.4rem;
+        font-weight: 700;
+        letter-spacing: -1px;
     }
-    .operation-card {
-        background: white;
-        border: 1px solid #e0e0e0;
-        border-radius: 8px;
-        padding: 1rem;
-        margin: 0.5rem 0;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    .sidebar-content, .css-1d391kg, .css-1lcbmhc, .css-1v0mbdj {
+        background: #F8FAFC !important;
+        border-radius: 0 24px 24px 0;
+        box-shadow: 2px 0 12px #e5e7eb44;
     }
-    .timeline-container {
-        background: #f8f9fa;
-        border-radius: 10px;
-        padding: 1rem;
-        margin: 1rem 0;
-    }
-    .module-tab {
-        background: #e3f2fd;
-        border-radius: 5px;
-        padding: 1rem;
-        margin: 0.5rem;
-        border-left: 4px solid #0066cc;
-    }
-    .alert-critical { 
-        background: #ffebee; 
-        border-left: 4px solid #f44336; 
-        padding: 1rem;
-        margin: 0.5rem 0;
-        border-radius: 5px;
-    }
-    .alert-warning { 
-        background: #fff3e0; 
-        border-left: 4px solid #ff9800; 
-        padding: 1rem;
-        margin: 0.5rem 0;
-        border-radius: 5px;
-    }
-    .alert-info { 
-        background: #e3f2fd; 
-        border-left: 4px solid #2196f3; 
-        padding: 1rem;
-        margin: 0.5rem 0;
-        border-radius: 5px;
+    .lucide-icon {
+        width: 1.3em;
+        height: 1.3em;
+        vertical-align: middle;
+        margin-right: 0.6em;
+        stroke-width: 2.2;
     }
     .kpi-card {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 1.5rem;
-        border-radius: 8px;
+        background: #fff;
+        border-radius: 14px;
+        box-shadow: 0 2px 12px #e5e7eb44;
+        padding: 2rem 1.5rem;
         text-align: center;
         margin: 0.5rem;
+        transition: transform .15s, box-shadow .15s;
+        cursor: pointer;
+        border: none;
+        font-weight: 600;
     }
-    .metric-card {
-        background: white;
-        border: 1px solid #e0e0e0;
+    .kpi-card:hover {
+        transform: scale(1.025);
+        box-shadow: 0 4px 24px #60a5fa33;
+        background: #f3f8ff;
+    }
+    .kpi-blue { color: #3B82F6; }
+    .kpi-green { color: #10B981; }
+    .kpi-orange { color: #F59E0B; }
+    .kpi-red { color: #EF4444; }
+    .status-dot {
+        display: inline-block;
+        width: 0.7em;
+        height: 0.7em;
+        border-radius: 50%;
+        margin-right: 0.5em;
+    }
+    .status-vert { background: #10B981; }
+    .status-orange { background: #F59E0B; }
+    .status-rouge { background: #EF4444; }
+    .sidebar-btn {
+        background: #fff;
         border-radius: 8px;
-        padding: 1rem;
-        text-align: center;
-        margin: 0.5rem;
+        padding: 0.7em 1em;
+        margin: 0.4em 0;
+        font-weight: 500;
+        border: none;
+        transition: background .15s, box-shadow .15s, transform .13s;
+        box-shadow: 0 1px 4px #e5e7eb33;
+        display: flex;
+        align-items: center;
+        font-size: 1.05em;
+        color: #222;
+        cursor: pointer;
+    }
+    .sidebar-btn:hover {
+        background: #F3F8FF;
+        transform: scale(1.03);
+        color: #3B82F6;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -1114,523 +1128,86 @@ def module_cloture(operation_id):
 def page_dashboard():
     """Dashboard principal avec KPIs ACO"""
     st.markdown("""
-    <div class="main-header">
-        <h1>🏗️ OPCOPILOT v4.0 - Dashboard SPIC Guadeloupe</h1>
-        <p>Interface de Gestion d'Opérations pour Agent de Conduite d'Opérations (ACO)</p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Chargement données
-    demo_data = load_demo_data()
-    kpis_data = demo_data.get('kpis_aco_demo', {})
-    activite_data = demo_data.get('activite_mensuelle_demo', {})
-    alertes_data = demo_data.get('alertes_demo', [])
-    
-    # KPIs personnels ACO
-    st.markdown("### 📊 Mes KPIs ACO - Marie-Claire ADMIN")
-    
-    col1, col2, col3, col4 = st.columns(4)
-    
-    with col1:
-        st.markdown(f"""
-        <div class="kpi-card">
-            <h2>{kpis_data.get('operations_actives', 23)}</h2>
-            <p>Opérations Actives</p>
-            <small>{kpis_data.get('operations_cloturees', 5)} clôturées</small>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col2:
-        rem_realise = kpis_data.get('rem_realisee_2024', 485000)
-        rem_prevu = kpis_data.get('rem_prevue_2024', 620000)
-        taux_real = kpis_data.get('taux_realisation_rem', 78)
-        st.markdown(f"""
-        <div class="kpi-card">
-            <h2>{rem_realise/1000:.0f}k€</h2>
-            <p>REM Réalisée 2024</p>
-            <small>{taux_real}% / {rem_prevu/1000:.0f}k€ prévue</small>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col3:
-        freins_actifs = kpis_data.get('freins_actifs', 3)
-        freins_critiques = kpis_data.get('freins_critiques', 2)
-        st.markdown(f"""
-        <div class="kpi-card">
-            <h2>{freins_actifs}</h2>
-            <p>Freins Actifs</p>
-            <small>{freins_critiques} critiques</small>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col4:
-        echeances = kpis_data.get('echeances_semaine', 5)
-        validations = kpis_data.get('validations_requises', 12)
-        st.markdown(f"""
-        <div class="kpi-card">
-            <h2>{echeances}</h2>
-            <p>Échéances Semaine</p>
-            <small>{validations} validations requises</small>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    # Alertes et actions
-    st.markdown("### 🚨 Alertes et Actions Prioritaires")
-    
-    col_alert1, col_alert2 = st.columns(2)
-    
-    with col_alert1:
-        st.markdown("#### Alertes Critiques")
-        
-        for alerte in alertes_data:
-            alert_class = f"alert-{alerte['type'].lower()}"
-            if alerte['type'] == 'CRITIQUE':
-                alert_class = "alert-critical"
-            elif alerte['type'] == 'WARNING':
-                alert_class = "alert-warning"
-            else:
-                alert_class = "alert-info"
-                
-            st.markdown(f"""
-            <div class="{alert_class}">
-                <strong>{alerte['operation']}</strong><br>
-                {alerte['message']}<br>
-                <em>Action: {alerte['action_requise']}</em>
-            </div>
-            """, unsafe_allow_html=True)
-    
-    with col_alert2:
-        st.markdown("#### Actions Réalisées Aujourd'hui")
-        
-        actions_jour = [
-            "✅ DGD validé - RÉSIDENCE SOLEIL",
-            "✅ Phase ESQ terminée - COUR CHARNEAU", 
-            "✅ MED envoyé - MANDAT ÉCOLE",
-            "✅ REM T3 saisi - 3 opérations",
-            "✅ Timeline mise à jour - VEFA BELCOURT"
-        ]
-        
-        for action in actions_jour:
-            st.write(action)
-    
-    # Graphique d'activité
-    st.markdown("### 📈 Activité Mensuelle")
-    
-    if activite_data:
-        fig_dashboard = go.Figure()
-        
-        # REM mensuelle
-        fig_dashboard.add_trace(go.Scatter(
-            x=activite_data['mois'],
-            y=activite_data['rem_mensuelle'],
-            mode='lines+markers',
-            name='REM Mensuelle (€)',
-            yaxis='y',
-            line=dict(color='#0066cc', width=3),
-            marker=dict(size=8)
-        ))
-        
-        # Opérations actives
-        fig_dashboard.add_trace(go.Scatter(
-            x=activite_data['mois'],
-            y=activite_data['operations_actives'],
-            mode='lines+markers',
-            name='Opérations Actives',
-            yaxis='y2',
-            line=dict(color='#ff6b35', width=3),
-            marker=dict(size=8)
-        ))
-        
-        fig_dashboard.update_layout(
-            title="Évolution Activité ACO 2024",
-            xaxis=dict(title="Mois"),
-            yaxis=dict(title="REM (€)", side="left"),
-            yaxis2=dict(title="Nb Opérations", side="right", overlaying="y"),
-            height=450,
-            hovermode='x unified'
-        )
-        
-        st.plotly_chart(fig_dashboard, use_container_width=True)
-
-def page_portefeuille_aco():
-    """Portefeuille ACO avec liste des opérations"""
-    st.markdown("### 📂 Mon Portefeuille - Marie-Claire ADMIN")
-    
-    # Chargement données
-    demo_data = load_demo_data()
-    operations_data = demo_data.get('operations_demo', [])
-    
-    # Filtres
-    col_filter1, col_filter2, col_filter3, col_filter4 = st.columns(4)
-    
-    with col_filter1:
-        filtre_type = st.selectbox("Type Opération", ["Tous", "OPP", "VEFA", "MANDAT_ETUDES", "MANDAT_REALISATION", "AMO"])
-    
-    with col_filter2:
-        filtre_statut = st.selectbox("Statut", ["Tous", "EN_MONTAGE", "EN_COURS", "EN_RECEPTION", "CLOTUREE"])
-    
-    with col_filter3:
-        filtre_commune = st.selectbox("Commune", ["Toutes", "Les Abymes", "Pointe-à-Pitre", "Basse-Terre", "Sainte-Anne"])
-    
-    with col_filter4:
-        if st.button("➕ Nouvelle Opération", type="primary"):
-            st.session_state.page = "creation_operation"
+    <div class="main-header">OPCOPILOT - Tableau de Bord Opérationnel</div>
+    <div style='font-size:1.2em;color:#64748b;margin-bottom:2em;'>Mon Tableau de Bord - <b>{}</b></div>
+    """.format(st.session_state.get('aco_user','ACO')), unsafe_allow_html=True)
+    kpi_cols = st.columns(4)
+    kpis = [
+        {"label": "23 Opérations Actives", "icon": "<svg class='lucide-icon kpi-blue' fill='none' stroke='currentColor' viewBox='0 0 24 24'><rect x='3' y='7' width='18' height='13' rx='2'/><path d='M16 3v4'/><path d='M8 3v4'/></svg>", "color": "kpi-blue", "page": "portefeuille"},
+        {"label": "485k€ REM Mon Portefeuille", "icon": "<svg class='lucide-icon kpi-green' fill='none' stroke='currentColor' viewBox='0 0 24 24'><polyline points='17 6 9 17 7 14'/></svg>", "color": "kpi-green", "page": "rem"},
+        {"label": "3 Freins Actifs", "icon": "<svg class='lucide-icon kpi-orange' fill='none' stroke='currentColor' viewBox='0 0 24 24'><polygon points='10 2 2 22 22 22 14 2 10 2'/></svg>", "color": "kpi-orange", "page": "freins"},
+        {"label": "5 Échéances Semaine", "icon": "<svg class='lucide-icon kpi-red' fill='none' stroke='currentColor' viewBox='0 0 24 24'><rect x='3' y='4' width='18' height='18' rx='2'/><line x1='16' y1='2' x2='16' y2='6'/><line x1='8' y1='2' x2='8' y2='6'/></svg>", "color": "kpi-red", "page": "planning"}
+    ]
+    for i, kpi in enumerate(kpis):
+        if kpi_cols[i].button(f"{kpi['icon']}<br><span style='font-size:1.1em;'>{kpi['label']}</span>", key=f"kpi_{i}", help=kpi['label']):
+            st.session_state['page'] = kpi['page']
             st.rerun()
-    
-    # Application des filtres
-    operations_filtrees = operations_data
-    if filtre_type != "Tous":
-        operations_filtrees = [op for op in operations_filtrees if op['type_operation'] == filtre_type]
-    if filtre_statut != "Tous":
-        operations_filtrees = [op for op in operations_filtrees if op['statut'] == filtre_statut]
-    if filtre_commune != "Toutes":
-        operations_filtrees = [op for op in operations_filtrees if op['commune'] == filtre_commune]
-    
-    # Liste des opérations
-    st.markdown(f"#### 📋 Mes Opérations ({len(operations_filtrees)} affichées)")
-    
-    for op in operations_filtrees:
-        with st.container():
-            st.markdown(f"""
-            <div class="operation-card">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <h4>🏗️ {op['nom']} - {op['type_operation']}</h4>
-                        <p><strong>📍 {op['commune']}</strong> • {op.get('nb_logements_total', 0)} logements • {op.get('budget_total', 0):,} €</p>
-                        <p><em>Créé le {op['date_creation']} • Fin prévue {op['date_fin_prevue']}</em></p>
-                    </div>
-                    <div style="text-align: right;">
-                        <p><strong>Avancement: {op['avancement']}%</strong></p>
-                        <p>Statut: <span style="color: {'green' if op['statut'] == 'EN_COURS' else 'orange'}">{op['statut']}</span></p>
-                        {f"<p style='color: red;'>⚠️ {op.get('freins_actifs', 0)} frein(s)</p>" if op.get('freins_actifs', 0) > 0 else ""}
-                    </div>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-            
-            col_btn1, col_btn2, col_btn3 = st.columns([1, 1, 2])
-            
-            with col_btn1:
-                if st.button(f"📂 Ouvrir", key=f"open_{op['id']}"):
-                    st.session_state.selected_operation_id = op['id']
-                    st.session_state.selected_operation = op
-                    st.session_state.page = "operation_details"
-                    st.rerun()
-            
-            with col_btn2:
-                if st.button(f"📊 Timeline", key=f"timeline_{op['id']}"):
-                    st.session_state.selected_operation_id = op['id']
-                    st.session_state.selected_operation = op
-                    st.session_state.page = "operation_details"
-                    st.session_state.active_tab = "timeline"
-                    st.rerun()
+        kpi_cols[i].markdown(f"<div class='kpi-card {kpi['color']}'>{kpi['icon']}<br><span style='font-size:1.1em;'>{kpi['label']}</span></div>", unsafe_allow_html=True)
 
-def page_operation_details(operation_id=None):
-    """Page détail opération avec timeline et modules intégrés"""
-    
-    # Récupération de l'opération
-    if operation_id is None and 'selected_operation_id' in st.session_state:
-        operation_id = st.session_state.selected_operation_id
-    
-    if 'selected_operation' in st.session_state:
-        operation = st.session_state.selected_operation
-    else:
-        # Fallback avec données de démo
-        demo_data = load_demo_data()
-        operations_data = demo_data.get('operations_demo', [])
-        operation = operations_data[0] if operations_data else {}
-        operation_id = operation.get('id', 1)
-    
-    # En-tête opération
+# --- SIDEBAR MODERNE ---
+with st.sidebar:
     st.markdown(f"""
-    <div class="main-header">
-        <h1>🏗️ {operation.get('nom', 'Opération')} - {operation.get('type_operation', 'OPP')}</h1>
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div>
-                <p><strong>📍 {operation.get('commune', 'Commune')}</strong> • {operation.get('nb_logements_total', 0)} logements • ACO {operation.get('aco_responsable', 'Marie-Claire ADMIN')}</p>
-            </div>
-            <div>
-                <p><strong>Budget:</strong> {operation.get('budget_total', 0):,} € • <strong>Avancement:</strong> {operation.get('avancement', 0)}%</p>
-            </div>
+    <div style='padding-top:1.2em;padding-bottom:0.5em;'>
+        <div style='font-size:1.3em;font-weight:700;color:#3B82F6;'>
+            {st.session_state.get('aco_user', 'ACO')}<br><span style='font-size:0.85em;font-weight:400;color:#64748b;'>Chargé d'Opérations</span>
         </div>
     </div>
     """, unsafe_allow_html=True)
-    
-    # Bouton retour
-    if st.button("← Retour au Portefeuille"):
-        st.session_state.page = "portefeuille"
-        st.rerun()
-    
-    # Onglets modules intégrés
-    tab_timeline, tab_rem, tab_avenants, tab_med, tab_concess, tab_dgd, tab_gpa, tab_cloture = st.tabs([
-        "📅 Timeline", "💰 REM", "📝 Avenants", "⚖️ MED", 
-        "🔌 Concess.", "📊 DGD", "🛡️ GPA", "✅ Clôture"
-    ])
-    
-    with tab_timeline:
-        st.markdown("### 📅 Timeline Horizontale - Gestion des Phases")
-        
-        # Chargement des phases
-        demo_data = load_demo_data()
-        phases_data = demo_data.get('phases_demo', {}).get(f'operation_{operation_id}', [])
-        
-        # Si pas de phases spécifiques, on charge un template selon le type
-        if not phases_data:
-            templates = load_templates_phases()
-            type_op = operation.get('type_operation', 'OPP')
-            template_phases = templates.get(type_op, {}).get('phases', [])
-            
-            # Conversion template en phases avec dates
-            phases_data = []
-            date_courante = datetime.now()
-            
-            for i, phase_template in enumerate(template_phases[:8]):  # Limite pour démo
-                debut = date_courante + timedelta(days=i*20)
-                fin = debut + timedelta(days=phase_template.get('duree_jours', 30))
-                
-                statuts_demo = ["VALIDEE", "EN_COURS", "EN_ATTENTE", "NON_DEMARREE"]
-                statut = statuts_demo[i % len(statuts_demo)]
-                
-                phases_data.append({
-                    "nom": phase_template['nom'],
-                    "date_debut_prevue": debut.isoformat(),
-                    "date_fin_prevue": fin.isoformat(),
-                    "statut": statut,
-                    "responsable": phase_template.get('responsable_type', 'ACO'),
-                    "est_critique": phase_template.get('est_critique', False)
-                })
-        
-        # Affichage timeline horizontale
-        if phases_data:
-            timeline_fig, config = create_timeline_horizontal(operation, phases_data)
-            if timeline_fig:
-                st.plotly_chart(timeline_fig, use_container_width=True, config=config)
-                
-                # Gestion des phases
-                st.markdown("#### 🔧 Gestion des Phases")
-                
-                col_phase1, col_phase2, col_phase3, col_phase4 = st.columns(4)
-                
-                with col_phase1:
-                    if st.button("➕ Ajouter Phase"):
-                        st.success("✅ Interface d'ajout de phase")
-                
-                with col_phase2:
-                    if st.button("✏️ Modifier Phase"):
-                        st.info("🔄 Mode modification activé")
-                
-                with col_phase3:
-                    if st.button("⚠️ Signaler Frein"):
-                        st.warning("🚨 Frein signalé sur phase sélectionnée")
-                
-                with col_phase4:
-                    if st.button("📊 Exporter Planning"):
-                        st.info("📁 Export Excel en cours...")
-        else:
-            st.warning("⚠️ Aucune phase définie pour cette opération")
-    
-    with tab_rem:
-        module_rem(operation_id)
-    
-    with tab_avenants:
-        module_avenants(operation_id)
-    
-    with tab_med:
-        module_med(operation_id)
-    
-    with tab_concess:
-        module_concessionnaires(operation_id)
-    
-    with tab_dgd:
-        module_dgd(operation_id)
-    
-    with tab_gpa:
-        module_gpa(operation_id)
-    
-    with tab_cloture:
-        module_cloture(operation_id)
+    # Navigation Lucide SVG
+    st.markdown("""
+    <a href="#" class="sidebar-btn" onclick="window.location.hash='dashboard';window.location.reload();">
+        <svg class="lucide-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Dashboard
+    </a>
+    <a href="#" class="sidebar-btn" onclick="window.location.hash='portefeuille';window.location.reload();">
+        <svg class="lucide-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2"/><path d="M3 7v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7"/><path d="M16 3v4"/><path d="M8 3v4"/></svg>
+        Mon Portefeuille
+    </a>
+    <a href="#" class="sidebar-btn" onclick="window.location.hash='nouvelle';window.location.reload();">
+        <svg class="lucide-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Nouvelle Opération
+    </a>
+    <a href="#" class="sidebar-btn" onclick="window.location.hash='acces';window.location.reload();">
+        <svg class="lucide-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="7 17 17 7"/><polyline points="7 7 17 17"/></svg>
+        Accès Rapide
+    </a>
+    """, unsafe_allow_html=True)
+    # Liste opérations démo avec pastilles statut
+    st.markdown("<div style='margin-top:2em;font-weight:600;color:#64748b;font-size:1.05em;'>Mes Opérations</div>", unsafe_allow_html=True)
+    # EXEMPLE (à remplacer par la vraie liste dans la logique)
+    for op in [
+        {"nom":"ZAC Bellevue", "statut":"vert"},
+        {"nom":"Résidence Soleil", "statut":"orange"},
+        {"nom":"Collège Nord", "statut":"rouge"}
+    ]:
+        st.markdown(f"""
+        <div class='sidebar-btn' style='padding:0.5em 1em;cursor:pointer;'>
+            <span class='status-dot status-{op['statut']}'></span>{op['nom']}
+        </div>
+        """, unsafe_allow_html=True)
+    st.markdown("<hr style='margin:1.5em 0 0.5em 0;border:0;border-top:1px solid #e5e7eb;'/>", unsafe_allow_html=True)
+    logout()
 
-def page_creation_operation():
-    """Page de création nouvelle opération"""
-    st.markdown("### ➕ Nouvelle Opération")
-    
-    # Chargement des templates
-    templates = load_templates_phases()
-    
-    with st.form("creation_operation"):
-        st.markdown("#### 📝 Informations Générales")
-        
-        col1, col2 = st.columns(2)
-        
-        with col1:
-            nom_operation = st.text_input("Nom Opération *", placeholder="Ex: RÉSIDENCE LES JARDINS")
-            type_operation = st.selectbox("Type Opération *", list(templates.keys()))
-            commune = st.selectbox("Commune *", [
-                "Les Abymes", "Pointe-à-Pitre", "Basse-Terre", 
-                "Sainte-Anne", "Le Gosier", "Petit-Bourg",
-                "Baie-Mahault", "Lamentin"
-            ])
-        
-        with col2:
-            aco_responsable = st.text_input("ACO Responsable", value="Marie-Claire ADMIN")
-            adresse = st.text_area("Adresse")
-            parcelle = st.text_input("Parcelle Cadastrale")
-        
-        # Formulaire adaptatif selon le type
-        template_info = templates.get(type_operation, {})
-        st.markdown(f"#### 🏠 Spécifique {type_operation}")
-        st.info(f"📋 {template_info.get('description', '')} - {template_info.get('nb_phases', 0)} phases")
-        
-        if type_operation == "OPP":
-            col_opp1, col_opp2 = st.columns(2)
-            
-            with col_opp1:
-                nb_logements_total = st.number_input("Nombre Total Logements *", min_value=1, value=40)
-                nb_lls = st.number_input("LLS (Logements Locatifs Sociaux)", min_value=0, value=25)
-                nb_lts = st.number_input("LTS (Logements Très Sociaux)", min_value=0, value=10)
-                nb_pls = st.number_input("PLS (Prêt Locatif Social)", min_value=0, value=5)
-                type_logement = st.selectbox("Type", ["Collectif", "Individuel", "Mixte"])
-            
-            with col_opp2:
-                budget_total = st.number_input("Budget Total (€)", min_value=0, value=2000000)
-                rem_totale = st.number_input("REM Totale Prévue (€)", min_value=0, value=120000)
-                financement = st.multiselect("Financement", ["CDC", "Région", "DEAL", "Fonds Propres"])
-        
-        elif type_operation == "VEFA":
-            col_vefa1, col_vefa2 = st.columns(2)
-            
-            with col_vefa1:
-                promoteur_nom = st.text_input("Nom Promoteur *")
-                contact_promoteur = st.text_input("Contact Promoteur")
-                nom_programme = st.text_input("Nom Programme")
-            
-            with col_vefa2:
-                nb_logements_reserves = st.number_input("Logements Réservés *", min_value=1, value=20)
-                prix_total_reservation = st.number_input("Prix Total Réservation (€)", min_value=0, value=1500000)
-                garantie_financiere = st.number_input("Garantie Financière (€)", min_value=0, value=150000)
-        
-        # Dates prévisionnelles
-        st.markdown("#### 📅 Planning Prévisionnel")
-        
-        col_date1, col_date2 = st.columns(2)
-        
-        with col_date1:
-            date_debut = st.date_input("Date Début Prévue", value=datetime.now())
-        
-        with col_date2:
-            date_fin = st.date_input("Date Fin Prévue", value=datetime.now() + timedelta(days=730))
-        
-        # Validation
-        submitted = st.form_submit_button("🎯 Créer Opération & Générer Timeline", type="primary")
-        
-        if submitted:
-            if nom_operation and type_operation and commune:
-                # Génération automatique des phases selon le type
-                phases_template = template_info.get('phases', [])
-                
-                st.success(f"✅ Opération '{nom_operation}' créée avec succès!")
-                st.info(f"📋 {len(phases_template)} phases générées automatiquement selon le référentiel {type_operation}")
-                
-                # Simulation de sauvegarde
-                nouvelle_operation = {
-                    "id": 999,  # ID temporaire pour la démo
-                    "nom": nom_operation,
-                    "type_operation": type_operation,
-                    "commune": commune,
-                    "aco_responsable": aco_responsable,
-                    "budget_total": locals().get('budget_total', 0),
-                    "avancement": 0,
-                    "statut": "EN_MONTAGE",
-                    "date_creation": datetime.now().strftime("%Y-%m-%d"),
-                    "date_debut_prevue": date_debut.strftime("%Y-%m-%d"),
-                    "date_fin_prevue": date_fin.strftime("%Y-%m-%d")
-                }
-                
-                st.session_state.selected_operation = nouvelle_operation
-                st.session_state.selected_operation_id = 999
-                st.session_state.page = "operation_details"
-                
-                if st.button("📂 Ouvrir l'opération créée"):
-                    st.rerun()
-            else:
-                st.error("❌ Veuillez remplir tous les champs obligatoires (*)")
-
-# ==============================================================================
-# 5. APPLICATION PRINCIPALE
-# ==============================================================================
-
+# --- NAVIGATION ---
 def main():
-    """Point d'entrée avec navigation st.session_state"""
-    
-    # Initialisation session state
-    if 'page' not in st.session_state:
-        st.session_state.page = "dashboard"
-    
-    if 'selected_operation' not in st.session_state:
-        st.session_state.selected_operation = None
-    
-    if 'selected_operation_id' not in st.session_state:
-        st.session_state.selected_operation_id = None
-    
-    # Sidebar navigation ACO-centrique
-    with st.sidebar:
-        st.markdown("### 🎯 Navigation ACO")
-        st.markdown("*Interface centrée Agent de Conduite d'Opérations*")
-        
-        if st.button("🏠 Dashboard", use_container_width=True, type="primary" if st.session_state.page == "dashboard" else "secondary"):
-            st.session_state.page = "dashboard"
-            st.rerun()
-        
-        if st.button("📂 Mon Portefeuille", use_container_width=True, type="primary" if st.session_state.page == "portefeuille" else "secondary"):
-            st.session_state.page = "portefeuille"
-            st.rerun()
-        
-        if st.button("➕ Nouvelle Opération", use_container_width=True, type="primary" if st.session_state.page == "creation_operation" else "secondary"):
-            st.session_state.page = "creation_operation"
-            st.rerun()
-        
-        st.markdown("---")
-        
-        # Opérations courantes (raccourcis)
-        st.markdown("#### 📋 Accès Rapide")
-        
-        demo_data = load_demo_data()
-        operations_demo = demo_data.get('operations_demo', [])
-        
-        for op in operations_demo[:4]:  # Limite à 4 pour la sidebar
-            progress_color = "🟢" if op['avancement'] > 80 else "🟡" if op['avancement'] > 50 else "🔴"
-            button_text = f"{progress_color} {op['nom']} ({op['avancement']}%)"
-            
-            if st.button(button_text, use_container_width=True, key=f"sidebar_{op['id']}"):
-                st.session_state.selected_operation = op
-                st.session_state.selected_operation_id = op['id']
-                st.session_state.page = "operation_details"
-                st.rerun()
-        
-        st.markdown("---")
-        
-        # Informations système
-        st.markdown("**OPCOPILOT v4.0**")
-        st.markdown("*SPIC Guadeloupe*")
-        st.markdown("*Architecture ACO-centrique*")
-        
-        # Statut données
-        if demo_data:
-            st.success("✅ Données chargées")
-        else:
-            st.error("❌ Erreur données")
-    
-    # Routage des pages
-    if st.session_state.page == "dashboard":
+    if not st.session_state.get('authenticated', False):
+        return
+    page = st.session_state.get('page', 'dashboard')
+    if page == 'dashboard':
         page_dashboard()
-    elif st.session_state.page == "portefeuille":
+    elif page == 'portefeuille':
         page_portefeuille_aco()
-    elif st.session_state.page == "creation_operation":
+    elif page == 'rem':
+        st.write('Section REM détaillée à venir.')
+    elif page == 'freins':
+        st.write('Liste des freins actifs à venir.')
+    elif page == 'planning':
+        st.write('Planning des échéances à venir.')
+    elif page == 'nouvelle':
         page_creation_operation()
-    elif st.session_state.page == "operation_details":
-        page_operation_details()
+    elif page == 'acces':
+        st.write('Accès rapide à venir.')
     else:
-        # Page par défaut
         page_dashboard()
 
 if __name__ == "__main__":
