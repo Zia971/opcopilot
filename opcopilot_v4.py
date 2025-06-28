@@ -1566,95 +1566,50 @@ def page_dashboard():
             st.session_state.page = "planning_echeances"
             st.rerun()
     
-    # Alertes et actions MODERNISÉES
+    # Alertes et actions MODERNISÉES ET SIMPLIFIÉES
     st.markdown("### 🚨 Alertes et Actions Prioritaires")
     
-    # CSS pour harmoniser avec les KPIs
+    # CSS pour cards cliquables simples
     st.markdown("""
     <style>
-    /* ALERTES MODERNES - Style cohérent avec KPIs */
-    .alert-card-critical {
-        background: linear-gradient(145deg, #FEF3C7, #FDE68A);
-        border-left: 4px solid #F59E0B;
-        border-radius: 15px;
-        padding: 1.25rem;
-        margin: 0.75rem 0;
-        box-shadow: 0 6px 20px rgba(245, 158, 11, 0.15);
-        cursor: pointer;
-        transition: all 0.3s ease;
+    /* BOUTONS ALERTES - Style card moderne */
+    .stButton > button[data-testid="baseButton-secondary"] {
+        background: linear-gradient(145deg, #FEF3C7, #FDE68A) !important;
+        border: none !important;
+        border-left: 4px solid #F59E0B !important;
+        border-radius: 15px !important;
+        padding: 1.25rem !important;
+        text-align: left !important;
+        box-shadow: 0 6px 20px rgba(245, 158, 11, 0.15) !important;
+        transition: all 0.3s ease !important;
+        width: 100% !important;
+        white-space: pre-line !important;
+        color: #92400E !important;
     }
     
-    .alert-card-warning {
-        background: linear-gradient(145deg, #DBEAFE, #BFDBFE);
-        border-left: 4px solid #3B82F6;
-        border-radius: 15px;
-        padding: 1.25rem;
-        margin: 0.75rem 0;
-        box-shadow: 0 6px 20px rgba(59, 130, 246, 0.15);
-        cursor: pointer;
-        transition: all 0.3s ease;
+    .stButton > button[data-testid="baseButton-secondary"]:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 8px 30px rgba(245, 158, 11, 0.25) !important;
     }
     
-    .alert-card-info {
-        background: linear-gradient(145deg, #E0E7FF, #C7D2FE);
-        border-left: 4px solid #8B5CF6;
-        border-radius: 15px;
-        padding: 1.25rem;
-        margin: 0.75rem 0;
-        box-shadow: 0 6px 20px rgba(139, 92, 246, 0.15);
-        cursor: pointer;
-        transition: all 0.3s ease;
+    /* BOUTONS ACTIONS - Style succès */
+    .stButton > button[data-testid="baseButton-primary"] {
+        background: linear-gradient(145deg, #D1FAE5, #A7F3D0) !important;
+        border: none !important;
+        border-left: 4px solid #10B981 !important;
+        border-radius: 15px !important;
+        padding: 1rem !important;
+        text-align: left !important;
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15) !important;
+        transition: all 0.3s ease !important;
+        width: 100% !important;
+        white-space: pre-line !important;
+        color: #047857 !important;
     }
     
-    .alert-card-critical:hover, .alert-card-warning:hover, .alert-card-info:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-    }
-    
-    /* ACTIONS MODERNES - Style succès */
-    .action-card {
-        background: linear-gradient(145deg, #D1FAE5, #A7F3D0);
-        border-left: 4px solid #10B981;
-        border-radius: 15px;
-        padding: 1rem;
-        margin: 0.5rem 0;
-        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15);
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-    
-    .action-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25);
-    }
-    
-    .alert-title {
-        font-weight: 700;
-        font-size: 1.1rem;
-        margin-bottom: 0.5rem;
-    }
-    
-    .alert-description {
-        margin: 0.5rem 0;
-        font-size: 0.95rem;
-    }
-    
-    .alert-action {
-        font-style: italic;
-        font-size: 0.9rem;
-        opacity: 0.9;
-    }
-    
-    .action-title {
-        font-weight: 600;
-        color: #047857;
-        font-size: 1rem;
-    }
-    
-    .action-description {
-        color: #065F46;
-        font-size: 0.9rem;
-        margin-top: 0.25rem;
+    .stButton > button[data-testid="baseButton-primary"]:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25) !important;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -1664,17 +1619,14 @@ def page_dashboard():
     with col_alert1:
         st.markdown("#### Alertes Critiques")
         
-        # Alerte CRITIQUE - Cliquable vers opération
-        st.markdown("""
-        <div class="alert-card-critical">
-            <div class="alert-title" style="color: #92400E;">🏗️ COUR CHARNEAU</div>
-            <div class="alert-description" style="color: #A16207;">Retard MOE 5 jours sur phase LBU</div>
-            <div class="alert-action" style="color: #B45309;">Action: Relance urgente MOE</div>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        if st.button("🔍 Voir détail COUR CHARNEAU", key="nav_cour_charneau", use_container_width=True):
-            # Navigation vers détail opération
+        # ALERTE 1 - Card cliquable directe (sans bouton séparé)
+        if st.button("""🏗️ COUR CHARNEAU
+Retard MOE 5 jours sur phase LBU
+Action: Relance urgente MOE""", 
+                    key="alert_cour_charneau", 
+                    use_container_width=True, 
+                    type="secondary"):
+            # Navigation directe vers opération
             demo_data = load_demo_data()
             operations_data = demo_data.get('operations_demo', [])
             cour_charneau = next((op for op in operations_data if "CHARNEAU" in op['nom']), None)
@@ -1684,17 +1636,14 @@ def page_dashboard():
                 st.session_state.page = "operation_details"
                 st.rerun()
         
-        # Alerte WARNING
-        st.markdown("""
-        <div class="alert-card-warning">
-            <div class="alert-title" style="color: #1E40AF;">🏠 VEFA BELCOURT</div>
-            <div class="alert-description" style="color: #1E3A8A;">Validation promoteur en attente</div>
-            <div class="alert-action" style="color: #1E3A8A;">Action: RDV programmé cette semaine</div>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        if st.button("🔍 Voir détail VEFA BELCOURT", key="nav_vefa_belcourt", use_container_width=True):
-            # Navigation vers détail opération
+        # ALERTE 2 - Card cliquable directe
+        if st.button("""🏠 VEFA BELCOURT
+Validation promoteur en attente
+Action: RDV programmé cette semaine""", 
+                    key="alert_vefa_belcourt", 
+                    use_container_width=True, 
+                    type="secondary"):
+            # Navigation directe vers opération
             demo_data = load_demo_data()
             operations_data = demo_data.get('operations_demo', [])
             vefa_belcourt = next((op for op in operations_data if "BELCOURT" in op['nom']), None)
@@ -1704,17 +1653,14 @@ def page_dashboard():
                 st.session_state.page = "operation_details"
                 st.rerun()
         
-        # Alerte INFO
-        st.markdown("""
-        <div class="alert-card-info">
-            <div class="alert-title" style="color: #5B21B6;">🏗️ RÉSIDENCE SOLEIL</div>
-            <div class="alert-description" style="color: #6B21A8;">Phase Travaux en cours - bon avancement</div>
-            <div class="alert-action" style="color: #6B21A8;">Action: Suivi hebdomadaire maintenu</div>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        if st.button("🔍 Voir détail RÉSIDENCE SOLEIL", key="nav_residence_soleil", use_container_width=True):
-            # Navigation vers détail opération
+        # ALERTE 3 - Card cliquable directe
+        if st.button("""🏗️ RÉSIDENCE SOLEIL
+Phase Travaux en cours - bon avancement
+Action: Suivi hebdomadaire maintenu""", 
+                    key="alert_residence_soleil", 
+                    use_container_width=True, 
+                    type="secondary"):
+            # Navigation directe vers opération
             demo_data = load_demo_data()
             operations_data = demo_data.get('operations_demo', [])
             residence_soleil = next((op for op in operations_data if "SOLEIL" in op['nom']), None)
@@ -1727,54 +1673,69 @@ def page_dashboard():
     with col_alert2:
         st.markdown("#### Actions Réalisées Aujourd'hui")
         
-        # Actions avec style moderne cohérent
-        actions_jour = [
-            ("✅ DGD validé", "RÉSIDENCE SOLEIL", "Décompte général définitif approuvé"),
-            ("✅ Phase ESQ terminée", "COUR CHARNEAU", "Études esquisse validées par SPIC"), 
-            ("✅ MED envoyé", "MANDAT ÉCOLE", "Mise en demeure promoteur envoyée"),
-            ("✅ REM T3 saisi", "3 opérations", "Trimestre 3 validé et saisi"),
-            ("✅ Timeline mise à jour", "VEFA BELCOURT", "Planning actualisé avec nouvelles échéances")
-        ]
+        # ACTION 1 - Card cliquable directe
+        if st.button("""✅ DGD validé - RÉSIDENCE SOLEIL
+Décompte général définitif approuvé""", 
+                    key="action_dgd_soleil", 
+                    use_container_width=True, 
+                    type="primary"):
+            # Navigation directe vers opération
+            demo_data = load_demo_data()
+            operations_data = demo_data.get('operations_demo', [])
+            residence_soleil = next((op for op in operations_data if "SOLEIL" in op['nom']), None)
+            if residence_soleil:
+                st.session_state.selected_operation = residence_soleil
+                st.session_state.selected_operation_id = residence_soleil['id']
+                st.session_state.page = "operation_details"
+                st.rerun()
         
-        for i, (action_type, operation, description) in enumerate(actions_jour):
-            st.markdown(f"""
-            <div class="action-card">
-                <div class="action-title">{action_type} - {operation}</div>
-                <div class="action-description">{description}</div>
-            </div>
-            """, unsafe_allow_html=True)
-            
-            # Bouton navigation contextuelle
-            if st.button(f"🔍 Voir {operation}", key=f"nav_action_{i}", use_container_width=True):
-                if "SOLEIL" in operation:
-                    demo_data = load_demo_data()
-                    operations_data = demo_data.get('operations_demo', [])
-                    op = next((op for op in operations_data if "SOLEIL" in op['nom']), None)
-                    if op:
-                        st.session_state.selected_operation = op
-                        st.session_state.selected_operation_id = op['id']
-                        st.session_state.page = "operation_details"
-                        st.rerun()
-                elif "CHARNEAU" in operation:
-                    demo_data = load_demo_data()
-                    operations_data = demo_data.get('operations_demo', [])
-                    op = next((op for op in operations_data if "CHARNEAU" in op['nom']), None)
-                    if op:
-                        st.session_state.selected_operation = op
-                        st.session_state.selected_operation_id = op['id']
-                        st.session_state.page = "operation_details"
-                        st.rerun()
-                elif "BELCOURT" in operation:
-                    demo_data = load_demo_data()
-                    operations_data = demo_data.get('operations_demo', [])
-                    op = next((op for op in operations_data if "BELCOURT" in op['nom']), None)
-                    if op:
-                        st.session_state.selected_operation = op
-                        st.session_state.selected_operation_id = op['id']
-                        st.session_state.page = "operation_details"
-                        st.rerun()
-                else:
-                    st.info(f"Navigation vers {operation} - Module en développement")
+        # ACTION 2 - Card cliquable directe
+        if st.button("""✅ Phase ESQ terminée - COUR CHARNEAU
+Études esquisse validées par SPIC""", 
+                    key="action_esq_charneau", 
+                    use_container_width=True, 
+                    type="primary"):
+            # Navigation directe vers opération
+            demo_data = load_demo_data()
+            operations_data = demo_data.get('operations_demo', [])
+            cour_charneau = next((op for op in operations_data if "CHARNEAU" in op['nom']), None)
+            if cour_charneau:
+                st.session_state.selected_operation = cour_charneau
+                st.session_state.selected_operation_id = cour_charneau['id']
+                st.session_state.page = "operation_details"
+                st.rerun()
+        
+        # ACTION 3 - Card cliquable directe
+        if st.button("""✅ MED envoyé - MANDAT ÉCOLE
+Mise en demeure promoteur envoyée""", 
+                    key="action_med_ecole", 
+                    use_container_width=True, 
+                    type="primary"):
+            st.info("Navigation vers MANDAT ÉCOLE - Module en développement")
+        
+        # ACTION 4 - Card cliquable directe
+        if st.button("""✅ REM T3 saisi - 3 opérations
+Trimestre 3 validé et saisi""", 
+                    key="action_rem_t3", 
+                    use_container_width=True, 
+                    type="primary"):
+            st.info("Navigation vers module REM - En développement")
+        
+        # ACTION 5 - Card cliquable directe
+        if st.button("""✅ Timeline mise à jour - VEFA BELCOURT
+Planning actualisé avec nouvelles échéances""", 
+                    key="action_timeline_belcourt", 
+                    use_container_width=True, 
+                    type="primary"):
+            # Navigation directe vers opération
+            demo_data = load_demo_data()
+            operations_data = demo_data.get('operations_demo', [])
+            vefa_belcourt = next((op for op in operations_data if "BELCOURT" in op['nom']), None)
+            if vefa_belcourt:
+                st.session_state.selected_operation = vefa_belcourt
+                st.session_state.selected_operation_id = vefa_belcourt['id']
+                st.session_state.page = "operation_details"
+                st.rerun()
     
     # Graphique d'activité MODERNISÉ
     st.markdown("### 📈 Activité Mensuelle")
