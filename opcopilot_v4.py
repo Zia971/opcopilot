@@ -1,4 +1,60 @@
-"""
+/* HEADER PRINCIPAL AVEC DÉGRADÉ MODERNE */
+    .main-header {
+        background: var(--gradient-primary);
+        color: white;
+        padding: 2rem;
+        border-radius: 20px;
+        margin-bottom: 2rem;
+        box-shadow: 0 20px 60px rgba(168, 85, 247, 0.2);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .main-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(255,255,255,0.1) 100%);
+        pointer-events: none;
+    }
+    
+    .main-header h1 {
+        margin: 0;
+        font-size: 2.5rem;
+        font-weight: 700;
+        font-family: 'Inter', sans-serif !important;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        letter-spacing: -0.02em;
+        position: relative;
+        z-index: 1;
+        color: white !important;
+    }
+    
+    .main-header h2 {
+        margin: 0.5rem 0 0 0;
+        font-size: 1.5rem;
+        font-weight: 500;
+        font-family: 'Inter', sans-serif !important;
+        opacity: 0.9;
+        position: relative;
+        z-index: 1;
+        color: white !important;
+    }
+    
+    .main-header p {
+        margin: 0.5rem 0 0 0;
+        font-size: 1.1rem;
+        font-weight: 400;
+        font-family: 'Inter', sans-serif !important;
+        opacity: 0.8;
+        position: relative;
+        z-index: 1;
+        color: white !important;
+    }"""
 OPCOPILOT v4.0 - Application Streamlit complète avec authentification CORRIGÉE
 Gestion d'opérations immobilières pour ACO SPIC Guadeloupe
 Architecture ACO-centrique avec Timeline horizontale obligatoire
@@ -47,28 +103,150 @@ st.markdown("""
         background-color: #F9FAFB !important;
     }
     
-    /* SIDEBAR MODE CLAIR COHÉRENT */
-    .css-1d391kg, .css-1lcbmhc, .css-1outpf7 {
-        background-color: #F8FAFC !important;
-        border-right: 1px solid #E5E7EB !important;
+    /* SIDEBAR MODE SOMBRE COHÉRENT - LISIBILITÉ GARANTIE */
+    .css-1d391kg, .css-1lcbmhc, .css-1outpf7, .css-18e3th9, .css-hbf57o {
+        background-color: #1F2937 !important;
+        border-right: 1px solid #374151 !important;
     }
     
-    .sidebar .stMarkdown h3, .sidebar .stMarkdown p {
-        color: #374151 !important;
+    /* SIDEBAR - TOUT LE TEXTE EN BLANC VISIBLE */
+    .sidebar * {
+        color: #FFFFFF !important;
+    }
+    
+    .sidebar .stMarkdown h1, 
+    .sidebar .stMarkdown h2, 
+    .sidebar .stMarkdown h3, 
+    .sidebar .stMarkdown h4, 
+    .sidebar .stMarkdown p,
+    .sidebar .stMarkdown div,
+    .sidebar .stMarkdown span,
+    .sidebar .stMarkdown strong,
+    .sidebar .stMarkdown em {
+        color: #FFFFFF !important;
         font-family: 'Inter', sans-serif !important;
     }
     
-    /* HEADER PRINCIPAL AVEC DÉGRADÉ MODERNE */
-    .main-header {
-        background: var(--gradient-primary);
-        color: white;
-        padding: 2rem;
-        border-radius: 20px;
-        margin-bottom: 2rem;
-        box-shadow: 0 20px 60px rgba(168, 85, 247, 0.2);
-        text-align: center;
-        position: relative;
-        overflow: hidden;
+    /* SIDEBAR NAVIGATION BUTTONS - STYLE UNIFORME DÉGRADÉ */
+    .sidebar .stButton > button {
+        background: linear-gradient(135deg, #a855f7 0%, #3b82f6 25%, #06b6d4 50%, #10b981 100%) !important;
+        color: white !important;
+        border: none !important;
+        font-family: 'Inter', sans-serif !important;
+        font-weight: 500 !important;
+        font-size: 0.9rem !important;
+        min-height: auto !important;
+        text-align: center !important;
+        margin-bottom: 0.5rem !important;
+        border-radius: 12px !important;
+        transition: all 0.3s ease !important;
+        padding: 0.75rem 1rem !important;
+        box-shadow: 0 4px 16px rgba(168, 85, 247, 0.25) !important;
+    }
+    
+    .sidebar .stButton > button:hover {
+        background: linear-gradient(135deg, #9333ea 0%, #2563eb 25%, #0891b2 50%, #059669 100%) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 20px rgba(168, 85, 247, 0.35) !important;
+        color: white !important;
+    }
+    
+    /* SIDEBAR BUTTONS - AUCUNE EXCEPTION */
+    .sidebar .stButton > button[kind="primary"],
+    .sidebar .stButton > button[kind="secondary"] {
+        background: linear-gradient(135deg, #a855f7 0%, #3b82f6 25%, #06b6d4 50%, #10b981 100%) !important;
+        color: white !important;
+        border: none !important;
+        font-weight: 600 !important;
+    }
+    
+    .sidebar .stButton > button[kind="primary"]:hover,
+    .sidebar .stButton > button[kind="secondary"]:hover {
+        background: linear-gradient(135deg, #9333ea 0%, #2563eb 25%, #0891b2 50%, #059669 100%) !important;
+        color: white !important;
+    }
+    
+    /* DASHBOARD MAIN CONTENT - TEXTE NOIR VISIBLE */
+    .main .block-container * {
+        color: #1F2937 !important;
+        font-family: 'Inter', sans-serif !important;
+    }
+    
+    .main .block-container h1,
+    .main .block-container h2,
+    .main .block-container h3,
+    .main .block-container h4,
+    .main .block-container p,
+    .main .block-container div,
+    .main .block-container span,
+    .main .block-container strong,
+    .main .block-container em {
+        color: #1F2937 !important;
+    }
+    
+    /* CARTES KPI PARFAITEMENT LISIBLES */
+    .kpi-card, .kpi-card.primary, .kpi-card.success, .kpi-card.warning, .kpi-card.danger {
+        background: #FFFFFF !important;
+        color: #1F2937 !important;
+        border: 2px solid transparent !important;
+        border-image: linear-gradient(135deg, #a855f7, #3b82f6, #06b6d4, #10b981) 1 !important;
+        border-radius: 16px !important;
+        padding: 1.5rem !important;
+        text-align: center !important;
+        margin: 0.5rem !important;
+        box-shadow: 0 4px 20px rgba(168, 85, 247, 0.1) !important;
+        transition: all 0.3s ease !important;
+        cursor: pointer !important;
+        min-height: 120px !important;
+        font-family: 'Inter', sans-serif !important;
+    }
+    
+    .kpi-card:hover {
+        box-shadow: 0 12px 40px rgba(168, 85, 247, 0.2) !important;
+        transform: translateY(-4px) !important;
+        background: rgba(168, 85, 247, 0.02) !important;
+        color: #1F2937 !important;
+    }
+    
+    /* MÉTRIQUES STREAMLIT COHÉRENTES */
+    .metric-container,
+    .metric-container [data-testid="metric-container"] {
+        background: #FFFFFF !important;
+        color: #1F2937 !important;
+        border: 2px solid transparent !important;
+        border-image: linear-gradient(135deg, #a855f7, #10b981) 1 !important;
+        border-radius: 16px !important;
+        padding: 1.5rem !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .metric-container:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 32px rgba(168, 85, 247, 0.15) !important;
+        background: rgba(168, 85, 247, 0.02) !important;
+        color: #1F2937 !important;
+    }
+    
+    /* DATAFRAMES ET TABLEAUX LISIBLES */
+    .stDataFrame {
+        font-family: 'Inter', sans-serif !important;
+        color: #1F2937 !important;
+    }
+    
+    .stDataFrame table {
+        border: 2px solid transparent !important;
+        border-image: linear-gradient(135deg, #a855f7, #10b981) 1 !important;
+        border-radius: 16px !important;
+        overflow: hidden !important;
+        background: white !important;
+    }
+    
+    .stDataFrame th,
+    .stDataFrame td {
+        color: #1F2937 !important;
+        background: white !important;
+        font-family: 'Inter', sans-serif !important;
     }
     
     .main-header::before {
@@ -644,41 +822,78 @@ st.markdown("""
         overflow: hidden !important;
     }
     
-    /* MESSAGES STREAMLIT NATIFS COHÉRENTS */
+    /* MESSAGES SYSTÈME PARFAITEMENT LISIBLES */
     .stSuccess {
-        background-color: #F0FDF4 !important;
-        border: 1px solid #BBF7D0 !important;
-        color: #166534 !important;
-        border-radius: 12px !important;
+        background: linear-gradient(135deg, #F0FDF4, #DCFCE7) !important;
+        border: 2px solid #10b981 !important;
+        color: #065F46 !important;
+        border-radius: 16px !important;
         font-family: 'Inter', sans-serif !important;
         font-weight: 500 !important;
+        padding: 1rem !important;
     }
     
     .stError {
-        background-color: #FEF2F2 !important;
-        border: 1px solid #FECACA !important;
-        color: #DC2626 !important;
-        border-radius: 12px !important;
+        background: linear-gradient(135deg, #FEF2F2, #FEE2E2) !important;
+        border: 2px solid #EF4444 !important;
+        color: #B91C1C !important;
+        border-radius: 16px !important;
         font-family: 'Inter', sans-serif !important;
         font-weight: 500 !important;
+        padding: 1rem !important;
     }
     
     .stWarning {
-        background-color: #FFFBEB !important;
-        border: 1px solid #FED7AA !important;
-        color: #D97706 !important;
-        border-radius: 12px !important;
+        background: linear-gradient(135deg, #FFFBEB, #FEF3C7) !important;
+        border: 2px solid #F59E0B !important;
+        color: #B45309 !important;
+        border-radius: 16px !important;
         font-family: 'Inter', sans-serif !important;
         font-weight: 500 !important;
+        padding: 1rem !important;
     }
     
     .stInfo {
-        background-color: #EFF6FF !important;
-        border: 1px solid #BFDBFE !important;
-        color: #1E40AF !important;
-        border-radius: 12px !important;
+        background: var(--gradient-soft) !important;
+        border: 2px solid #a855f7 !important;
+        color: #7c3aed !important;
+        border-radius: 16px !important;
         font-family: 'Inter', sans-serif !important;
         font-weight: 500 !important;
+        padding: 1rem !important;
+    }
+    
+    /* CORRECTION GLOBALE - AUCUN TEXTE INVISIBLE */
+    .stApp [data-testid="stSidebar"] * {
+        color: #FFFFFF !important;
+    }
+    
+    .stApp .main * {
+        color: #1F2937 !important;
+    }
+    
+    .stApp .main .main-header * {
+        color: white !important;
+    }
+    
+    /* BOUTONS UNIFORMES - STYLE DÉCONNEXION POUR TOUS */
+    .stButton > button:not(.sidebar .stButton > button) {
+        background: white !important;
+        color: #1F2937 !important;
+        border: 1px solid #E5E7EB !important;
+        border-radius: 16px !important;
+        font-family: 'Inter', sans-serif !important;
+        font-weight: 500 !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+    }
+    
+    .stButton > button:not(.sidebar .stButton > button):hover {
+        background: var(--gradient-soft) !important;
+        color: #1F2937 !important;
+        border-color: rgba(168, 85, 247, 0.3) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 25px rgba(168, 85, 247, 0.15) !important;
     }
     
     /* TABS STREAMLIT AVEC DÉGRADÉ COHÉRENT */
@@ -785,6 +1000,55 @@ st.markdown("""
         background: var(--gradient-primary) !important;
         background-size: 200% 200% !important;
         animation: gradient-animation 3s ease infinite !important;
+    }
+    
+    /* CORRECTION FINALE - LISIBILITÉ GARANTIE À 100% */
+    
+    /* Sidebar - Fond sombre, texte blanc TOUJOURS */
+    .css-1d391kg *, 
+    .css-1lcbmhc *, 
+    .css-1outpf7 *,
+    .css-18e3th9 *,
+    .css-hbf57o *,
+    [data-testid="stSidebar"] *,
+    .sidebar * {
+        color: #FFFFFF !important;
+        background-color: transparent !important;
+    }
+    
+    /* Dashboard main content - Fond clair, texte sombre TOUJOURS */
+    .main *:not(.main-header *):not(.sidebar *) {
+        color: #1F2937 !important;
+    }
+    
+    .main .block-container *:not(.main-header *) {
+        color: #1F2937 !important;
+    }
+    
+    /* Exception pour header qui reste blanc sur dégradé */
+    .main-header,
+    .main-header *,
+    .main-header h1,
+    .main-header h2,
+    .main-header p {
+        color: white !important;
+    }
+    
+    /* Labels et inputs - Lisibilité parfaite */
+    .stTextInput label,
+    .stSelectbox label,
+    .stNumberInput label,
+    .stTextArea label {
+        color: #1F2937 !important;
+        font-family: 'Inter', sans-serif !important;
+        font-weight: 500 !important;
+    }
+    
+    /* Checkbox et radio - Texte visible */
+    .stCheckbox label,
+    .stRadio label {
+        color: #1F2937 !important;
+        font-family: 'Inter', sans-serif !important;
     }
     
     /* RESPONSIVE ADJUSTMENTS */
@@ -2121,7 +2385,7 @@ def page_portefeuille_aco():
         filtre_commune = st.selectbox("Commune", ["Toutes", "Les Abymes", "Pointe-à-Pitre", "Basse-Terre", "Sainte-Anne"])
     
     with col_filter4:
-        if st.button("➕ Nouvelle Opération", type="primary"):
+        if st.button("✨ Nouvelle Opération", type="primary"):
             st.session_state.page = "creation_operation"
             st.rerun()
     
@@ -2159,14 +2423,14 @@ def page_portefeuille_aco():
             col_btn1, col_btn2, col_btn3 = st.columns([1, 1, 2])
             
             with col_btn1:
-                if st.button(f"📂 Ouvrir", key=f"open_{op['id']}"):
+                if st.button(f"💼 Ouvrir", key=f"open_{op['id']}"):
                     st.session_state.selected_operation_id = op['id']
                     st.session_state.selected_operation = op
                     st.session_state.page = "operation_details"
                     st.rerun()
             
             with col_btn2:
-                if st.button(f"📊 Timeline", key=f"timeline_{op['id']}"):
+                if st.button(f"📈 Timeline", key=f"timeline_{op['id']}"):
                     st.session_state.selected_operation_id = op['id']
                     st.session_state.selected_operation = op
                     st.session_state.page = "operation_details"
@@ -2307,7 +2571,7 @@ def page_creation_operation():
     user_data = st.session_state.user_data
     nom_aco = user_data.get('nom', 'ACO')
     
-    st.markdown("### ➕ Nouvelle Opération")
+    st.markdown("### ✨ Nouvelle Opération")
     
     # Chargement des templates
     templates = load_templates_phases()
@@ -2449,9 +2713,9 @@ def main():
         st.markdown("### 🎯 Navigation Principale")
         
         nav_buttons = [
-            ("🏠 Dashboard", "dashboard"),
-            ("📂 Mon Portefeuille", "portefeuille"),
-            ("➕ Nouvelle Opération", "creation_operation"),
+            ("📈 Dashboard", "dashboard"),
+            ("💼 Mon Portefeuille", "portefeuille"),
+            ("✨ Nouvelle Opération", "creation_operation"),
         ]
         
         for label, page_key in nav_buttons:
@@ -2480,7 +2744,7 @@ def main():
         st.markdown("---")
         
         # Opérations courantes (raccourcis)
-        st.markdown("### 📋 Accès Rapide Opérations")
+        st.markdown("### 🔄 Accès Rapide Opérations")
         
         demo_data = load_demo_data()
         operations_demo = demo_data.get('operations_demo', [])
@@ -2519,7 +2783,7 @@ def main():
         st.markdown("*Architecture ACO-centrique*")
         
         # Bouton déconnexion
-        if st.button("🚪 Déconnexion", use_container_width=True, type="primary", key="logout_btn"):
+        if st.button("👋 Déconnexion", use_container_width=True, type="primary", key="logout_btn"):
             logout()
             st.rerun()
     
