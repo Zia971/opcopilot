@@ -1569,78 +1569,10 @@ def page_dashboard():
     # Alertes et actions MODERNISÉES ET SIMPLIFIÉES
     st.markdown("### 🚨 Alertes et Actions Prioritaires")
     
-    # CSS pour couleurs alertes selon criticité métier UNIQUEMENT
+    # CSS simplifié pour actions réalisées uniquement
     st.markdown("""
     <style>
-    /* ALERTES CRITIQUES - Couleurs selon criticité métier */
-    
-    /* ALERTE 1 - COUR CHARNEAU = ROUGE/ROSE (CRITIQUE - Retard MOE urgent !) */
-    .stButton > button[data-testid="baseButton-secondary"]:has-text("COUR CHARNEAU"),
-    .stButton > button[key="alert_cour_charneau"] {
-        background: linear-gradient(145deg, #FEE2E2, #FECACA) !important;
-        border-left: 4px solid #EF4444 !important;
-        color: #DC2626 !important;
-        box-shadow: 0 6px 20px rgba(239, 68, 68, 0.15) !important;
-        border-radius: 15px !important;
-        padding: 1.25rem !important;
-        text-align: left !important;
-        transition: all 0.3s ease !important;
-        width: 100% !important;
-        white-space: pre-line !important;
-        font-weight: 600 !important;
-        border: none !important;
-    }
-    
-    .stButton > button[data-testid="baseButton-secondary"]:has-text("COUR CHARNEAU"):hover {
-        transform: translateY(-3px) !important;
-        box-shadow: 0 8px 30px rgba(239, 68, 68, 0.25) !important;
-    }
-    
-    /* ALERTE 2 - VEFA BELCOURT = JAUNE (ATTENTION - Validation requise) */
-    .stButton > button[data-testid="baseButton-secondary"]:has-text("VEFA BELCOURT"),
-    .stButton > button[key="alert_vefa_belcourt"] {
-        background: linear-gradient(145deg, #FEF3C7, #FDE68A) !important;
-        border-left: 4px solid #F59E0B !important;
-        color: #D97706 !important;
-        box-shadow: 0 6px 20px rgba(245, 158, 11, 0.15) !important;
-        border-radius: 15px !important;
-        padding: 1.25rem !important;
-        text-align: left !important;
-        transition: all 0.3s ease !important;
-        width: 100% !important;
-        white-space: pre-line !important;
-        font-weight: 600 !important;
-        border: none !important;
-    }
-    
-    .stButton > button[data-testid="baseButton-secondary"]:has-text("VEFA BELCOURT"):hover {
-        transform: translateY(-3px) !important;
-        box-shadow: 0 8px 30px rgba(245, 158, 11, 0.25) !important;
-    }
-    
-    /* ALERTE 3 - RÉSIDENCE SOLEIL = BLEU CLAIR (INFORMATION - Suivi normal) */
-    .stButton > button[data-testid="baseButton-secondary"]:has-text("RÉSIDENCE SOLEIL"),
-    .stButton > button[key="alert_residence_soleil"] {
-        background: linear-gradient(145deg, #DBEAFE, #BFDBFE) !important;
-        border-left: 4px solid #3B82F6 !important;
-        color: #2563EB !important;
-        box-shadow: 0 6px 20px rgba(59, 130, 246, 0.15) !important;
-        border-radius: 15px !important;
-        padding: 1.25rem !important;
-        text-align: left !important;
-        transition: all 0.3s ease !important;
-        width: 100% !important;
-        white-space: pre-line !important;
-        font-weight: 600 !important;
-        border: none !important;
-    }
-    
-    .stButton > button[data-testid="baseButton-secondary"]:has-text("RÉSIDENCE SOLEIL"):hover {
-        transform: translateY(-3px) !important;
-        box-shadow: 0 8px 30px rgba(59, 130, 246, 0.25) !important;
-    }
-    
-    /* ACTIONS RÉALISÉES - Garder style vert existant (non modifié) */
+    /* ACTIONS RÉALISÉES - Style vert (inchangé) */
     .stButton > button[data-testid="baseButton-primary"] {
         background: linear-gradient(145deg, #D1FAE5, #A7F3D0) !important;
         border: none !important;
@@ -1662,6 +1594,17 @@ def page_dashboard():
         transform: translateY(-2px) !important;
         box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25) !important;
     }
+    
+    /* BOUTONS NAVIGATION ALERTES */
+    .stButton > button:not([data-testid="baseButton-primary"]) {
+        background: linear-gradient(145deg, #8B5CF6, #3B82F6) !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 10px !important;
+        padding: 0.5rem 1rem !important;
+        font-weight: 600 !important;
+        margin-top: 0.5rem !important;
+    }
     </style>
     """, unsafe_allow_html=True)
     
@@ -1670,14 +1613,26 @@ def page_dashboard():
     with col_alert1:
         st.markdown("#### Alertes Critiques")
         
-        # ALERTE 1 - Card cliquable directe (sans bouton séparé)
-        if st.button("""🏗️ COUR CHARNEAU
-Retard MOE 5 jours sur phase LBU
-Action: Relance urgente MOE""", 
-                    key="alert_cour_charneau", 
-                    use_container_width=True, 
-                    type="secondary"):
-            # Navigation directe vers opération
+        # ALERTE 1 - CRITIQUE ROUGE (HTML direct avec styles)
+        st.markdown("""
+        <div style="background: linear-gradient(145deg, #FEE2E2, #FECACA); 
+                    border-left: 4px solid #EF4444; 
+                    border-radius: 15px; 
+                    padding: 1.25rem; 
+                    margin: 0.75rem 0; 
+                    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.15); 
+                    cursor: pointer; 
+                    transition: all 0.3s ease;"
+             onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 30px rgba(239, 68, 68, 0.25)'"
+             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 6px 20px rgba(239, 68, 68, 0.15)'">
+            <div style="font-weight: 700; font-size: 1.1rem; color: #DC2626; margin-bottom: 0.5rem;">🏗️ COUR CHARNEAU</div>
+            <div style="color: #DC2626; margin: 0.5rem 0; font-size: 0.95rem;">Retard MOE 5 jours sur phase LBU</div>
+            <div style="color: #DC2626; font-style: italic; font-size: 0.9rem; opacity: 0.9;">Action: Relance urgente MOE</div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("🔍 Ouvrir COUR CHARNEAU", key="nav_cour_charneau", use_container_width=True):
+            # Navigation vers détail opération
             demo_data = load_demo_data()
             operations_data = demo_data.get('operations_demo', [])
             cour_charneau = next((op for op in operations_data if "CHARNEAU" in op['nom']), None)
@@ -1687,14 +1642,26 @@ Action: Relance urgente MOE""",
                 st.session_state.page = "operation_details"
                 st.rerun()
         
-        # ALERTE 2 - Card cliquable directe
-        if st.button("""🏠 VEFA BELCOURT
-Validation promoteur en attente
-Action: RDV programmé cette semaine""", 
-                    key="alert_vefa_belcourt", 
-                    use_container_width=True, 
-                    type="secondary"):
-            # Navigation directe vers opération
+        # ALERTE 2 - ATTENTION JAUNE (HTML direct avec styles)
+        st.markdown("""
+        <div style="background: linear-gradient(145deg, #FEF3C7, #FDE68A); 
+                    border-left: 4px solid #F59E0B; 
+                    border-radius: 15px; 
+                    padding: 1.25rem; 
+                    margin: 0.75rem 0; 
+                    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.15); 
+                    cursor: pointer; 
+                    transition: all 0.3s ease;"
+             onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 30px rgba(245, 158, 11, 0.25)'"
+             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 6px 20px rgba(245, 158, 11, 0.15)'">
+            <div style="font-weight: 700; font-size: 1.1rem; color: #D97706; margin-bottom: 0.5rem;">🏠 VEFA BELCOURT</div>
+            <div style="color: #D97706; margin: 0.5rem 0; font-size: 0.95rem;">Validation promoteur en attente</div>
+            <div style="color: #D97706; font-style: italic; font-size: 0.9rem; opacity: 0.9;">Action: RDV programmé cette semaine</div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("🔍 Ouvrir VEFA BELCOURT", key="nav_vefa_belcourt", use_container_width=True):
+            # Navigation vers détail opération
             demo_data = load_demo_data()
             operations_data = demo_data.get('operations_demo', [])
             vefa_belcourt = next((op for op in operations_data if "BELCOURT" in op['nom']), None)
@@ -1704,14 +1671,26 @@ Action: RDV programmé cette semaine""",
                 st.session_state.page = "operation_details"
                 st.rerun()
         
-        # ALERTE 3 - Card cliquable directe
-        if st.button("""🏗️ RÉSIDENCE SOLEIL
-Phase Travaux en cours - bon avancement
-Action: Suivi hebdomadaire maintenu""", 
-                    key="alert_residence_soleil", 
-                    use_container_width=True, 
-                    type="secondary"):
-            # Navigation directe vers opération
+        # ALERTE 3 - INFORMATION BLEU CLAIR (HTML direct avec styles)
+        st.markdown("""
+        <div style="background: linear-gradient(145deg, #DBEAFE, #BFDBFE); 
+                    border-left: 4px solid #3B82F6; 
+                    border-radius: 15px; 
+                    padding: 1.25rem; 
+                    margin: 0.75rem 0; 
+                    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.15); 
+                    cursor: pointer; 
+                    transition: all 0.3s ease;"
+             onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 30px rgba(59, 130, 246, 0.25)'"
+             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 6px 20px rgba(59, 130, 246, 0.15)'">
+            <div style="font-weight: 700; font-size: 1.1rem; color: #2563EB; margin-bottom: 0.5rem;">🏗️ RÉSIDENCE SOLEIL</div>
+            <div style="color: #2563EB; margin: 0.5rem 0; font-size: 0.95rem;">Phase Travaux en cours - bon avancement</div>
+            <div style="color: #2563EB; font-style: italic; font-size: 0.9rem; opacity: 0.9;">Action: Suivi hebdomadaire maintenu</div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("🔍 Ouvrir RÉSIDENCE SOLEIL", key="nav_residence_soleil", use_container_width=True):
+            # Navigation vers détail opération
             demo_data = load_demo_data()
             operations_data = demo_data.get('operations_demo', [])
             residence_soleil = next((op for op in operations_data if "SOLEIL" in op['nom']), None)
