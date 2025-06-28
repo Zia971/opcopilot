@@ -1585,6 +1585,18 @@ def page_dashboard():
         background-color: #F8FAFC !important;
     }
     
+    /* CACHER LES BOUTONS DE NAVIGATION */
+    button[key="alert_cour_charneau"],
+    button[key="alert_vefa_belcourt"],
+    button[key="alert_residence_soleil"],
+    button[key="action_dgd_residence"],
+    button[key="action_timeline_cour"],
+    button[key="action_med_freins"],
+    button[key="action_rem_analyse"],
+    button[key="action_timeline_vefa"] {
+        display: none !important;
+    }
+    
     /* ACTIONS RÉALISÉES - VERT FORCÉ (pas violet) */
     .stButton > button[data-testid="baseButton-primary"] {
         background: linear-gradient(145deg, #10B981, #D1FAE5) !important;
