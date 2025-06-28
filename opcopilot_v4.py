@@ -1573,7 +1573,7 @@ def page_dashboard():
     # Alertes et actions MODERNISÉES ET SIMPLIFIÉES
     st.markdown("### 🚨 Alertes et Actions Prioritaires")
     
-    # CSS simplifié pour actions réalisées uniquement
+    # CSS simplifié
     st.markdown("""
     <style>
     /* SIDEBAR RESTAURÉE à l'état original */
@@ -1585,40 +1585,93 @@ def page_dashboard():
         background-color: #F8FAFC !important;
     }
     
-    /* CACHER LES BOUTONS DE NAVIGATION */
-    button[key="alert_cour_charneau"],
-    button[key="alert_vefa_belcourt"],
-    button[key="alert_residence_soleil"],
-    button[key="action_dgd_residence"],
-    button[key="action_timeline_cour"],
-    button[key="action_med_freins"],
-    button[key="action_rem_analyse"],
-    button[key="action_timeline_vefa"] {
+    /* CACHER LES BOUTONS DE NAVIGATION INVISIBLES */
+    .hidden-buttons {
         display: none !important;
-    }
-    
-    /* ACTIONS RÉALISÉES - VERT FORCÉ (pas violet) */
-    .stButton > button[data-testid="baseButton-primary"] {
-        background: linear-gradient(145deg, #10B981, #D1FAE5) !important;
-        border: none !important;
-        border-left: 4px solid #10B981 !important;
-        border-radius: 15px !important;
-        padding: 1rem !important;
-        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15) !important;
-        transition: all 0.3s ease !important;
-        width: 100% !important;
-        color: white !important;
-        font-weight: 600 !important;
-        text-align: left !important;
-        white-space: pre-line !important;
-    }
-    
-    .stButton > button[data-testid="baseButton-primary"]:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25) !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        overflow: hidden !important;
     }
     </style>
     """, unsafe_allow_html=True)
+    
+    # NAVIGATION CACHÉE - Boutons invisibles pour la navigation
+    with st.container():
+        st.markdown('<div class="hidden-buttons">', unsafe_allow_html=True)
+        
+        # Boutons pour alertes
+        if st.button("hidden_nav_cour", key="nav_alert_cour"):
+            demo_data = load_demo_data()
+            operations = demo_data.get('operations_demo', [])
+            cour_charneau = next((op for op in operations if "COUR CHARNEAU" in op['nom']), None)
+            if cour_charneau:
+                st.session_state.selected_operation = cour_charneau
+                st.session_state.selected_operation_id = cour_charneau['id']
+                st.session_state.page = "operation_details"
+                st.rerun()
+        
+        if st.button("hidden_nav_vefa", key="nav_alert_vefa"):
+            demo_data = load_demo_data()
+            operations = demo_data.get('operations_demo', [])
+            vefa_belcourt = next((op for op in operations if "VEFA BELCOURT" in op['nom']), None)
+            if vefa_belcourt:
+                st.session_state.selected_operation = vefa_belcourt
+                st.session_state.selected_operation_id = vefa_belcourt['id']
+                st.session_state.page = "operation_details"
+                st.rerun()
+        
+        if st.button("hidden_nav_residence", key="nav_alert_residence"):
+            demo_data = load_demo_data()
+            operations = demo_data.get('operations_demo', [])
+            residence_soleil = next((op for op in operations if "RÉSIDENCE SOLEIL" in op['nom']), None)
+            if residence_soleil:
+                st.session_state.selected_operation = residence_soleil
+                st.session_state.selected_operation_id = residence_soleil['id']
+                st.session_state.page = "operation_details"
+                st.rerun()
+        
+        # Boutons pour actions
+        if st.button("hidden_action_dgd", key="nav_action_dgd"):
+            demo_data = load_demo_data()
+            operations = demo_data.get('operations_demo', [])
+            residence_soleil = next((op for op in operations if "RÉSIDENCE SOLEIL" in op['nom']), None)
+            if residence_soleil:
+                st.session_state.selected_operation = residence_soleil
+                st.session_state.selected_operation_id = residence_soleil['id']
+                st.session_state.page = "operation_details"
+                st.session_state.active_tab = "dgd"
+                st.rerun()
+        
+        if st.button("hidden_action_timeline_cour", key="nav_action_timeline_cour"):
+            demo_data = load_demo_data()
+            operations = demo_data.get('operations_demo', [])
+            cour_charneau = next((op for op in operations if "COUR CHARNEAU" in op['nom']), None)
+            if cour_charneau:
+                st.session_state.selected_operation = cour_charneau
+                st.session_state.selected_operation_id = cour_charneau['id']
+                st.session_state.page = "operation_details"
+                st.session_state.active_tab = "timeline"
+                st.rerun()
+        
+        if st.button("hidden_action_med", key="nav_action_med"):
+            st.session_state.page = "gestion_freins"
+            st.rerun()
+        
+        if st.button("hidden_action_rem", key="nav_action_rem"):
+            st.info("📊 Analyse REM détaillée - En développement")
+        
+        if st.button("hidden_action_timeline_vefa", key="nav_action_timeline_vefa"):
+            demo_data = load_demo_data()
+            operations = demo_data.get('operations_demo', [])
+            vefa_belcourt = next((op for op in operations if "VEFA BELCOURT" in op['nom']), None)
+            if vefa_belcourt:
+                st.session_state.selected_operation = vefa_belcourt
+                st.session_state.selected_operation_id = vefa_belcourt['id']
+                st.session_state.page = "operation_details"
+                st.session_state.active_tab = "timeline"
+                st.rerun()
+        
+        st.markdown('</div>', unsafe_allow_html=True)
     
     col_alert1, col_alert2 = st.columns(2)
     
