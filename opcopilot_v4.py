@@ -169,40 +169,78 @@ st.markdown("""
     .kpi-card {
         background: white;
         border: 1px solid #E5E7EB;
-        border-radius: 15px;
+        border-radius: 20px;
         padding: 2rem;
         text-align: center;
         margin: 0.5rem;
-        box-shadow: 0 8px 32px rgba(139, 92, 246, 0.15);
-        border-left: 4px solid;
-        border-image: linear-gradient(135deg, #8B5CF6, #3B82F6, #10B981) 1;
-        transition: all 0.3s ease;
+        box-shadow: 0 10px 40px rgba(139, 92, 246, 0.15);
+        border: 2px solid transparent;
+        background-clip: padding-box;
+        transition: all 0.4s ease;
         cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .kpi-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 20px;
+        padding: 2px;
+        background: linear-gradient(135deg, #8B5CF6, #3B82F6, #10B981);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask-composite: exclude;
     }
     
     .kpi-card:hover {
-        box-shadow: 0 12px 40px rgba(139, 92, 246, 0.25);
-        transform: translateY(-3px);
+        box-shadow: 0 20px 60px rgba(139, 92, 246, 0.25);
+        transform: translateY(-5px) scale(1.02);
     }
     
     .kpi-card.primary {
         background: linear-gradient(135deg, #8B5CF6 0%, #3B82F6 50%, #10B981 100%);
         color: white;
+        border: none;
+    }
+    
+    .kpi-card.primary::before {
+        display: none;
     }
     
     .kpi-card.success {
         background: linear-gradient(135deg, #10B981 0%, #059669 100%);
         color: white;
+        border: none;
+    }
+    
+    .kpi-card.success::before {
+        display: none;
     }
     
     .kpi-card.warning {
         background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
         color: white;
+        border: none;
+    }
+    
+    .kpi-card.warning::before {
+        display: none;
     }
     
     .kpi-card.danger {
         background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
         color: white;
+        border: none;
+    }
+    
+    .kpi-card.danger::before {
+        display: none;
     }
     
     .timeline-container {
@@ -961,19 +999,19 @@ def create_timeline_horizontal(operation_data, phases_data):
         date_min = min(dates_debut)
         date_max = max(dates_fin)
         
-        # BARRE HORIZONTALE AVEC ESPACEMENT ÉGAL - Timeline chronologique MODERNISÉE
+        # BARRE HORIZONTALE AVEC ESPACEMENT ÉGAL - Timeline chronologique
         if len(phases_valides) > 1:
             # Positions équidistantes (chronologie simple, pas durées)
             x_positions = list(range(len(phases_valides)))
             
-            # Couleurs du dégradé MODERNISÉ (violet → bleu → vert)
+            # Couleurs du dégradé (jaune → orange → rouge → violet → bleu)
             couleurs_degrade = [
-                "#8B5CF6",  # Violet
-                "#7C3AED",  # Violet foncé
-                "#6366F1",  # Indigo
-                "#3B82F6",  # Bleu
-                "#06B6D4",  # Cyan
-                "#10B981"   # Vert
+                "#FFD54F",  # Jaune
+                "#FF9800",  # Orange  
+                "#F44336",  # Rouge
+                "#E91E63",  # Rose/Violet
+                "#673AB7",  # Violet
+                "#2E7D32"   # Bleu-vert foncé
             ]
             
             # Segments de la barre avec espacement égal
@@ -1010,7 +1048,7 @@ def create_timeline_horizontal(operation_data, phases_data):
                     hoverinfo='skip'
                 ))
         
-        # CERCLES AVEC DATES MM/YY - Espacement chronologique égal MODERNISÉ
+        # CERCLES AVEC DATES MM/YY - Espacement chronologique égal
         for i, phase in enumerate(phases_valides):
             try:
                 debut_date = dates_debut[i]  # Date réelle pour format MM/YY
@@ -1018,10 +1056,10 @@ def create_timeline_horizontal(operation_data, phases_data):
                 statut = phase.get('statut', 'NON_DEMARREE')
                 nom_phase = phase.get('nom', f'Phase {i+1}')
                 
-                # Couleur assortie au dégradé MODERNISÉ
+                # Couleur assortie au dégradé
                 couleurs_cercles = [
-                    "#8B5CF6", "#7C3AED", "#6366F1", 
-                    "#3B82F6", "#06B6D4", "#10B981"
+                    "#FFD54F", "#FF9800", "#F44336", 
+                    "#E91E63", "#673AB7", "#2E7D32"
                 ]
                 couleur = couleurs_cercles[i % len(couleurs_cercles)]
                 
@@ -1095,7 +1133,7 @@ def create_timeline_horizontal(operation_data, phases_data):
                 st.warning(f"⚠️ Erreur phase {i+1}: {str(e)}")
                 continue
         
-        # LAYOUT TIMELINE CHRONOLOGIQUE MODERNISÉ
+        # LAYOUT TIMELINE CHRONOLOGIQUE (espacement égal, pas durées)
         operation_nom = operation_data.get('nom', 'Opération') if isinstance(operation_data, dict) else 'Opération'
         
         fig.update_layout(
@@ -1105,9 +1143,9 @@ def create_timeline_horizontal(operation_data, phases_data):
                 'xanchor': 'center',
                 'font': {'size': 22, 'color': '#333333', 'family': 'Arial Black'}
             },
-            # Fond moderne avec dégradé léger
-            plot_bgcolor='rgba(139, 92, 246, 0.02)',
-            paper_bgcolor='#f9fafb',
+            # Fond gris clair comme modèle
+            plot_bgcolor='rgba(240, 240, 240, 0.3)',
+            paper_bgcolor='#f5f5f5',
             
             # SUPPRESSION COMPLÈTE AXE X (chronologie dans cercles)
             xaxis=dict(
@@ -1230,11 +1268,16 @@ def page_dashboard():
         operations_actives = kpis_data.get('operations_actives', 23)
         operations_cloturees = kpis_data.get('operations_cloturees', 5)
         
-        if st.button(f"""
-        **{operations_actives}**  
-        Opérations Actives  
-        {operations_cloturees} clôturées
-        """, key="btn_operations", use_container_width=True):
+        st.markdown(f"""
+        <div class="kpi-card primary" onclick="location.href='#';" style="cursor: pointer;">
+            <div style="font-size: 3rem; margin-bottom: 0.5rem;">📂</div>
+            <div style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem;">{operations_actives}</div>
+            <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">Opérations Actives</div>
+            <div style="font-size: 1rem; opacity: 0.9;">{operations_cloturees} clôturées</div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("📂 Voir Portfolio", key="btn_operations", use_container_width=True):
             st.session_state.page = "portefeuille"
             st.rerun()
     
@@ -1243,24 +1286,32 @@ def page_dashboard():
         rem_prevu = kpis_data.get('rem_prevue_2024', 620000)
         taux_real = kpis_data.get('taux_realisation_rem', 78)
         
-        if st.button(f"""
-        **{rem_realise/1000:.0f}k€**  
-        REM Réalisée 2024  
-        {taux_real}% / {rem_prevu/1000:.0f}k€ prévue
-        """, key="btn_rem", use_container_width=True):
-            # Navigation vers analyse REM
+        st.markdown(f"""
+        <div class="kpi-card success" onclick="location.href='#';" style="cursor: pointer;">
+            <div style="font-size: 3rem; margin-bottom: 0.5rem;">💰</div>
+            <div style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem;">{rem_realise/1000:.0f}k€</div>
+            <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">REM Réalisée 2024</div>
+            <div style="font-size: 1rem; opacity: 0.9;">{taux_real}% / {rem_prevu/1000:.0f}k€ prévue</div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("💰 Analyse REM", key="btn_rem", use_container_width=True):
             st.info("📊 Analyse REM détaillée - En développement")
     
     with col3:
         freins_actifs = kpis_data.get('freins_actifs', 3)
         freins_critiques = kpis_data.get('freins_critiques', 2)
         
-        if st.button(f"""
-        **{freins_actifs}**  
-        Freins Actifs  
-        {freins_critiques} critiques
-        """, key="btn_freins", use_container_width=True):
-            # Navigation vers détail des freins
+        st.markdown(f"""
+        <div class="kpi-card warning" onclick="location.href='#';" style="cursor: pointer;">
+            <div style="font-size: 3rem; margin-bottom: 0.5rem;">🚨</div>
+            <div style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem;">{freins_actifs}</div>
+            <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">Freins Actifs</div>
+            <div style="font-size: 1rem; opacity: 0.9;">{freins_critiques} critiques</div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("🚨 Gérer Freins", key="btn_freins", use_container_width=True):
             st.session_state.page = "gestion_freins"
             st.rerun()
     
@@ -1268,12 +1319,16 @@ def page_dashboard():
         echeances = kpis_data.get('echeances_semaine', 5)
         validations = kpis_data.get('validations_requises', 12)
         
-        if st.button(f"""
-        **{echeances}**  
-        Échéances Semaine  
-        {validations} validations requises
-        """, key="btn_echeances", use_container_width=True):
-            # Navigation vers planning
+        st.markdown(f"""
+        <div class="kpi-card danger" onclick="location.href='#';" style="cursor: pointer;">
+            <div style="font-size: 3rem; margin-bottom: 0.5rem;">📅</div>
+            <div style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem;">{echeances}</div>
+            <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">Échéances Semaine</div>
+            <div style="font-size: 1rem; opacity: 0.9;">{validations} validations requises</div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("📅 Planning", key="btn_echeances", use_container_width=True):
             st.session_state.page = "planning_echeances"
             st.rerun()
     
