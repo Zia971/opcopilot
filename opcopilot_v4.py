@@ -1614,7 +1614,7 @@ def page_dashboard():
         st.markdown("#### Alertes Critiques")
         
         # Boutons cachés pour la navigation (invisibles)
-        if st.button("nav_cour_charneau", key="hidden_cour_charneau", help="Navigation", label_visibility="hidden"):
+        if st.button("nav_cour_charneau", key="hidden_cour_charneau"):
             # Navigation vers COUR CHARNEAU
             demo_data = load_demo_data()
             operations = demo_data.get('operations_demo', [])
@@ -1625,7 +1625,7 @@ def page_dashboard():
                 st.session_state.page = "operation_details"
                 st.rerun()
         
-        if st.button("nav_vefa_belcourt", key="hidden_vefa_belcourt", help="Navigation", label_visibility="hidden"):
+        if st.button("nav_vefa_belcourt", key="hidden_vefa_belcourt"):
             # Navigation vers VEFA BELCOURT
             demo_data = load_demo_data()
             operations = demo_data.get('operations_demo', [])
@@ -1636,7 +1636,16 @@ def page_dashboard():
                 st.session_state.page = "operation_details"
                 st.rerun()
         
-        if st.button("nav_residence_soleil", key="hidden_residence_soleil", help="Navigation", label_visibility="hidden"):
+        if st.button("nav_residence_soleil", key="hidden_residence_soleil"):
+            # Navigation vers RÉSIDENCE SOLEIL
+            demo_data = load_demo_data()
+            operations = demo_data.get('operations_demo', [])
+            residence_soleil = next((op for op in operations if "RÉSIDENCE SOLEIL" in op['nom']), None)
+            if residence_soleil:
+                st.session_state.selected_operation = residence_soleil
+                st.session_state.selected_operation_id = residence_soleil['id']
+                st.session_state.page = "operation_details"
+                st.rerun()
             # Navigation vers RÉSIDENCE SOLEIL
             demo_data = load_demo_data()
             operations = demo_data.get('operations_demo', [])
@@ -1650,14 +1659,14 @@ def page_dashboard():
         # CSS pour cacher les boutons
         st.markdown("""
         <style>
-        button[kind="secondary"][key="hidden_cour_charneau"],
-        button[kind="secondary"][key="hidden_vefa_belcourt"], 
-        button[kind="secondary"][key="hidden_residence_soleil"],
-        button[kind="secondary"][key="hidden_action_1"],
-        button[kind="secondary"][key="hidden_action_2"],
-        button[kind="secondary"][key="hidden_action_3"],
-        button[kind="secondary"][key="hidden_action_4"],
-        button[kind="secondary"][key="hidden_action_5"] {
+        button[key="hidden_cour_charneau"],
+        button[key="hidden_vefa_belcourt"], 
+        button[key="hidden_residence_soleil"],
+        button[key="hidden_action_1"],
+        button[key="hidden_action_2"],
+        button[key="hidden_action_3"],
+        button[key="hidden_action_4"],
+        button[key="hidden_action_5"] {
             display: none !important;
         }
         </style>
@@ -1724,7 +1733,7 @@ def page_dashboard():
         st.markdown("#### Actions Réalisées Aujourd'hui")
         
         # Boutons cachés pour les actions réalisées
-        if st.button("nav_action_1", key="hidden_action_1", help="Navigation", label_visibility="hidden"):
+        if st.button("nav_action_1", key="hidden_action_1"):
             # Navigation vers RÉSIDENCE SOLEIL + module DGD
             demo_data = load_demo_data()
             operations = demo_data.get('operations_demo', [])
@@ -1736,7 +1745,7 @@ def page_dashboard():
                 st.session_state.active_tab = "dgd"
                 st.rerun()
         
-        if st.button("nav_action_2", key="hidden_action_2", help="Navigation", label_visibility="hidden"):
+        if st.button("nav_action_2", key="hidden_action_2"):
             # Navigation vers COUR CHARNEAU + timeline
             demo_data = load_demo_data()
             operations = demo_data.get('operations_demo', [])
@@ -1748,16 +1757,26 @@ def page_dashboard():
                 st.session_state.active_tab = "timeline"
                 st.rerun()
         
-        if st.button("nav_action_3", key="hidden_action_3", help="Navigation", label_visibility="hidden"):
+        if st.button("nav_action_3", key="hidden_action_3"):
             # Navigation vers gestion MED (page générale)
             st.session_state.page = "gestion_freins"
             st.rerun()
         
-        if st.button("nav_action_4", key="hidden_action_4", help="Navigation", label_visibility="hidden"):
+        if st.button("nav_action_4", key="hidden_action_4"):
             # Navigation vers analyse REM
             st.info("📊 Analyse REM détaillée - En développement")
         
-        if st.button("nav_action_5", key="hidden_action_5", help="Navigation", label_visibility="hidden"):
+        if st.button("nav_action_5", key="hidden_action_5"):
+            # Navigation vers VEFA BELCOURT + timeline
+            demo_data = load_demo_data()
+            operations = demo_data.get('operations_demo', [])
+            vefa_belcourt = next((op for op in operations if "VEFA BELCOURT" in op['nom']), None)
+            if vefa_belcourt:
+                st.session_state.selected_operation = vefa_belcourt
+                st.session_state.selected_operation_id = vefa_belcourt['id']
+                st.session_state.page = "operation_details"
+                st.session_state.active_tab = "timeline"
+                st.rerun()
             # Navigation vers VEFA BELCOURT + timeline
             demo_data = load_demo_data()
             operations = demo_data.get('operations_demo', [])
