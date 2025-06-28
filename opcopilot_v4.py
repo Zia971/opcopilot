@@ -24,62 +24,7 @@ DEMO_ACO_USERS = {
     "aco3": "password3"
 }
 
-def login_form():
-    st.markdown(
-        """
-        <div style="background-color:#23272F; padding:2em; border-radius:10px; box-shadow:0 0 10px #111;">
-            <h2 style="color:#E1E1E1;">Authentification ACO</h2>
-        </div>
-        """, unsafe_allow_html=True
-    )
-    login = st.text_input("Identifiant ACO", key="login_input")
-    pwd = st.text_input("Mot de passe", type="password", key="pwd_input")
-    login_btn = st.button("Se connecter", key="login_btn")
-    if login_btn:
-        if login in DEMO_ACO_USERS and DEMO_ACO_USERS[login] == pwd:
-            st.session_state["authenticated"] = True
-            st.session_state["aco_user"] = login
-            st.rerun()
-        else:
-            st.error("Identifiant ou mot de passe incorrect.")
-
-def logout():
-    if st.button("Se déconnecter", key="logout_btn"):
-        st.session_state["authenticated"] = False
-        st.session_state["aco_user"] = None
-        st.rerun()
-
-# Initialisation de l'état de session
-if "authenticated" not in st.session_state:
-    st.session_state["authenticated"] = False
-    st.session_state["aco_user"] = None
-
-if not st.session_state["authenticated"]:
-    st.markdown(
-        """
-        <style>
-        /* Centrage vertical et fond sombre */
-        .block-container { display: flex; align-items: center; justify-content: center; height: 100vh; background: #181C22; }
-        </style>
-        """, unsafe_allow_html=True
-    )
-    login_form()
-    st.stop()
-else:
-    # Affiche le bouton de déconnexion dans la barre latérale
-    with st.sidebar:
-        st.markdown(f"**ACO connecté :** {st.session_state['aco_user']}", unsafe_allow_html=True)
-        logout()
-
-# Configuration page
-st.set_page_config(
-    page_title="OPCOPILOT v4.0 - SPIC Guadeloupe",
-    page_icon="🏗️",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
-
-# CSS personnalisé pour interface moderne
+# ---- CSS & FONTS MODERNES ----
 st.markdown("""
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -132,16 +77,6 @@ st.markdown("""
     .kpi-green { color: #10B981; }
     .kpi-orange { color: #F59E0B; }
     .kpi-red { color: #EF4444; }
-    .status-dot {
-        display: inline-block;
-        width: 0.7em;
-        height: 0.7em;
-        border-radius: 50%;
-        margin-right: 0.5em;
-    }
-    .status-vert { background: #10B981; }
-    .status-orange { background: #F59E0B; }
-    .status-rouge { background: #EF4444; }
     .sidebar-btn {
         background: #fff;
         border-radius: 8px;
@@ -162,8 +97,126 @@ st.markdown("""
         transform: scale(1.03);
         color: #3B82F6;
     }
+    .login-container {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 16px #e5e7eb55;
+        padding: 2.5em 2em 2em 2em;
+        margin: auto;
+        width: 100%;
+        max-width: 370px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .login-title {
+        font-size: 2em;
+        font-weight: 700;
+        color: #3B82F6;
+        margin-bottom: 1.2em;
+        text-align: center;
+    }
+    .login-form label, .login-form input {
+        width: 100%;
+        font-size: 1.07em;
+    }
+    .login-form input {
+        margin-bottom: 1.2em;
+        padding: 0.8em;
+        border-radius: 7px;
+        border: 1px solid #d1d5db;
+        background: #f8fafc;
+    }
+    .login-btn {
+        width: 100%;
+        background: #3B82F6;
+        color: #fff;
+        font-weight: 600;
+        border: none;
+        border-radius: 7px;
+        padding: 0.9em;
+        font-size: 1.08em;
+        transition: background .15s, transform .13s;
+        cursor: pointer;
+    }
+    .login-btn:hover {
+        background: #2563eb;
+        transform: scale(1.03);
+    }
 </style>
 """, unsafe_allow_html=True)
+
+# ---- PAGE DE CONNEXION MODERNE ----
+def login_form():
+    st.markdown("""
+    <div class="login-container">
+        <div class="login-title">OPCOPILOT - Authentification</div>
+        <form class="login-form">
+    """, unsafe_allow_html=True)
+    login = st.text_input("Identifiant ACO", key="login_input")
+    pwd = st.text_input("Mot de passe", type="password", key="pwd_input")
+    st.markdown("""</form></div>""", unsafe_allow_html=True)
+    login_btn = st.button("Se connecter", key="login_btn", help="Connexion ACO", type="primary")
+    if login_btn:
+        if login in DEMO_ACO_USERS and DEMO_ACO_USERS[login] == pwd:
+            st.session_state["authenticated"] = True
+            st.session_state["aco_user"] = login
+            st.rerun()
+        else:
+            st.error("Identifiant ou mot de passe incorrect.")
+
+# ---- SIDEBAR MODERNE ----
+def sidebar_modern():
+    with st.sidebar:
+        st.markdown(f"""
+        <div style='padding-top:1.2em;padding-bottom:0.5em;'>
+            <div style='font-size:1.3em;font-weight:700;color:#3B82F6;'>
+                {st.session_state.get('aco_user', 'ACO')}<br><span style='font-size:0.85em;font-weight:400;color:#64748b;'>Chargé d'Opérations</span>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        # Navigation Lucide SVG
+        st.markdown("""
+        <a href="#" class="sidebar-btn" onclick="window.location.hash='dashboard';window.location.reload();">
+            <svg class="lucide-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Dashboard
+        </a>
+        <a href="#" class="sidebar-btn" onclick="window.location.hash='portefeuille';window.location.reload();">
+            <svg class="lucide-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2"/><path d="M3 7v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7"/><path d="M16 3v4"/><path d="M8 3v4"/></svg>
+            Mon Portefeuille
+        </a>
+        <a href="#" class="sidebar-btn" onclick="window.location.hash='nouvelle';window.location.reload();">
+            <svg class="lucide-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Nouvelle Opération
+        </a>
+        <a href="#" class="sidebar-btn" onclick="window.location.hash='acces';window.location.reload();">
+            <svg class="lucide-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="7 17 17 7"/><polyline points="7 7 17 17"/></svg>
+            Accès Rapide
+        </a>
+        <a href="#" class="sidebar-btn" onclick="window.location.hash='logout';window.location.reload();">
+            <svg class="lucide-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Se déconnecter
+        </a>
+        """, unsafe_allow_html=True)
+
+# ---- LOGIQUE D'AUTHENTIFICATION INCHANGÉE ----
+if "authenticated" not in st.session_state:
+    st.session_state["authenticated"] = False
+    st.session_state["aco_user"] = None
+
+if not st.session_state["authenticated"]:
+    login_form()
+    st.stop()
+else:
+    sidebar_modern()
+
+# Configuration page
+st.set_page_config(
+    page_title="OPCOPILOT v4.0 - SPIC Guadeloupe",
+    page_icon="🏗️",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
 # ==============================================================================
 # 1. CONFIGURATION & CHARGEMENT DONNÉES
