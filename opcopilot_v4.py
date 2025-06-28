@@ -29,8 +29,12 @@ st.set_page_config(
 # CSS personnalisé pour interface MODERNE CLAIRE - DESIGN PROFESSIONNEL CORRIGÉ
 st.markdown("""
 <style>
-    /* IMPORTATION POLICE INTER MODERNE */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    /* DÉGRADÉ MODERNE VIOLET-BLEU-TURQUOISE-VERT - GLOBAL */
+    :root {
+        --gradient-primary: linear-gradient(135deg, #a855f7 0%, #3b82f6 25%, #06b6d4 50%, #10b981 100%);
+        --gradient-hover: linear-gradient(135deg, #9333ea 0%, #2563eb 25%, #0891b2 50%, #059669 100%);
+        --gradient-soft: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(59, 130, 246, 0.1) 25%, rgba(6, 182, 212, 0.1) 50%, rgba(16, 185, 129, 0.1) 100%);
+    }
     
     /* THÈME CLAIR MODERNE - GLOBAL */
     .stApp {
@@ -54,14 +58,28 @@ st.markdown("""
         font-family: 'Inter', sans-serif !important;
     }
     
+    /* HEADER PRINCIPAL AVEC DÉGRADÉ MODERNE */
     .main-header {
-        background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);
+        background: var(--gradient-primary);
         color: white;
         padding: 2rem;
-        border-radius: 16px;
+        border-radius: 20px;
         margin-bottom: 2rem;
-        box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+        box-shadow: 0 20px 60px rgba(168, 85, 247, 0.2);
         text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .main-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(255,255,255,0.1) 100%);
+        pointer-events: none;
     }
     
     .main-header h1 {
@@ -69,8 +87,10 @@ st.markdown("""
         font-size: 2.5rem;
         font-weight: 700;
         font-family: 'Inter', sans-serif !important;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        text-shadow: 0 2px 8px rgba(0,0,0,0.2);
         letter-spacing: -0.02em;
+        position: relative;
+        z-index: 1;
     }
     
     .main-header h2 {
@@ -79,6 +99,8 @@ st.markdown("""
         font-weight: 500;
         font-family: 'Inter', sans-serif !important;
         opacity: 0.9;
+        position: relative;
+        z-index: 1;
     }
     
     .main-header p {
@@ -87,6 +109,8 @@ st.markdown("""
         font-weight: 400;
         font-family: 'Inter', sans-serif !important;
         opacity: 0.8;
+        position: relative;
+        z-index: 1;
     }
     
     /* PAGE DE CONNEXION - MODE CLAIR FORCÉ */
@@ -141,56 +165,101 @@ st.markdown("""
         background-color: white !important;
     }
     
-    /* BOUTONS DASHBOARD MODERNES */
+    /* BOUTONS DASHBOARD MODERNES AVEC DÉGRADÉ */
     .stButton > button {
         background: white !important;
         color: #1F2937 !important;
         border: 1px solid #E5E7EB !important;
-        border-radius: 12px !important;
+        border-radius: 16px !important;
         padding: 1rem 1.5rem !important;
         font-weight: 500 !important;
         font-size: 0.95rem !important;
         font-family: 'Inter', sans-serif !important;
-        transition: all 0.2s ease !important;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
         min-height: 120px !important;
         text-align: left !important;
         line-height: 1.4 !important;
+        position: relative !important;
+        overflow: hidden !important;
+    }
+    
+    .stButton > button::before {
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        background: var(--gradient-soft) !important;
+        opacity: 0 !important;
+        transition: opacity 0.3s ease !important;
+        border-radius: 16px !important;
+    }
+    
+    .stButton > button:hover::before {
+        opacity: 1 !important;
     }
     
     .stButton > button:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
-        border-color: #3B82F6 !important;
+        transform: translateY(-3px) !important;
+        box-shadow: 0 12px 32px rgba(168, 85, 247, 0.15) !important;
+        border: 1px solid transparent !important;
+        border-image: var(--gradient-primary) 1 !important;
         background: white !important;
         color: #1F2937 !important;
     }
     
-    /* BOUTONS PRIMAIRES POUR ACTIONS */
+    /* BOUTONS PRIMAIRES AVEC DÉGRADÉ COMPLET */
     .stButton > button[kind="primary"] {
-        background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%) !important;
+        background: var(--gradient-primary) !important;
         color: white !important;
         border: none !important;
         font-weight: 600 !important;
         min-height: auto !important;
+        box-shadow: 0 8px 32px rgba(168, 85, 247, 0.3) !important;
+        position: relative !important;
+        overflow: hidden !important;
+    }
+    
+    .stButton > button[kind="primary"]::before {
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: -100% !important;
+        width: 100% !important;
+        height: 100% !important;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent) !important;
+        transition: left 0.5s !important;
     }
     
     .stButton > button[kind="primary"]:hover {
-        background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%) !important;
-        transform: translateY(-1px) !important;
+        background: var(--gradient-hover) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 12px 40px rgba(168, 85, 247, 0.4) !important;
+        border-image: none !important;
     }
     
-    /* BOUTONS SECONDAIRES */
+    .stButton > button[kind="primary"]:hover::before {
+        left: 100% !important;
+    }
+    
+    /* BOUTONS SECONDAIRES AVEC ACCENT DÉGRADÉ */
     .stButton > button[kind="secondary"] {
         background: white !important;
-        color: #3B82F6 !important;
-        border: 2px solid #3B82F6 !important;
+        color: #a855f7 !important;
+        border: 2px solid transparent !important;
+        border-image: var(--gradient-primary) 1 !important;
         min-height: auto !important;
+        font-weight: 500 !important;
+        position: relative !important;
     }
     
     .stButton > button[kind="secondary"]:hover {
-        background: #3B82F6 !important;
-        color: white !important;
+        background: var(--gradient-soft) !important;
+        color: #7c3aed !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 8px 25px rgba(168, 85, 247, 0.2) !important;
     }
     
     /* CARTES OPÉRATIONS */
@@ -276,94 +345,198 @@ st.markdown("""
     
     .timeline-container {
         background: white !important;
-        border-radius: 16px !important;
+        border-radius: 20px !important;
         padding: 2rem !important;
         margin: 1rem 0 !important;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
         border: 1px solid #E5E7EB !important;
         font-family: 'Inter', sans-serif !important;
+        position: relative !important;
+    }
+    
+    .timeline-container::before {
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        height: 4px !important;
+        background: var(--gradient-primary) !important;
+        border-radius: 20px 20px 0 0 !important;
     }
     
     .module-tab {
         background: white !important;
         border: 1px solid #E5E7EB !important;
-        border-radius: 12px !important;
+        border-radius: 16px !important;
         padding: 1.5rem !important;
         margin: 0.5rem !important;
-        border-left: 4px solid #3B82F6 !important;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05) !important;
         font-family: 'Inter', sans-serif !important;
+        position: relative !important;
+        overflow: hidden !important;
+    }
+    
+    .module-tab::before {
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 4px !important;
+        height: 100% !important;
+        background: var(--gradient-primary) !important;
     }
     
     .alert-critical { 
-        background: #FEF2F2 !important; 
+        background: linear-gradient(135deg, #FEF2F2, #FEE2E2) !important; 
         border-left: 4px solid #EF4444 !important; 
         padding: 1rem !important;
         margin: 0.5rem 0 !important;
-        border-radius: 12px !important;
+        border-radius: 16px !important;
         border: 1px solid #FECACA !important;
         font-family: 'Inter', sans-serif !important;
         color: #B91C1C !important;
         font-weight: 500 !important;
+        box-shadow: 0 4px 16px rgba(239, 68, 68, 0.1) !important;
     }
     
     .alert-warning { 
-        background: #FFFBEB !important; 
+        background: linear-gradient(135deg, #FFFBEB, #FEF3C7) !important; 
         border-left: 4px solid #F59E0B !important; 
         padding: 1rem !important;
         margin: 0.5rem 0 !important;
-        border-radius: 12px !important;
+        border-radius: 16px !important;
         border: 1px solid #FED7AA !important;
         font-family: 'Inter', sans-serif !important;
         color: #D97706 !important;
         font-weight: 500 !important;
+        box-shadow: 0 4px 16px rgba(245, 158, 11, 0.1) !important;
     }
     
     .alert-info { 
-        background: #EFF6FF !important; 
-        border-left: 4px solid #3B82F6 !important; 
+        background: var(--gradient-soft) !important; 
+        border-left: 4px solid #a855f7 !important; 
         padding: 1rem !important;
         margin: 0.5rem 0 !important;
-        border-radius: 12px !important;
-        border: 1px solid #BFDBFE !important;
+        border-radius: 16px !important;
+        border: 1px solid rgba(168, 85, 247, 0.2) !important;
         font-family: 'Inter', sans-serif !important;
-        color: #1E40AF !important;
+        color: #7c3aed !important;
         font-weight: 500 !important;
+        box-shadow: 0 4px 16px rgba(168, 85, 247, 0.1) !important;
     }
     
     .metric-card {
         background: white !important;
         border: 1px solid #E5E7EB !important;
-        border-radius: 12px !important;
+        border-radius: 16px !important;
         padding: 1.5rem !important;
         text-align: center !important;
         margin: 0.5rem !important;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05) !important;
         font-family: 'Inter', sans-serif !important;
+        transition: all 0.3s ease !important;
+        position: relative !important;
     }
     
-    /* SIDEBAR MODERNE COHÉRENTE */
+    .metric-card:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 32px rgba(168, 85, 247, 0.1) !important;
+        border-color: rgba(168, 85, 247, 0.3) !important;
+    }
+    
+    /* SIDEBAR MODERNE COHÉRENTE AVEC DÉGRADÉ */
     .sidebar-header {
-        background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%) !important;
+        background: var(--gradient-primary) !important;
         color: white !important;
         padding: 1.5rem !important;
-        border-radius: 12px !important;
+        border-radius: 16px !important;
         margin-bottom: 1.5rem !important;
         text-align: center !important;
         font-family: 'Inter', sans-serif !important;
-        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2) !important;
+        box-shadow: 0 8px 32px rgba(168, 85, 247, 0.25) !important;
+        position: relative !important;
+        overflow: hidden !important;
+    }
+    
+    .sidebar-header::before {
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(255,255,255,0.1) 100%) !important;
+        pointer-events: none !important;
     }
     
     .sidebar-header h3 {
         font-size: 1.25rem !important;
         font-weight: 600 !important;
         margin: 0 !important;
+        position: relative !important;
+        z-index: 1 !important;
     }
     
     .sidebar-header p {
         font-size: 0.875rem !important;
         margin: 0.25rem 0 0 0 !important;
         opacity: 0.9 !important;
+        position: relative !important;
+        z-index: 1 !important;
+    }
+    
+    /* SIDEBAR NAVIGATION BUTTONS AVEC ACCENT DÉGRADÉ */
+    .sidebar .stButton > button {
+        background: white !important;
+        color: #374151 !important;
+        border: 1px solid #E5E7EB !important;
+        font-family: 'Inter', sans-serif !important;
+        font-weight: 500 !important;
+        min-height: auto !important;
+        text-align: center !important;
+        margin-bottom: 0.5rem !important;
+        border-radius: 12px !important;
+        transition: all 0.3s ease !important;
+        position: relative !important;
+        overflow: hidden !important;
+    }
+    
+    .sidebar .stButton > button::before {
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 4px !important;
+        height: 100% !important;
+        background: var(--gradient-primary) !important;
+        opacity: 0 !important;
+        transition: opacity 0.3s ease !important;
+    }
+    
+    .sidebar .stButton > button:hover {
+        background: var(--gradient-soft) !important;
+        border-color: transparent !important;
+        color: #7c3aed !important;
+        transform: translateX(4px) !important;
+    }
+    
+    .sidebar .stButton > button:hover::before {
+        opacity: 1 !important;
+    }
+    
+    .sidebar .stButton > button[kind="primary"] {
+        background: var(--gradient-primary) !important;
+        color: white !important;
+        border-color: transparent !important;
+        font-weight: 600 !important;
+        box-shadow: 0 4px 16px rgba(168, 85, 247, 0.25) !important;
+    }
+    
+    .sidebar .stButton > button[kind="primary"]:hover {
+        background: var(--gradient-hover) !important;
+        transform: translateX(2px) translateY(-1px) !important;
+        box-shadow: 0 6px 20px rgba(168, 85, 247, 0.35) !important;
     }
     
     /* MESSAGES SYSTÈME MODERNES */
@@ -508,24 +681,127 @@ st.markdown("""
         font-weight: 500 !important;
     }
     
-    /* TABS STREAMLIT COHÉRENTS */
+    /* TABS STREAMLIT AVEC DÉGRADÉ COHÉRENT */
     .stTabs [data-baseweb="tab-list"] {
         background-color: #F8FAFC !important;
-        border-radius: 12px !important;
-        padding: 0.25rem !important;
+        border-radius: 16px !important;
+        padding: 0.5rem !important;
+        border: 1px solid #E5E7EB !important;
     }
     
     .stTabs [data-baseweb="tab"] {
         color: #6B7280 !important;
         font-family: 'Inter', sans-serif !important;
         font-weight: 500 !important;
-        border-radius: 8px !important;
+        border-radius: 12px !important;
+        padding: 0.75rem 1.5rem !important;
+        transition: all 0.3s ease !important;
     }
     
     .stTabs [aria-selected="true"] {
-        background-color: white !important;
-        color: #3B82F6 !important;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+        background: var(--gradient-primary) !important;
+        color: white !important;
+        box-shadow: 0 4px 16px rgba(168, 85, 247, 0.2) !important;
+        font-weight: 600 !important;
+    }
+    
+    .stTabs [data-baseweb="tab"]:hover:not([aria-selected="true"]) {
+        background: var(--gradient-soft) !important;
+        color: #7c3aed !important;
+    }
+    
+    /* FORMULAIRES AVEC ACCENTS DÉGRADÉS */
+    .stSelectbox > div > div {
+        border-radius: 12px !important;
+        border: 1px solid #E5E7EB !important;
+        font-family: 'Inter', sans-serif !important;
+    }
+    
+    .stSelectbox > div > div:focus-within {
+        border: 2px solid transparent !important;
+        border-image: var(--gradient-primary) 1 !important;
+        box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.1) !important;
+    }
+    
+    /* PROGRESS BARS AVEC DÉGRADÉ */
+    .stProgress .stProgress-bar {
+        background: var(--gradient-primary) !important;
+        border-radius: 8px !important;
+    }
+    
+    /* EXPANDEURS AVEC ACCENTS */
+    .streamlit-expanderHeader {
+        background: var(--gradient-soft) !important;
+        border-radius: 12px !important;
+        border: 1px solid rgba(168, 85, 247, 0.2) !important;
+        font-family: 'Inter', sans-serif !important;
+        font-weight: 500 !important;
+    }
+    
+    /* MÉTRIQUES STREAMLIT MODERNES */
+    .metric-container [data-testid="metric-container"] {
+        background: white !important;
+        border: 1px solid #E5E7EB !important;
+        border-radius: 16px !important;
+        padding: 1.5rem !important;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05) !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .metric-container [data-testid="metric-container"]:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 32px rgba(168, 85, 247, 0.1) !important;
+        border-color: rgba(168, 85, 247, 0.3) !important;
+    }
+    
+    /* SCROLLBARS AVEC ACCENTS DÉGRADÉ */
+    ::-webkit-scrollbar {
+        width: 8px !important;
+        height: 8px !important;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: #F1F5F9 !important;
+        border-radius: 4px !important;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: var(--gradient-primary) !important;
+        border-radius: 4px !important;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--gradient-hover) !important;
+    }
+    
+    /* ANIMATIONS GLOBALES MODERNES */
+    @keyframes gradient-animation {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .animated-gradient {
+        background: var(--gradient-primary) !important;
+        background-size: 200% 200% !important;
+        animation: gradient-animation 3s ease infinite !important;
+    }
+    
+    /* RESPONSIVE ADJUSTMENTS */
+    @media (max-width: 768px) {
+        .main-header h1 {
+            font-size: 2rem !important;
+        }
+        
+        .main-header {
+            padding: 1.5rem !important;
+            border-radius: 16px !important;
+        }
+        
+        .login-container {
+            padding: 2rem !important;
+            border-radius: 16px !important;
+        }
     }
 </style>
 """, unsafe_allow_html=True)
