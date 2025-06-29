@@ -628,7 +628,7 @@ st.markdown("""
         background-color: #F8FAFC !important;
     }
     
-    /* ALERTES CRITIQUES - Style amélioré */
+    /* ALERTES CRITIQUES - Style spécifique */
     .stButton > button[data-testid="baseButton-primary"][key^="alert_"] {
         background: linear-gradient(90deg, #EF4444 0%, #DC2626 100%) !important;
         border: none !important;
@@ -1874,9 +1874,31 @@ def page_dashboard():
         background-color: #F8FAFC !important;
     }
     
-    /* ACTIONS RÉALISÉES - VERT FORCÉ (pas violet) */
-    .stButton > button[data-testid="baseButton-primary"] {
-        background: linear-gradient(90deg, #4CAF50 0%, #ffffff 100%) !important;
+    /* ALERTES CRITIQUES - Style spécifique */
+    .stButton > button[data-testid="baseButton-primary"][key^="alert_"] {
+        background: linear-gradient(90deg, #EF4444 0%, #DC2626 100%) !important;
+        border: none !important;
+        border-left: 4px solid #DC2626 !important;
+        border-radius: 15px !important;
+        padding: 1rem !important;
+        box-shadow: 0 4px 15px rgba(220, 38, 38, 0.15) !important;
+        transition: all 0.3s ease !important;
+        width: 100% !important;
+        color: white !important;
+        font-weight: 600 !important;
+        text-align: left !important;
+        white-space: pre-line !important;
+        cursor: pointer !important;
+    }
+    
+    .stButton > button[data-testid="baseButton-primary"][key^="alert_"]:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 20px rgba(220, 38, 38, 0.25) !important;
+    }
+    
+    /* ACTIONS RÉALISÉES - Dégradé inversé */
+    .stButton > button[data-testid="baseButton-primary"][key^="action_"] {
+        background: linear-gradient(90deg, #ffffff 0%, #4CAF50 100%) !important;
         border: none !important;
         border-left: 4px solid #10B981 !important;
         border-radius: 15px !important;
@@ -1884,13 +1906,13 @@ def page_dashboard():
         box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15) !important;
         transition: all 0.3s ease !important;
         width: 100% !important;
-        color: white !important;
+        color: #1F2937 !important;
         font-weight: 600 !important;
         text-align: left !important;
         white-space: pre-line !important;
     }
     
-    .stButton > button[data-testid="baseButton-primary"]:hover {
+    .stButton > button[data-testid="baseButton-primary"][key^="action_"]:hover {
         transform: translateY(-2px) !important;
         box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25) !important;
     }
