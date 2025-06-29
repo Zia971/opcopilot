@@ -1670,115 +1670,64 @@ def page_dashboard():
     with col_alert2:
         st.markdown("#### Actions Réalisées Aujourd'hui")
         
-        # ACTION 1 - VERTE avec coche alignée à gauche (HTML direct)
-        st.markdown("""
-        <div style="background: linear-gradient(145deg, #D1FAE5, #10B981); 
-                    border-left: 4px solid #10B981; 
-                    border-radius: 15px; 
-                    padding: 1rem; 
-                    margin: 0.5rem 0; 
-                    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15); 
-                    cursor: pointer; 
-                    transition: all 0.3s ease;
-                    display: flex;
-                    align-items: flex-start;"
-             onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.25)'"
-             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'">
-            <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: white;">✅</div>
-            <div style="flex-grow: 1; color: white;">
-                <div style="font-weight: 600; font-size: 1rem;">DGD validé - RÉSIDENCE SOLEIL</div>
-                <div style="font-size: 0.9rem; margin-top: 0.25rem; opacity: 0.9;">Décompte général définitif approuvé</div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        # ACTION 1 - Card verte avec coche alignée à gauche
+        if st.button("✅   DGD validé - RÉSIDENCE SOLEIL\n      Décompte général définitif approuvé", 
+                    key="action_dgd_soleil", 
+                    use_container_width=True, 
+                    type="primary"):
+            # Navigation directe vers opération
+            demo_data = load_demo_data()
+            operations_data = demo_data.get('operations_demo', [])
+            residence_soleil = next((op for op in operations_data if "SOLEIL" in op['nom']), None)
+            if residence_soleil:
+                st.session_state.selected_operation = residence_soleil
+                st.session_state.selected_operation_id = residence_soleil['id']
+                st.session_state.page = "operation_details"
+                st.rerun()
         
-        # ACTION 2 - VERTE avec coche alignée à gauche (HTML direct)
-        st.markdown("""
-        <div style="background: linear-gradient(145deg, #D1FAE5, #10B981); 
-                    border-left: 4px solid #10B981; 
-                    border-radius: 15px; 
-                    padding: 1rem; 
-                    margin: 0.5rem 0; 
-                    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15); 
-                    cursor: pointer; 
-                    transition: all 0.3s ease;
-                    display: flex;
-                    align-items: flex-start;"
-             onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.25)'"
-             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'">
-            <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: white;">✅</div>
-            <div style="flex-grow: 1; color: white;">
-                <div style="font-weight: 600; font-size: 1rem;">Phase ESQ terminée - COUR CHARNEAU</div>
-                <div style="font-size: 0.9rem; margin-top: 0.25rem; opacity: 0.9;">Études esquisse validées par SPIC</div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        # ACTION 2 - Card verte avec coche alignée à gauche
+        if st.button("✅   Phase ESQ terminée - COUR CHARNEAU\n      Études esquisse validées par SPIC", 
+                    key="action_esq_charneau", 
+                    use_container_width=True, 
+                    type="primary"):
+            # Navigation directe vers opération
+            demo_data = load_demo_data()
+            operations_data = demo_data.get('operations_demo', [])
+            cour_charneau = next((op for op in operations_data if "CHARNEAU" in op['nom']), None)
+            if cour_charneau:
+                st.session_state.selected_operation = cour_charneau
+                st.session_state.selected_operation_id = cour_charneau['id']
+                st.session_state.page = "operation_details"
+                st.rerun()
         
-        # ACTION 3 - VERTE avec coche alignée à gauche (HTML direct)
-        st.markdown("""
-        <div style="background: linear-gradient(145deg, #D1FAE5, #10B981); 
-                    border-left: 4px solid #10B981; 
-                    border-radius: 15px; 
-                    padding: 1rem; 
-                    margin: 0.5rem 0; 
-                    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15); 
-                    cursor: pointer; 
-                    transition: all 0.3s ease;
-                    display: flex;
-                    align-items: flex-start;"
-             onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.25)'"
-             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'">
-            <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: white;">✅</div>
-            <div style="flex-grow: 1; color: white;">
-                <div style="font-weight: 600; font-size: 1rem;">MED envoyé - MANDAT ÉCOLE</div>
-                <div style="font-size: 0.9rem; margin-top: 0.25rem; opacity: 0.9;">Mise en demeure promoteur envoyée</div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        # ACTION 3 - Card verte avec coche alignée à gauche
+        if st.button("✅   MED envoyé - MANDAT ÉCOLE\n      Mise en demeure promoteur envoyée", 
+                    key="action_med_ecole", 
+                    use_container_width=True, 
+                    type="primary"):
+            st.info("Navigation vers MANDAT ÉCOLE - Module en développement")
         
-        # ACTION 4 - VERTE avec coche alignée à gauche (HTML direct)
-        st.markdown("""
-        <div style="background: linear-gradient(145deg, #D1FAE5, #10B981); 
-                    border-left: 4px solid #10B981; 
-                    border-radius: 15px; 
-                    padding: 1rem; 
-                    margin: 0.5rem 0; 
-                    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15); 
-                    cursor: pointer; 
-                    transition: all 0.3s ease;
-                    display: flex;
-                    align-items: flex-start;"
-             onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.25)'"
-             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'">
-            <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: white;">✅</div>
-            <div style="flex-grow: 1; color: white;">
-                <div style="font-weight: 600; font-size: 1rem;">REM T3 saisi - 3 opérations</div>
-                <div style="font-size: 0.9rem; margin-top: 0.25rem; opacity: 0.9;">Trimestre 3 validé et saisi</div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        # ACTION 4 - Card verte avec coche alignée à gauche
+        if st.button("✅   REM T3 saisi - 3 opérations\n      Trimestre 3 validé et saisi", 
+                    key="action_rem_t3", 
+                    use_container_width=True, 
+                    type="primary"):
+            st.info("Navigation vers module REM - En développement")
         
-        # ACTION 5 - VERTE avec coche alignée à gauche (HTML direct)
-        st.markdown("""
-        <div style="background: linear-gradient(145deg, #D1FAE5, #10B981); 
-                    border-left: 4px solid #10B981; 
-                    border-radius: 15px; 
-                    padding: 1rem; 
-                    margin: 0.5rem 0; 
-                    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15); 
-                    cursor: pointer; 
-                    transition: all 0.3s ease;
-                    display: flex;
-                    align-items: flex-start;"
-             onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.25)'"
-             onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(16, 185, 129, 0.15)'">
-            <div style="margin-right: 0.75rem; flex-shrink: 0; font-size: 1.2rem; color: white;">✅</div>
-            <div style="flex-grow: 1; color: white;">
-                <div style="font-weight: 600; font-size: 1rem;">Timeline mise à jour - VEFA BELCOURT</div>
-                <div style="font-size: 0.9rem; margin-top: 0.25rem; opacity: 0.9;">Planning actualisé avec nouvelles échéances</div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        # ACTION 5 - Card verte avec coche alignée à gauche
+        if st.button("✅   Timeline mise à jour - VEFA BELCOURT\n      Planning actualisé avec nouvelles échéances", 
+                    key="action_timeline_belcourt", 
+                    use_container_width=True, 
+                    type="primary"):
+            # Navigation directe vers opération
+            demo_data = load_demo_data()
+            operations_data = demo_data.get('operations_demo', [])
+            vefa_belcourt = next((op for op in operations_data if "BELCOURT" in op['nom']), None)
+            if vefa_belcourt:
+                st.session_state.selected_operation = vefa_belcourt
+                st.session_state.selected_operation_id = vefa_belcourt['id']
+                st.session_state.page = "operation_details"
+                st.rerun()
     
     # Graphique d'activité MODERNISÉ
     st.markdown("### 📈 Activité Mensuelle")
