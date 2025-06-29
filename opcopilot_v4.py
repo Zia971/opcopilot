@@ -1585,9 +1585,9 @@ def page_dashboard():
         background-color: #F8FAFC !important;
     }
     
-    /* ACTIONS RÉALISÉES - VERT FORCÉ (pas violet) */
+    /* ACTIONS RÉALISÉES - Style vert (inchangé) */
     .stButton > button[data-testid="baseButton-primary"] {
-        background: linear-gradient(145deg, #D1FAE5, #10B981) !important;
+        background: linear-gradient(145deg, #D1FAE5, #A7F3D0) !important;
         border: none !important;
         border-left: 4px solid #10B981 !important;
         border-radius: 15px !important;
@@ -1595,8 +1595,10 @@ def page_dashboard():
         box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15) !important;
         transition: all 0.3s ease !important;
         width: 100% !important;
-        color: white !important;
+        color: #047857 !important;
         font-weight: 600 !important;
+        display: flex !important;
+        align-items: flex-start !important;
         text-align: left !important;
         white-space: pre-line !important;
     }
