@@ -6,6 +6,8 @@ VERSION MODERNISÉE - Dégradé violet-bleu-vert
 """
 
 import streamlit as st
+st.cache_data.clear()
+st.cache_resource.clear()
 import pandas as pd
 import plotly.graph_objects as go
 import plotly.express as px
@@ -388,6 +390,9 @@ st.markdown("""
     .kpi-operations {
         background: linear-gradient(145deg, #3B82F6, #2563EB);
         color: white;
+        width: 200px !important;
+        min-width: 200px !important;
+        max-width: 200px !important;
         height: 200px !important;
         min-height: 200px !important;
         max-height: 200px !important;
@@ -399,13 +404,16 @@ st.markdown("""
         justify-content: space-between;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         cursor: pointer;
-        margin-bottom: 1rem;
+        margin: 0.5rem;
     }
     
     /* KPI REM - Vert performance (succès, croissance) */
     .kpi-rem {
         background: linear-gradient(145deg, #10B981, #059669);
         color: white;
+        width: 200px !important;
+        min-width: 200px !important;
+        max-width: 200px !important;
         height: 200px !important;
         min-height: 200px !important;
         max-height: 200px !important;
@@ -417,13 +425,16 @@ st.markdown("""
         justify-content: space-between;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         cursor: pointer;
-        margin-bottom: 1rem;
+        margin: 0.5rem;
     }
     
     /* KPI FREINS - Orange vigilance (attention, action requise) */
     .kpi-freins {
         background: linear-gradient(145deg, #F59E0B, #D97706);
         color: white;
+        width: 200px !important;
+        min-width: 200px !important;
+        max-width: 200px !important;
         height: 200px !important;
         min-height: 200px !important;
         max-height: 200px !important;
@@ -435,13 +446,16 @@ st.markdown("""
         justify-content: space-between;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         cursor: pointer;
-        margin-bottom: 1rem;
+        margin: 0.5rem;
     }
     
     /* KPI ÉCHÉANCES - Rouge urgence (priorité absolue) */
     .kpi-echeances {
         background: linear-gradient(145deg, #EF4444, #DC2626);
         color: white;
+        width: 200px !important;
+        min-width: 200px !important;
+        max-width: 200px !important;
         height: 200px !important;
         min-height: 200px !important;
         max-height: 200px !important;
@@ -453,7 +467,7 @@ st.markdown("""
         justify-content: space-between;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         cursor: pointer;
-        margin-bottom: 1rem;
+        margin: 0.5rem;
     }
     
     /* ICÔNES 3D MODERNES AVEC EFFETS */
@@ -605,6 +619,70 @@ st.markdown("""
         color: rgba(255, 255, 255, 0.9) !important;
         margin-bottom: 1rem !important;
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Styles communs pour tous les KPIs */
+    .kpi-card {
+        width: 200px !important;
+        height: 200px !important;
+        border-radius: 20px;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        text-align: center;
+        margin: 0.5rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .kpi-icon {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    
+    .kpi-value {
+        font-size: 2rem;
+        font-weight: bold;
+        margin: 0.5rem 0;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    
+    .kpi-label {
+        font-size: 1rem;
+        font-weight: 500;
+        margin-top: 0.5rem;
+        line-height: 1.2;
+    }
+    
+    /* KPI OPÉRATIONS - Bleu */
+    .kpi-operations {
+        background: linear-gradient(145deg, #3B82F6, #2563EB);
+        color: white;
+        box-shadow: 0 10px 40px rgba(59, 130, 246, 0.3);
+    }
+    
+    /* KPI REM - Vert */
+    .kpi-rem {
+        background: linear-gradient(145deg, #10B981, #059669);
+        color: white;
+        box-shadow: 0 10px 40px rgba(16, 185, 129, 0.3);
+    }
+    
+    /* KPI FREINS - Orange */
+    .kpi-freins {
+        background: linear-gradient(145deg, #F59E0B, #D97706);
+        color: white;
+        box-shadow: 0 10px 40px rgba(245, 158, 11, 0.3);
+    }
+    
+    /* KPI ÉCHÉANCES - Rouge */
+    .kpi-echeances {
+        background: linear-gradient(145deg, #EF4444, #DC2626);
+        color: white;
+        box-shadow: 0 10px 40px rgba(239, 68, 68, 0.3);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -1491,313 +1569,34 @@ def page_dashboard():
     # KPIs personnels ACO INTERACTIFS MODERNISÉS
     st.markdown("### 📊 Mes Indicateurs Clés de Performance")
     
-    # CSS spécifique pour KPIs UNIQUEMENT
-    st.markdown("""
-    <style>
-    /* STYLES KPIs UNIQUEMENT - COULEURS STRATÉGIQUES MÉTIER */
-    
-    /* KPI OPÉRATIONS - Bleu professionnel (confiance, stabilité) */
-    .kpi-operations {
-        background: linear-gradient(145deg, #3B82F6, #2563EB);
-        color: white;
-        height: 200px !important;
-        min-height: 200px !important;
-        max-height: 200px !important;
-        border-radius: 20px;
-        padding: 1.5rem;
-        box-shadow: 0 10px 40px rgba(59, 130, 246, 0.3);
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        cursor: pointer;
-        margin-bottom: 1rem;
-    }
-    
-    /* KPI REM - Vert performance (succès, croissance) */
-    .kpi-rem {
-        background: linear-gradient(145deg, #10B981, #059669);
-        color: white;
-        height: 200px !important;
-        min-height: 200px !important;
-        max-height: 200px !important;
-        border-radius: 20px;
-        padding: 1.5rem;
-        box-shadow: 0 10px 40px rgba(16, 185, 129, 0.3);
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        cursor: pointer;
-        margin-bottom: 1rem;
-    }
-    
-    /* KPI FREINS - Orange vigilance (attention, action requise) */
-    .kpi-freins {
-        background: linear-gradient(145deg, #F59E0B, #D97706);
-        color: white;
-        height: 200px !important;
-        min-height: 200px !important;
-        max-height: 200px !important;
-        border-radius: 20px;
-        padding: 1.5rem;
-        box-shadow: 0 10px 40px rgba(245, 158, 11, 0.3);
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        cursor: pointer;
-        margin-bottom: 1rem;
-    }
-    
-    /* KPI ÉCHÉANCES - Rouge urgence (priorité absolue) */
-    .kpi-echeances {
-        background: linear-gradient(145deg, #EF4444, #DC2626);
-        color: white;
-        height: 200px !important;
-        min-height: 200px !important;
-        max-height: 200px !important;
-        border-radius: 20px;
-        padding: 1.5rem;
-        box-shadow: 0 10px 40px rgba(239, 68, 68, 0.3);
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        cursor: pointer;
-        margin-bottom: 1rem;
-    }
-    
-    /* ICÔNES 3D MODERNES AVEC EFFETS */
-    .kpi-icon-operations {
-        background: linear-gradient(145deg, #60A5FA, #3B82F6);
-        width: 60px;
-        height: 60px;
-        border-radius: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 
-            0 8px 16px rgba(0, 0, 0, 0.1),
-            inset 0 1px 2px rgba(255, 255, 255, 0.2);
-        margin: 0 auto 1rem auto;
-        position: relative;
-    }
-    
-    .kpi-icon-operations::before {
-        content: "📁";
-        font-size: 32px;
-        filter: drop-shadow(4px 4px 8px rgba(59, 130, 246, 0.6));
-    }
-    
-    .kpi-icon-rem {
-        background: linear-gradient(145deg, #34D399, #10B981);
-        width: 60px;
-        height: 60px;
-        border-radius: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 
-            0 8px 16px rgba(0, 0, 0, 0.1),
-            inset 0 1px 2px rgba(255, 255, 255, 0.2);
-        margin: 0 auto 1rem auto;
-        position: relative;
-    }
-    
-    .kpi-icon-rem::before {
-        content: "€";
-        font-size: 32px;
-        color: #FFD700;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        filter: drop-shadow(3px 3px 6px rgba(255, 215, 0, 0.8));
-        font-weight: bold;
-    }
-    
-    .kpi-icon-freins {
-        background: linear-gradient(145deg, #FBBF24, #F59E0B);
-        width: 60px;
-        height: 60px;
-        border-radius: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 
-            0 8px 16px rgba(0, 0, 0, 0.1),
-            inset 0 1px 2px rgba(255, 255, 255, 0.2);
-        margin: 0 auto 1rem auto;
-        position: relative;
-    }
-    
-    .kpi-icon-freins::before {
-        content: "⚠️";
-        font-size: 32px;
-        filter: drop-shadow(3px 3px 6px rgba(245, 158, 11, 0.8));
-    }
-    
-    .kpi-icon-echeances {
-        background: linear-gradient(145deg, #F87171, #EF4444);
-        width: 60px;
-        height: 60px;
-        border-radius: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 
-            0 8px 16px rgba(0, 0, 0, 0.1),
-            inset 0 1px 2px rgba(255, 255, 255, 0.2);
-        margin: 0 auto 1rem auto;
-        position: relative;
-    }
-    
-    .kpi-icon-echeances::before {
-        content: "📅";
-        font-size: 32px;
-        filter: drop-shadow(3px 3px 6px rgba(239, 68, 68, 0.8));
-    }
-    
-    /* BOUTONS UNIFORMES 45px */
-    .kpi-button {
-        background: rgba(255, 255, 255, 0.2) !important;
-        border: 1px solid rgba(255, 255, 255, 0.3) !important;
-        min-height: 45px !important;
-        max-height: 45px !important;
-        border-radius: 12px !important;
-        color: white !important;
-        font-weight: 600 !important;
-        margin-top: auto;
-        transition: all 0.3s ease;
-        padding: 0.5rem 1rem;
-    }
-    
-    .kpi-button:hover {
-        background: rgba(255, 255, 255, 0.3) !important;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-    
-    /* EFFETS HOVER CARDS */
-    .kpi-operations:hover, .kpi-rem:hover, .kpi-freins:hover, .kpi-echeances:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-    }
-    
-    /* CONTENU CENTRÉ DANS LES CARDS */
-    .kpi-content {
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        color: white !important;
-    }
-    
-    /* GROS CHIFFRE BLANC */
-    .kpi-value {
-        font-size: 2.5rem !important;
-        font-weight: bold !important;
-        color: white !important;
-        margin: 0.5rem 0 !important;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    }
-    
-    /* LABEL PRINCIPAL BLANC */
-    .kpi-label {
-        font-size: 1rem !important;
-        font-weight: 600 !important;
-        color: white !important;
-        margin-bottom: 0.25rem !important;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-    }
-    
-    /* DÉTAIL BLANC */
-    .kpi-detail {
-        font-size: 0.875rem !important;
-        color: rgba(255, 255, 255, 0.9) !important;
-        margin-bottom: 1rem !important;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-    }
-    </style>
-    """, unsafe_allow_html=True)
-    
-    col1, col2, col3, col4 = st.columns(4, gap="medium")
-    
-    with col1:
-        operations_actives = kpis_data.get('operations_actives', 23)
-        operations_cloturees = kpis_data.get('operations_cloturees', 5)
-        
-        st.markdown(f"""
-        <div style="background: linear-gradient(145deg, #3B82F6, #2563EB); color: white; min-height: 180px; border-radius: 20px; padding: 1.5rem; box-shadow: 0 10px 40px rgba(59, 130, 246, 0.3); display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 1rem;">
-            <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
-                <div class="kpi-icon-operations"></div>
-                <div style="font-size: 2.5rem; font-weight: bold; color: white; margin: 0.5rem 0; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">{operations_actives}</div>
-                <div style="font-size: 1rem; font-weight: 600; color: white; margin-bottom: 0.25rem;">Opérations Actives</div>
-                <div style="font-size: 0.875rem; color: rgba(255, 255, 255, 0.9);">{operations_cloturees} clôturées</div>
+    with st.container():
+        st.markdown("""
+        <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div class="kpi-card kpi-operations">
+                <div class="kpi-icon">📁</div>
+                <div class="kpi-value">{nb_operations}</div>
+                <div class="kpi-label">Opérations en cours</div>
+            </div>
+            
+            <div class="kpi-card kpi-rem">
+                <div class="kpi-icon">€</div>
+                <div class="kpi-value">{rem_total_formatted}</div>
+                <div class="kpi-label">REM Total</div>
+            </div>
+            
+            <div class="kpi-card kpi-freins">
+                <div class="kpi-icon">⚠️</div>
+                <div class="kpi-value">{nb_freins}</div>
+                <div class="kpi-label">Points de blocage</div>
+            </div>
+            
+            <div class="kpi-card kpi-echeances">
+                <div class="kpi-icon">📅</div>
+                <div class="kpi-value">{nb_echeances}</div>
+                <div class="kpi-label">Échéances à venir</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
-        
-        if st.button("📂 Voir Portfolio", key="btn_operations", use_container_width=True, type="primary"):
-            st.session_state.page = "portefeuille"
-            st.rerun()
-    
-    with col2:
-        rem_realise = kpis_data.get('rem_realisee_2024', 485000)
-        rem_prevu = kpis_data.get('rem_prevue_2024', 620000)
-        taux_real = kpis_data.get('taux_realisation_rem', 78)
-        
-        st.markdown(f"""
-        <div style="background: linear-gradient(145deg, #10B981, #059669); color: white; min-height: 180px; border-radius: 20px; padding: 1.5rem; box-shadow: 0 10px 40px rgba(16, 185, 129, 0.3); display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 1rem;">
-            <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
-                <div class="kpi-icon-rem"></div>
-                <div style="font-size: 2.5rem; font-weight: bold; color: white; margin: 0.5rem 0; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">{rem_realise/1000:.0f}k€</div>
-                <div style="font-size: 1rem; font-weight: 600; color: white; margin-bottom: 0.25rem;">REM Réalisée 2024</div>
-                <div style="font-size: 0.875rem; color: rgba(255, 255, 255, 0.9);">{taux_real}% / {rem_prevu/1000:.0f}k€ prévue</div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        if st.button("💰 Analyse REM", key="btn_rem", use_container_width=True, type="primary"):
-            st.info("📊 Analyse REM détaillée - En développement")
-    
-    with col3:
-        freins_actifs = kpis_data.get('freins_actifs', 3)
-        freins_critiques = kpis_data.get('freins_critiques', 2)
-        
-        st.markdown(f"""
-        <div style="background: linear-gradient(145deg, #F59E0B, #D97706); color: white; min-height: 180px; border-radius: 20px; padding: 1.5rem; box-shadow: 0 10px 40px rgba(245, 158, 11, 0.3); display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 1rem;">
-            <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
-                <div class="kpi-icon-freins"></div>
-                <div style="font-size: 2.5rem; font-weight: bold; color: white; margin: 0.5rem 0; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">{freins_actifs}</div>
-                <div style="font-size: 1rem; font-weight: 600; color: white; margin-bottom: 0.25rem;">Freins Actifs</div>
-                <div style="font-size: 0.875rem; color: rgba(255, 255, 255, 0.9);">{freins_critiques} critiques</div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        if st.button("🚨 Gérer Freins", key="btn_freins", use_container_width=True, type="primary"):
-            st.session_state.page = "gestion_freins"
-            st.rerun()
-    
-    with col4:
-        echeances = kpis_data.get('echeances_semaine', 5)
-        validations = kpis_data.get('validations_requises', 12)
-        
-        st.markdown(f"""
-        <div style="background: linear-gradient(145deg, #EF4444, #DC2626); color: white; min-height: 180px; border-radius: 20px; padding: 1.5rem; box-shadow: 0 10px 40px rgba(239, 68, 68, 0.3); display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 1rem;">
-            <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
-                <div class="kpi-icon-echeances"></div>
-                <div style="font-size: 2.5rem; font-weight: bold; color: white; margin: 0.5rem 0; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">{echeances}</div>
-                <div style="font-size: 1rem; font-weight: 600; color: white; margin-bottom: 0.25rem;">Échéances Semaine</div>
-                <div style="font-size: 0.875rem; color: rgba(255, 255, 255, 0.9);">{validations} validations requises</div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        if st.button("📅 Planning", key="btn_echeances", use_container_width=True, type="primary"):
-            st.session_state.page = "planning_echeances"
-            st.rerun()
     
     # Alertes et actions MODERNISÉES ET SIMPLIFIÉES
     st.markdown("### 🚨 Alertes et Actions Prioritaires")
