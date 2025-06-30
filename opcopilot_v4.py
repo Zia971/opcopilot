@@ -1570,30 +1570,30 @@ def page_dashboard():
     st.markdown("### 📊 Mes Indicateurs Clés de Performance")
     
     with st.container():
-        st.markdown("""
+        st.markdown(f"""
         <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1rem;">
-            <div class="kpi-card kpi-operations">
-                <div class="kpi-icon">📁</div>
-                <div class="kpi-value">{nb_operations}</div>
-                <div class="kpi-label">Opérations en cours</div>
+            <div class="kpi-card primary">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">📁</div>
+                <div style="font-size: 2.5rem; font-weight: bold;">{nb_operations}</div>
+                <div style="font-size: 1.2rem; margin-top: 0.5rem;">Opérations en cours</div>
             </div>
             
-            <div class="kpi-card kpi-rem">
-                <div class="kpi-icon">€</div>
-                <div class="kpi-value">{rem_total_formatted}</div>
-                <div class="kpi-label">REM Total</div>
+            <div class="kpi-card success">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">€</div>
+                <div style="font-size: 2.5rem; font-weight: bold;">{rem_total_formatted}</div>
+                <div style="font-size: 1.2rem; margin-top: 0.5rem;">REM Total</div>
             </div>
             
-            <div class="kpi-card kpi-freins">
-                <div class="kpi-icon">⚠️</div>
-                <div class="kpi-value">{nb_freins}</div>
-                <div class="kpi-label">Points de blocage</div>
+            <div class="kpi-card warning">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
+                <div style="font-size: 2.5rem; font-weight: bold;">{nb_freins}</div>
+                <div style="font-size: 1.2rem; margin-top: 0.5rem;">Points de blocage</div>
             </div>
             
-            <div class="kpi-card kpi-echeances">
-                <div class="kpi-icon">📅</div>
-                <div class="kpi-value">{nb_echeances}</div>
-                <div class="kpi-label">Échéances à venir</div>
+            <div class="kpi-card danger">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">📅</div>
+                <div style="font-size: 2.5rem; font-weight: bold;">{nb_echeances}</div>
+                <div style="font-size: 1.2rem; margin-top: 0.5rem;">Échéances à venir</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
