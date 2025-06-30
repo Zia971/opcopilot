@@ -1186,16 +1186,16 @@ def page_dashboard():
     """.format(st.session_state.get('aco_user','ACO')), unsafe_allow_html=True)
     kpi_cols = st.columns(4)
     kpis = [
-        {"label": "23 Opérations Actives", "icon": "<svg class='lucide-icon kpi-blue' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/><path d='M12 2v20'/><path d='M9 22v-4h6v4'/></svg>", "color": "kpi-blue", "page": "portefeuille"},
-        {"label": "485k€ REM Mon Portefeuille", "icon": "<svg class='lucide-icon kpi-green' fill='none' stroke='currentColor' viewBox='0 0 24 24'><circle cx='12' cy='12' r='10'/><path d='M12 6v12'/><path d='M8 10h8'/><path d='M10 14h4'/></svg>", "color": "kpi-green", "page": "rem"},
-        {"label": "3 Freins Actifs", "icon": "<svg class='lucide-icon kpi-orange' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path d='M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z'/></svg>", "color": "kpi-orange", "page": "freins"},
-        {"label": "5 Échéances Semaine", "icon": "<svg class='lucide-icon kpi-red' fill='none' stroke='currentColor' viewBox='0 0 24 24'><rect x='3' y='4' width='18' height='18' rx='2'/><path d='M16 2v4'/><path d='M8 2v4'/><path d='M3 10h18'/><path d='M8 14h.01'/><path d='M12 14h.01'/><path d='M16 14h.01'/><path d='M8 18h.01'/><path d='M12 18h.01'/><path d='M16 18h.01'/></svg>", "color": "kpi-red", "page": "planning"}
+        {"label": "23 Opérations Actives", "icon": "<svg class='lucide-icon kpi-blue' fill='none' stroke='currentColor' viewBox='0 0 24 24'><rect x='3' y='7' width='18' height='13' rx='2'/><path d='M16 3v4'/><path d='M8 3v4'/></svg>", "color": "kpi-blue", "page": "portefeuille"},
+        {"label": "485k€ REM Mon Portefeuille", "icon": "<svg class='lucide-icon kpi-green' fill='none' stroke='currentColor' viewBox='0 0 24 24'><polyline points='17 6 9 17 7 14'/></svg>", "color": "kpi-green", "page": "rem"},
+        {"label": "3 Freins Actifs", "icon": "<svg class='lucide-icon kpi-orange' fill='none' stroke='currentColor' viewBox='0 0 24 24'><polygon points='10 2 2 22 22 22 14 2 10 2'/></svg>", "color": "kpi-orange", "page": "freins"},
+        {"label": "5 Échéances Semaine", "icon": "<svg class='lucide-icon kpi-red' fill='none' stroke='currentColor' viewBox='0 0 24 24'><rect x='3' y='4' width='18' height='18' rx='2'/><line x1='16' y1='2' x2='16' y2='6'/><line x1='8' y1='2' x2='8' y2='6'/></svg>", "color": "kpi-red", "page": "planning"}
     ]
     for i, kpi in enumerate(kpis):
         if kpi_cols[i].button(f"{kpi['icon']}<br><span style='font-size:1.1em;'>{kpi['label']}</span>", key=f"kpi_{i}", help=kpi['label']):
             st.session_state['page'] = kpi['page']
             st.rerun()
-        kpi_cols[i].markdown(f"<div class='kpi-card {kpi['color']}'><span style='font-size:2em;'>{kpi['icon']}</span><br><span style='font-size:1.1em;'>{kpi['label']}</span></div>", unsafe_allow_html=True)
+        kpi_cols[i].markdown(f"<div class='kpi-card {kpi['color']}'>{kpi['icon']}<br><span style='font-size:1.1em;'>{kpi['label']}</span></div>", unsafe_allow_html=True)
 
 # --- SIDEBAR MODERNE ---
 with st.sidebar:
